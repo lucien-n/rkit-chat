@@ -1,10 +1,9 @@
-import { superValidate } from 'sveltekit-superforms';
 import type { PageServerLoad } from './$types';
 import { signinSchema } from '$lib/schemas/signin.schema';
-import { zod } from 'sveltekit-superforms/adapters';
+import { superValidate } from 'sveltekit-superforms/server';
 
 export const load: PageServerLoad = async () => {
 	return {
-		form: await superValidate(zod(signinSchema))
+		form: await superValidate(signinSchema)
 	};
 };
