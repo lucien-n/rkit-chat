@@ -4,7 +4,7 @@
 	import { Home, Enter, Exit } from 'radix-icons-svelte';
 </script>
 
-<nav class="flex gap-3 p-3">
+<nav class="fixed left-0 top-0 flex w-full gap-3 p-3">
 	<ul>
 		<li><Button href={urls.auth.signin} class="flex gap-1"><Home /> Home</Button></li>
 	</ul>
