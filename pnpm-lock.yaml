@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@lucia-auth/adapter-postgresql':
+    specifier: ^3.1.0
+    version: 3.1.0(lucia@3.0.1)(pg@8.11.3)
   bits-ui:
     specifier: ^0.18.1
     version: 0.18.1(svelte@4.2.10)
@@ -466,6 +469,25 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
+
+  /@lucia-auth/adapter-postgresql@3.1.0(lucia@3.0.1)(pg@8.11.3):
+    resolution: {integrity: sha512-W6LXc9nfoyAwew5JCDnv63i4BKT3wLbmG9+QtnfmsD0xfOLOUiIi3wA1t0cpIXaJsq69/I3TRYXdb8e8yXRo9Q==}
+    peerDependencies:
+      '@neondatabase/serverless': 0.7.x
+      lucia: 3.x
+      pg: ^8.8.0
+      postgres: ^3.3.0
+    peerDependenciesMeta:
+      '@neondatabase/serverless':
+        optional: true
+      pg:
+        optional: true
+      postgres:
+        optional: true
+    dependencies:
+      lucia: 3.0.1
+      pg: 8.11.3
+    dev: false
 
   /@melt-ui/svelte@0.71.2(svelte@4.2.10):
     resolution: {integrity: sha512-GDUErhAphEoEOLpcBjQ84BgzRR6M3344fQE4QYFffwT7aedWak7CvNsECgeig1Y5xvfDmeEaFnGlOQXIBucJYw==}
