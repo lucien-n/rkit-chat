@@ -3,7 +3,7 @@
 	import AuthLayout from '$lib/components/layouts/auth-layout.svelte';
 	import type { PageData } from './$types';
 	import { Separator } from '$shadcn/separator';
-	import { Link1, Link2, QuestionMarkCircled } from 'radix-icons-svelte';
+	import { QuestionMarkCircled } from 'radix-icons-svelte';
 	import { Button } from '$shadcn/button';
 	import urls from '$lib/urls';
 
