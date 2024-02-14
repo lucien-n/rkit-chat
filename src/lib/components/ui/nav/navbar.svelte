@@ -6,7 +6,7 @@
 
 <nav class="fixed left-0 top-0 flex w-full gap-3 p-3">
 	<ul>
-		<li><Button href={urls.auth.signin} class="flex gap-1"><Home /> Home</Button></li>
+		<li><Button href={urls.home} class="flex gap-1"><Home /> Home</Button></li>
 	</ul>
 	<ul>
 		<li><Button href={urls.auth.signin} class="flex gap-1"><Enter /> Sign In</Button></li>
