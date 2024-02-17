@@ -1,9 +1,35 @@
-import type { PageServerLoad } from './$types';
-import { signinSchema } from '$lib/schemas/signin.schema';
+import type { Actions, PageServerLoad } from './$types';
 import { superValidate } from 'sveltekit-superforms/server';
+import { createSession } from '$lib/server/lucia';
+import { fail, redirect } from '@sveltejs/kit';
+import { AuthController } from '$shared/modules/auth/auth.controller';
+import { signinSchema } from '$shared/modules/auth/schemas/signin.schema';
+import urls from '$lib/urls';
+import { remult } from 'remult';
 
 export const load: PageServerLoad = async () => {
+	if (remult.authenticated()) redirect(302, urls.home);
+
 	return {
 		form: await superValidate(signinSchema)
 	};
+};
+
+export const actions: Actions = {
+	default: async (event) => {
+		const form = await superValidate(event, signinSchema);
+		if (!form.valid) {
+			return fail(400, {
+				form
+			});
+		}
+
+		const { email, password } = form.data;
+
+		const user = await AuthController.signin({ email, password });
+
+		await createSession(event, user);
+
+		redirect(302, urls.home);
+	}
 };

@@ -6,3 +6,5 @@ export const signinSchema = z.object({
 });
 
 export type SigninSchema = typeof signinSchema;
+
+export type SigninInput = z.infer<SigninSchema>;
