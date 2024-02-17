@@ -18,6 +18,11 @@ export class AuthController {
 	}
 
 	@BackendMethod({ allowed: false })
+	static async findById(id: string) {
+		return remult.repo(AuthUser).findOne({ where: { id } });
+	}
+
+	@BackendMethod({ allowed: false })
 	static async signup(inputs: SignupInput) {
 		const { username, email, password } = parseZSchema(inputs, signupSchema);
 

@@ -6,7 +6,6 @@
 	<Card.Root>
 		<Card.Header>
 			<div class="text-4xl font-bold tracking-tight">
-
 				<slot name="header" />
 			</div>
 		</Card.Header>

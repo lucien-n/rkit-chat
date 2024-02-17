@@ -8,3 +8,9 @@ declare global {
 }
 
 export {};
+
+declare module 'remult' {
+	export interface UserInfo {
+		email: string;
+	}
+}
