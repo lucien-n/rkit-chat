@@ -15,7 +15,8 @@ const config = {
 		alias: {
 			$shadcn: './src/lib/shadcn/components/ui',
 			$cn: './src/lib/shadcn/utils',
-			$shared: './src/shared'
+			$shared: './src/shared',
+			$typography: './src/lib/components/typography'
 		}
 	}
 };
