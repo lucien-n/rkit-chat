@@ -10,7 +10,7 @@
 </script>
 
 <Dialog.Root>
-	<Dialog.Trigger class="flex w-full items-center justify-center px-6 py-3">
+	<Dialog.Trigger class="flex w-full items-center justify-center rounded-md border px-3 py-2">
 		<Plus size={20} />
 		<Large>New</Large>
 	</Dialog.Trigger>

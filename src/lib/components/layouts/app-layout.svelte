@@ -35,8 +35,8 @@
 <div class="grid h-full w-full grid-cols-4 gap-6 p-6">
 	<div class="flex h-full flex-col gap-8">
 		<ProfileCard />
-		<div class="flex h-full w-full flex-col justify-between rounded-md border">
-			<div class="flex flex-col gap-3 p-3">
+		<div class="flex h-full w-full flex-col justify-between rounded-md border p-3">
+			<div class="flex flex-col gap-3">
 				{#each $groups as group}
 					<GroupCard {group} />
 				{/each}
@@ -45,7 +45,7 @@
 		</div>
 	</div>
 	<div class="col-span-3 flex h-full flex-col gap-6">
-		<div class="flex h-full w-full flex-col gap-6 overflow-y-scroll rounded-md border p-4">
+		<div class="flex h-full w-full flex-col gap-6 overflow-y-scroll rounded-md border p-3">
 			{#each $messages.reverse().slice(0, 5).reverse() as message}
 				<MessageCard {message} />
 			{/each}
