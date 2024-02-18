@@ -26,8 +26,9 @@ export const actions: Actions = {
 			});
 		}
 		const { content } = form.data;
+		const { groupId } = event.params;
 
-		await MessagesController.create({ content });
+		await MessagesController.create({ content }, groupId);
 
 		return message(form, 'Message sent');
 	},
