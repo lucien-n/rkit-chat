@@ -26,6 +26,7 @@ export class AuthController {
 		const profile = remult.repo(AuthUser).findOne({ where: { id }, include });
 		return remult.repo(AuthUser).toJson(profile);
 	}
+
 	@BackendMethod({ allowed: false })
 	static async signup(inputs: SignupInput) {
 		const { username, email, password } = parseZSchema(inputs, signupSchema);
