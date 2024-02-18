@@ -9,7 +9,7 @@
 
 	export let form: SuperValidated<CreateMessageSchema>;
 
-	$: console.log(form.message);
+	$: console.log('create-message-form', form.message);
 </script>
 
 <Form.Root {form} schema={createMessageSchema} let:config class="flex items-end gap-2">
