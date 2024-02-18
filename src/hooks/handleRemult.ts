@@ -23,8 +23,8 @@ export const handleRemult = remultSveltekit({
 
 		return {
 			id,
-			name: profile.username,
-			email: profile.user.email
+			name: profile.username ?? 'Unknown',
+			email: profile.user.email ?? 'unknown-mail'
 		};
 	},
 	entities,
