@@ -19,7 +19,7 @@
 		messages.listen({
 			orderBy: { createdAt: 'asc' },
 			include: { author: true },
-			where: { groupId: '1929f10d-9d30-4d97-9b24-7d502d4934d8' }
+			where: { groupId: $page.params.groupId }
 		});
 
 	$: browser &&
