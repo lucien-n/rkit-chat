@@ -4,14 +4,17 @@
 	import * as Avatar from '$shadcn/avatar';
 	import type { Message } from '$shared/modules/messages/message.entity';
 	import { Muted } from '$typography';
+	import moment from 'moment';
 
 	export let message: Message;
+
+	$: isSelf = $userStore?.id === message.author?.id;
 </script>
 
 <div
 	class={cn(
-		'flex gap-2 rounded-md border p-2 ',
-		$userStore?.id === message.authorId ? 'flex-wrap-reverse border-blue-300' : ''
+		'relative flex w-fit gap-2 rounded-md border p-2',
+		isSelf ? 'flex-row-reverse self-end border-blue-300 pl-8' : ''
 	)}
 >
 	<Avatar.Root class="self-center">
@@ -19,7 +22,12 @@
 		<Avatar.Fallback>UK</Avatar.Fallback>
 	</Avatar.Root>
 	<div class="flex flex-col">
-		<Muted>{message.author?.username}</Muted>
+		<Muted class={cn(isSelf && 'self-end')}>{message.author?.username}</Muted>
 		<p>{message.content}</p>
+	</div>
+	<div class="absolute -bottom-6">
+		<Muted>
+			{moment(message.createdAt).fromNow()}
+		</Muted>
 	</div>
 </div>
