@@ -1,6 +1,6 @@
 <script lang="ts">
 	import SigninForm from '$lib/components/ui/auth/signin-form.svelte';
-	import AuthLayout from '$lib/components/layouts/auth-layout.svelte';
+	import AuthLayout from '$layouts/auth-layout.svelte';
 	import type { PageData } from './$types';
 	import { Separator } from '$shadcn/separator';
 	import { QuestionMarkCircled } from 'radix-icons-svelte';

@@ -16,7 +16,9 @@ const config = {
 			$shadcn: './src/lib/shadcn/components/ui',
 			$cn: './src/lib/shadcn/utils',
 			$shared: './src/shared',
-			$typography: './src/lib/components/typography'
+			$typography: './src/lib/components/typography',
+			$ui: './src/lib/components/ui',
+			$layouts: './src/lib/components/layouts'
 		}
 	}
 };

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import SignupForm from '$lib/components/ui/auth/signup-form.svelte';
-	import AuthLayout from '$lib/components/layouts/auth-layout.svelte';
+	import SignupForm from '$ui/auth/signup-form.svelte';
+	import AuthLayout from '$layouts/auth-layout.svelte';
 	import type { PageData } from './$types';
 	import urls from '$lib/urls';
 	import { Button } from '$shadcn/button';

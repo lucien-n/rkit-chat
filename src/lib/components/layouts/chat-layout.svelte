@@ -1,14 +1,14 @@
 <script lang="ts">
-	import CreateMessageForm from '../ui/chat/create-message-form.svelte';
+	import CreateMessageForm from '$ui/chat/create-message-form.svelte';
 	import { remultLive } from '$lib/stores/remultLive';
 	import { remult } from 'remult';
 	import { Message } from '$shared/modules/messages/message.entity';
 	import { browser } from '$app/environment';
-	import CreateGroupDialog from '../ui/groups/create-group-dialog.svelte';
+	import CreateGroupDialog from '$ui/groups/create-group-dialog.svelte';
 	import { Group } from '$shared/modules/groups/group.entity';
-	import MessageCard from '../ui/chat/message-card.svelte';
-	import ProfileCard from '../ui/profile/profile-card.svelte';
-	import GroupCard from '../ui/groups/group-card.svelte';
+	import MessageCard from '$ui/chat/message-card.svelte';
+	import ProfileCard from '$ui/profile/profile-card.svelte';
+	import GroupCard from '$ui/groups/group-card.svelte';
 	import urls from '$lib/urls';
 	import { page } from '$app/stores';
 
