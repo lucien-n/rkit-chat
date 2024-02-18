@@ -1,8 +1,15 @@
 <script lang="ts">
+	import urls from '$lib/urls';
+	import { Button } from '$shadcn/button';
 	import * as Card from '$shadcn/card';
+	import { CaretLeft } from 'radix-icons-svelte';
 </script>
 
 <div class="container flex h-full items-center justify-center">
+	<Button variant="link" class="fixed left-0 top-0" href={urls.home}>
+		<CaretLeft />
+		Home
+	</Button>
 	<Card.Root>
 		<Card.Header>
 			<div class="text-4xl font-bold tracking-tight">
