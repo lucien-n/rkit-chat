@@ -12,7 +12,13 @@
 	$: console.log('create-message-form', form.message);
 </script>
 
-<Form.Root {form} schema={createMessageSchema} let:config class="flex items-end gap-2">
+<Form.Root
+	{form}
+	action="?/createMessage"
+	schema={createMessageSchema}
+	let:config
+	class="flex items-end gap-2"
+>
 	<Form.Field {config} name="content">
 		<Form.Item class="w-full">
 			<Form.Validation />

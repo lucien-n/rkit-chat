@@ -12,16 +12,18 @@
 	$: console.log('create-group-form', form.message);
 </script>
 
-<Form.Root {form} schema={createGroupSchema} let:config class="flex items-end gap-2">
-	<Form.Field {config} name="name">
-		<Form.Item class="w-full">
-			<Form.Validation />
-			<Form.Input type="text" placeholder="Type your message..." class="w-full" required />
-		</Form.Item>
-	</Form.Field>
-	<br />
-	<Form.Button class="flex gap-2">
-		<Plus />
-		Create
-	</Form.Button>
+<Form.Root {form} schema={createGroupSchema} let:config>
+	<form action="?/createGroup" method="post" class="flex items-end gap-2">
+		<Form.Field {config} name="name">
+			<Form.Item class="w-full">
+				<Form.Validation />
+				<Form.Input type="text" placeholder="Group name" class="w-full" required />
+			</Form.Item>
+		</Form.Field>
+		<br />
+		<Form.Button class="flex gap-2">
+			<Plus />
+			Create
+		</Form.Button>
+	</form>
 </Form.Root>

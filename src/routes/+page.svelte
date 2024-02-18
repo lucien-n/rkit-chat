@@ -11,7 +11,7 @@
 	export let data: PageData;
 </script>
 
-<AppLayout form={data.form} />
+<AppLayout messageForm={data.messageForm} groupForm={data.groupForm} />
 
 {#if !$userStore}
 	<div
@@ -23,7 +23,7 @@
 			</Card.Header>
 			<Card.Content>
 				<Button variant="link" href={urls.auth.signin} class="flex items-center gap-1">
-					<Enter size="20" />
+					<Enter size={20} />
 					<Large>Sign In</Large>
 				</Button>
 			</Card.Content>

@@ -13,8 +13,11 @@
 	import { remult } from 'remult';
 	import { Message } from '$shared/modules/messages/message.entity';
 	import { browser } from '$app/environment';
+	import CreateGroupDialog from '../ui/groups/create-group-dialog.svelte';
+	import type { CreateGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
 
-	export let form: SuperValidated<CreateMessageSchema>;
+	export let messageForm: SuperValidated<CreateMessageSchema>;
+	export let groupForm: SuperValidated<CreateGroupSchema>;
 
 	const messages = remultLive(remult.repo(Message));
 
@@ -50,7 +53,9 @@
 				<Large>{$userStore?.name ?? 'Unknown'}</Large>
 			</div>
 		</div>
-		<div class="h-full w-full rounded-md border" />
+		<div class="flex h-full w-full flex-col justify-end rounded-md border">
+			<CreateGroupDialog form={groupForm} />
+		</div>
 	</div>
 	<div class="col-span-3 flex h-full flex-col gap-6">
 		<div class="flex h-full w-full flex-col gap-6 overflow-y-scroll rounded-md border p-4">
@@ -67,6 +72,6 @@
 				</div>
 			{/each}
 		</div>
-		<CreateMessageForm {form} />
+		<CreateMessageForm form={messageForm} />
 	</div>
 </div>
