@@ -12,8 +12,8 @@ export class AuthUser {
 	updatedAt!: Date;
 
 	@Fields.string()
-	email!: string;
+	email?: string;
 
 	@Fields.string()
-	hashedPassword!: string;
+	hashedPassword?: string;
 }

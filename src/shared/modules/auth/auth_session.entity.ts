@@ -10,8 +10,8 @@ export class AuthSession {
 	expires_at!: Date;
 
 	@Fields.string()
-	user_id!: string;
+	user_id?: string;
 
 	@Relations.toOne(() => AuthUser, { field: 'userId' })
-	user!: AuthUser;
+	user?: AuthUser;
 }
