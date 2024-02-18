@@ -6,7 +6,11 @@ import { fail } from '@sveltejs/kit';
 import { createGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
 import { GroupsController } from '$shared/modules/groups/groups.controller';
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async (event) => {
+	const { groupId } = event.params;
+
+	console.log(groupId);
+
 	return {
 		messageForm: await superValidate(createMessageSchema),
 		groupForm: await superValidate(createGroupSchema)

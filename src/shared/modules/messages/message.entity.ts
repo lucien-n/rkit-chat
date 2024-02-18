@@ -1,5 +1,6 @@
 import { Entity, Fields, Relations } from 'remult';
 import { Profile } from '../profiles/profile.entity';
+import { Group } from '../groups/group.entity';
 
 @Entity<Message>('messages', { allowApiCrud: true }) // !temp allowApiCrud
 export class Message {
@@ -16,7 +17,13 @@ export class Message {
 	content!: string;
 
 	@Fields.string()
-	authorId!: string;
+	groupId?: string;
+
+	@Fields.string()
+	authorId?: string;
+
+	@Relations.toOne(() => Group, { field: 'groupId' })
+	group?: Group;
 
 	@Relations.toOne(() => Profile, { field: 'authorId' })
 	author?: Profile;

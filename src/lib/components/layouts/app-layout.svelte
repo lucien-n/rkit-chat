@@ -1,20 +1,16 @@
 <script lang="ts">
 	import CreateMessageForm from '../ui/chat/create-message-form.svelte';
-	import type { SuperValidated } from 'sveltekit-superforms';
-	import type { CreateMessageSchema } from '$shared/modules/messages/schemas/create-message.schema';
 	import { remultLive } from '$lib/stores/remultLive';
 	import { remult } from 'remult';
 	import { Message } from '$shared/modules/messages/message.entity';
 	import { browser } from '$app/environment';
 	import CreateGroupDialog from '../ui/groups/create-group-dialog.svelte';
-	import type { CreateGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
 	import { Group } from '$shared/modules/groups/group.entity';
 	import MessageCard from '../ui/chat/message-card.svelte';
 	import ProfileCard from '../ui/profile/profile-card.svelte';
 	import GroupCard from '../ui/groups/group-card.svelte';
-
-	export let messageForm: SuperValidated<CreateMessageSchema>;
-	export let groupForm: SuperValidated<CreateGroupSchema>;
+	import urls from '$lib/urls';
+	import { page } from '$app/stores';
 
 	const messages = remultLive(remult.repo(Message));
 	const groups = remultLive(remult.repo(Group));
@@ -22,7 +18,8 @@
 	$: browser &&
 		messages.listen({
 			orderBy: { createdAt: 'asc' },
-			include: { author: true }
+			include: { author: true },
+			where: { groupId: '1929f10d-9d30-4d97-9b24-7d502d4934d8' }
 		});
 
 	$: browser &&
@@ -38,10 +35,12 @@
 		<div class="flex h-full w-full flex-col justify-between rounded-md border p-3">
 			<div class="flex flex-col gap-3">
 				{#each $groups as group}
-					<GroupCard {group} />
+					<a href={urls.groups + '/' + group.id} data-sveltekit-preload-data="off">
+						<GroupCard {group} selected={$page.params.groupId === group.id} />
+					</a>
 				{/each}
 			</div>
-			<CreateGroupDialog form={groupForm} />
+			<CreateGroupDialog form={$page.data.groupForm} />
 		</div>
 	</div>
 	<div class="col-span-3 flex h-full flex-col gap-6">
@@ -50,6 +49,6 @@
 				<MessageCard {message} />
 			{/each}
 		</div>
-		<CreateMessageForm form={messageForm} />
+		<CreateMessageForm form={$page.data.messageForm} />
 	</div>
 </div>
