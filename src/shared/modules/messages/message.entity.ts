@@ -1,7 +1,7 @@
 import { Entity, Fields, Relations } from 'remult';
 import { Profile } from '../profiles/profile.entity';
 
-@Entity<Message>('messages', { allowApiCrud: true }) // !temp
+@Entity<Message>('messages', { allowApiCrud: true }) // !temp allowApiCrud
 export class Message {
 	@Fields.uuid()
 	id!: string;
