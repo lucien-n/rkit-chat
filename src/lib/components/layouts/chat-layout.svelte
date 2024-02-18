@@ -35,7 +35,7 @@
 		<div class="flex h-full w-full flex-col justify-between rounded-md border p-3">
 			<div class="flex flex-col gap-3">
 				{#each $groups as group}
-					<a href={urls.groups + '/' + group.id} data-sveltekit-preload-data="off">
+					<a href={urls.groups + '/' + group.id}>
 						<GroupCard {group} selected={$page.params.groupId === group.id} />
 					</a>
 				{/each}
