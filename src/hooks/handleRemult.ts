@@ -4,11 +4,13 @@ import { DATABASE_URL } from '$env/static/private';
 import { controllers, entities } from '$shared';
 import { AuthUser } from '$shared/modules/auth/auth_user.entity';
 import { AuthController } from '$shared/modules/auth/auth.controller';
+import { Message } from '$shared/modules/messages/message.entity';
 
 export const handleRemult = remultSveltekit({
 	dataProvider: createPostgresDataProvider({ connectionString: DATABASE_URL }),
 	initApi: async (remult) => {
 		console.table(await remult.repo(AuthUser).find());
+		console.table(await remult.repo(Message).find());
 	},
 	getUser: async (event) => {
 		if (!event.locals.user) return undefined;

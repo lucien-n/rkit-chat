@@ -1,14 +1,17 @@
 <script lang="ts">
 	import AppLayout from '$lib/components/layouts/app-layout.svelte';
-	import { userStore } from '$lib/stores';
+	import { userStore } from '$lib/stores/stores';
 	import urls from '$lib/urls';
 	import { Button } from '$shadcn/button';
 	import * as Card from '$shadcn/card';
 	import { H3, Large } from '$typography';
 	import { Enter } from 'radix-icons-svelte';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 </script>
 
-<AppLayout />
+<AppLayout form={data.form} />
 
 {#if !$userStore}
 	<div

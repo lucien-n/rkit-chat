@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.pcss';
 	import type { LayoutData } from './$types';
-	import { userStore } from '$lib/stores';
+	import { userStore } from '$lib/stores/stores';
 	import { browser } from '$app/environment';
 
 	export let data: LayoutData;
