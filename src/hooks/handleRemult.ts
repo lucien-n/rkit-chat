@@ -3,8 +3,8 @@ import { createPostgresDataProvider } from 'remult/postgres';
 import { DATABASE_URL } from '$env/static/private';
 import { controllers, entities } from '$shared';
 import { AuthUser } from '$shared/modules/auth/auth_user.entity';
-import { AuthController } from '$shared/modules/auth/auth.controller';
 import { Message } from '$shared/modules/messages/message.entity';
+import { ProfilesController } from '$shared/modules/profiles/profiles.controller';
 
 export const handleRemult = remultSveltekit({
 	dataProvider: createPostgresDataProvider({ connectionString: DATABASE_URL }),
@@ -17,12 +17,14 @@ export const handleRemult = remultSveltekit({
 
 		const { id } = event.locals.user;
 
-		const user = await AuthController.findById(id);
+		const profile = await ProfilesController.findById(id, { user: true });
+
+		if (!profile?.user) return undefined;
 
 		return {
 			id,
-			name: user.username,
-			email: user.email
+			name: profile.username,
+			email: profile.user.email
 		};
 	},
 	entities,

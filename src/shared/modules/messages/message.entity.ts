@@ -1,12 +1,7 @@
 import { Entity, Fields, Relations } from 'remult';
 import { AuthUser } from '../auth/auth_user.entity';
 
-@Entity<Message>('messages', {
-	allowApiRead: (c) => {
-		console.log('c', c);
-		return true;
-	}
-})
+@Entity<Message>('messages', { allowApiCrud: true }) // !temp
 export class Message {
 	@Fields.uuid()
 	id!: string;

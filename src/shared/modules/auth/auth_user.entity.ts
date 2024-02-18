@@ -12,9 +12,6 @@ export class AuthUser {
 	updatedAt!: Date;
 
 	@Fields.string()
-	username!: string;
-
-	@Fields.string()
 	email!: string;
 
 	@Fields.string()
