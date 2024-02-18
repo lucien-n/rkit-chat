@@ -19,7 +19,7 @@ export class Group {
 	@Fields.string()
 	adminId?: string;
 
-	@Relations.toOne(() => Profile, { key: 'adminId' })
+	@Relations.toOne(() => Profile, { field: 'adminId' })
 	admin?: Profile;
 
 	@Relations.toMany(() => GroupsToProfiles, 'groupId')
