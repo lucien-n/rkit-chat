@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AppLayout from '$lib/components/layouts/app-layout.svelte';
+	import ChatLayout from '$lib/components/layouts/chat-layout.svelte';
 </script>
 
-<AppLayout />
+<ChatLayout />
