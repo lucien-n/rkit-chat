@@ -1,5 +1,5 @@
 import { Entity, Fields, Relations } from 'remult';
-import { AuthUser } from '../auth/auth_user.entity';
+import { Profile } from '../profiles/profile.entity';
 
 @Entity<Message>('messages', { allowApiCrud: true }) // !temp
 export class Message {
@@ -18,6 +18,6 @@ export class Message {
 	@Fields.string()
 	authorId!: string;
 
-	@Relations.toOne(() => AuthUser, { field: 'authorId' })
-	author?: AuthUser;
+	@Relations.toOne(() => Profile, { field: 'authorId' })
+	author?: Profile;
 }
