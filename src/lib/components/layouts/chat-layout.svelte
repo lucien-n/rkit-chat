@@ -8,13 +8,12 @@
 	import { Group } from '$shared/modules/groups/group.entity';
 	import MessageCard from '$ui/chat/message-card.svelte';
 	import ProfileAvatar from '$ui/profile/profile-card.svelte';
-	import urls from '$lib/urls';
 	import { page } from '$app/stores';
 	import { Large, Muted } from '$typography';
 	import { Badge } from '$shadcn/badge';
 	import { userStore } from '$lib/stores/stores';
-	import GroupAvatar from '$ui/groups/group-avatar.svelte';
 	import { Separator } from '$shadcn/separator';
+	import GroupLink from '$ui/groups/group-link.svelte';
 
 	const messages = remultLive(remult.repo(Message));
 	const groups = remultLive(remult.repo(Group));
@@ -42,9 +41,7 @@
 		<div class="flex h-full flex-col justify-between">
 			<div class="flex flex-col gap-3">
 				{#each $groups as group}
-					<a class="avatar" href={urls.groups + '/' + group.id}>
-						<GroupAvatar {group} selected={$page.params.groupId === group.id} />
-					</a>
+					<GroupLink {group} />
 				{/each}
 			</div>
 			<CreateGroupDialog form={$page.data.groupForm} />
