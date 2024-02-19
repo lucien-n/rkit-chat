@@ -4,15 +4,13 @@
 	import CreateGroupForm from './create-group-form.svelte';
 	import type { CreateGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
 	import { Plus } from 'radix-icons-svelte';
-	import { Large } from '$typography';
 
 	export let form: SuperValidated<CreateGroupSchema>;
 </script>
 
 <Dialog.Root>
-	<Dialog.Trigger class="flex w-full items-center justify-center rounded-md border px-3 py-2">
-		<Plus size={20} />
-		<Large>New</Large>
+	<Dialog.Trigger class="avatar flex items-center justify-center rounded-full border">
+		<Plus size={16} />
 	</Dialog.Trigger>
 	<Dialog.Content class="sm:max-w-[425px]">
 		<Dialog.Header>
