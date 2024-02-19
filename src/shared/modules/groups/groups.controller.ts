@@ -1,8 +1,10 @@
 import { BackendMethod, Controller, remult, type MembersToInclude } from 'remult';
 import { createGroupSchema, type CreateGroupInput } from './schemas/create-group.schema';
 import { parseZSchema } from '$shared/helpers/zod';
-import { Error } from '$shared/helpers/errors';
+import { AuthError, Error } from '$shared/helpers/errors';
 import { Group } from './group.entity';
+import { Profile } from '../profiles/profile.entity';
+import { ProfilesController } from '../profiles/profiles.controller';
 
 @Controller('GroupsController')
 export class GroupsController {
@@ -19,10 +21,14 @@ export class GroupsController {
 	static async create(inputs: CreateGroupInput) {
 		const { name } = parseZSchema(inputs, createGroupSchema);
 
-		const currentUser = remult.user;
-		if (!currentUser) throw Error.AuthRequired;
+		const user = remult.user;
+		if (!user) throw Error.AuthRequired;
 
-		const group = await remult.repo(Group).insert({ name, adminId: currentUser.id });
+		const profile = await ProfilesController.findById(user.id);
+		if (!profile) throw AuthError.UserNotFound;
+
+		const group = await remult.repo(Group).insert({ name, adminId: user.id });
+		await remult.repo(Profile).relations(profile).groups.insert([group]);
 
 		return remult.repo(Group).toJson(group);
 	}
