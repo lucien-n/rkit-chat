@@ -29,11 +29,9 @@ export class GroupsController {
 		if (!profile) throw AuthError.UserNotFound;
 
 		const group = await this.repo.insert({ name, adminId: user.id });
-		console.log(group, profile);
-		const res = await this.repo
+		await this.repo
 			.relations(group)
 			.profiles.insert([{ profileId: profile.id, groupId: group.id }]);
-		console.log(res);
 
 		return this.repo.toJson(group);
 	}

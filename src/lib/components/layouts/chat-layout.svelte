@@ -31,8 +31,10 @@
 
 	userStore.subscribe(async (user) => {
 		if (!user) return;
-		groups = (await GroupsToProfileController.findByUser(user.id)) ?? [];
+		groups = (await GroupsToProfileController.findByUser(user.id, { profiles: true })) ?? [];
 	});
+
+	$: console.table(groups);
 </script>
 
 <div class=" flex h-full w-full gap-6 p-6">

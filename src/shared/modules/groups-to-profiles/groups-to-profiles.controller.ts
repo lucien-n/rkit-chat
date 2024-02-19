@@ -9,13 +9,14 @@ export class GroupsToProfileController {
 		profileId: string,
 		include: MembersToInclude<Group> = {}
 	): Promise<Group[] | undefined> {
-		const groups = await remult.repo(GroupsToProfiles).find({
-			where: { profileId },
-			include: { group: true, ...include }
+		const profileGroups = await remult.repo(GroupsToProfiles).find({
+			where: { profileId }
 		});
-		return remult
-			.repo(GroupsToProfiles)
-			.toJson(groups)
-			.map(({ group }) => group);
+
+		const groupsIds = profileGroups.map(({ groupId }) => groupId);
+
+		const groups = await remult.repo(Group).find({ where: { id: { $in: groupsIds } }, include });
+
+		return remult.repo(Group).toJson(groups);
 	}
 }
