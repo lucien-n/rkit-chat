@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { cn } from '$cn';
 	import { userStore } from '$lib/stores/stores';
-	import * as Avatar from '$shadcn/avatar';
 	import type { Message } from '$shared/modules/messages/message.entity';
 	import { Muted, Large } from '$typography';
+	import ProfileAvatar from '$ui/profile/profile-avatar.svelte';
 	import moment from 'moment';
 
 	export let message: Message;
@@ -13,23 +13,24 @@
 
 <div
 	class={cn(
-		' relative flex w-fit min-w-48 gap-2 rounded-md border p-2',
-		isSelf ? 'flex-row-reverse self-end border-blue-300 pl-8' : ''
+		' relative flex w-fit min-w-48 gap-2 ',
+		isSelf ? 'flex-row-reverse self-end border-blue-300' : ''
 	)}
 >
-	<Avatar.Root class="self-center">
-		<Avatar.Image src="https://avatars.githubusercontent.com/u/77048269?v=4" alt="avatar" />
-		<Avatar.Fallback>UK</Avatar.Fallback>
-	</Avatar.Root>
-	<div class="flex flex-col">
-		<div class={cn('flex items-center gap-2', isSelf && 'flex-row-reverse')}>
-			<Large>
-				{message.author?.username}
-			</Large>
-			<Muted class="text-[.75rem]">
-				{moment(message.createdAt).fromNow()}
-			</Muted>
+	<div class="avatar self-start rounded-2xl border">
+		<ProfileAvatar profile={message.author} />
+	</div>
+	<div class="rounded-md border p-2">
+		<div class="flex flex-col">
+			<div class={cn('flex items-center gap-2', isSelf && 'flex-row-reverse')}>
+				<Large>
+					{message.author?.username}
+				</Large>
+				<Muted class="text-[.75rem]">
+					{moment(message.createdAt).fromNow()}
+				</Muted>
+			</div>
+			<p>{message.content}</p>
 		</div>
-		<p>{message.content}</p>
 	</div>
 </div>

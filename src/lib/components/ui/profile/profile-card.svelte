@@ -1,17 +1,14 @@
 <script lang="ts">
-	import * as Avatar from '$shadcn/avatar';
 	import * as Dropdown from '$shadcn/dropdown-menu';
 	import urls from '$lib/urls';
 	import { Exit } from 'radix-icons-svelte';
 	import { enhance } from '$app/forms';
+	import ProfileAvatar from './profile-avatar.svelte';
 </script>
 
 <Dropdown.Root>
 	<Dropdown.Trigger class="avatar">
-		<Avatar.Root class="h-full w-full">
-			<Avatar.Image src="https://avatars.githubusercontent.com/u/77048269?v=4" alt="avatar" />
-			<Avatar.Fallback>UK</Avatar.Fallback>
-		</Avatar.Root>
+		<ProfileAvatar />
 	</Dropdown.Trigger>
 	<Dropdown.Content>
 		<Dropdown.Group>
