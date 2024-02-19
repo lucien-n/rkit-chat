@@ -1,6 +1,6 @@
 import { Entity, Fields, Relations } from 'remult';
 import { AuthUser } from '../auth/auth_user.entity';
-import { GroupsToProfiles } from '../groups-to-profile/groups-to-profile.entity';
+import { GroupsToProfiles } from '../groups-to-profiles/groups-to-profiles.entity';
 
 @Entity<Profile>('profiles', { allowApiCrud: true, id: { id: true } }) // !temp allowApiCrud
 export class Profile {

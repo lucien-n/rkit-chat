@@ -14,9 +14,11 @@
 	import { userStore } from '$lib/stores/stores';
 	import { Separator } from '$shadcn/separator';
 	import GroupLink from '$ui/groups/group-link.svelte';
+	import { GroupsToProfileController } from '$shared/modules/groups-to-profiles/groups-to-profiles.controller';
 
 	const messages = remultLive(remult.repo(Message));
-	const groups = remultLive(remult.repo(Group));
+
+	let groups: Group[] = [];
 
 	$: browser &&
 		messages.listen({
@@ -25,13 +27,12 @@
 			where: { groupId: $page.params.groupId }
 		});
 
-	$: browser &&
-		groups.listen({
-			orderBy: { createdAt: 'asc' },
-			include: { profiles: true }
-		});
+	$: currentGroup = groups.find(({ id }) => id === $page.params.groupId) ?? null;
 
-	$: currentGroup = $groups.find(({ id }) => id === $page.params.groupId) ?? null;
+	userStore.subscribe(async (user) => {
+		if (!user) return;
+		groups = (await GroupsToProfileController.findByUser(user.id)) ?? [];
+	});
 </script>
 
 <div class=" flex h-full w-full gap-6 p-6">
@@ -40,7 +41,7 @@
 		<Separator />
 		<div class="flex h-full flex-col justify-between">
 			<div class="flex flex-col gap-3">
-				{#each $groups as group}
+				{#each groups as group}
 					<GroupLink {group} />
 				{/each}
 			</div>

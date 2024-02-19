@@ -1,6 +1,6 @@
 import { Entity, Fields, Relations, remult } from 'remult';
 import { Profile } from '../profiles/profile.entity';
-import { GroupsToProfiles } from '../groups-to-profile/groups-to-profile.entity';
+import { GroupsToProfiles } from '../groups-to-profiles/groups-to-profiles.entity';
 
 @Entity<Group>('groups', {
 	apiPrefilter: () => {
