@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { cn } from '$cn';
 	import { userStore } from '$lib/stores/stores';
+	import { Card } from '$shadcn/card';
 	import type { Message } from '$shared/modules/messages/message.entity';
 	import { Muted, Large } from '$typography';
 	import ProfileAvatar from '$ui/profile/profile-avatar.svelte';
@@ -20,17 +21,15 @@
 	<div class="avatar self-start rounded-2xl border">
 		<ProfileAvatar profile={message.author} />
 	</div>
-	<div class="rounded-md border p-2">
-		<div class="flex flex-col">
-			<div class={cn('flex items-center gap-2', isSelf && 'flex-row-reverse')}>
-				<Large>
-					{message.author?.username}
-				</Large>
-				<Muted class="text-[.75rem]">
-					{moment(message.createdAt).fromNow()}
-				</Muted>
-			</div>
-			<p>{message.content}</p>
+	<Card class="flex flex-col p-2 px-3">
+		<div class={cn('flex items-center gap-2', isSelf && 'flex-row-reverse')}>
+			<Large>
+				{message.author?.username}
+			</Large>
+			<Muted class="text-[.75rem]">
+				{moment(message.createdAt).fromNow()}
+			</Muted>
 		</div>
-	</div>
+		<p>{message.content}</p>
+	</Card>
 </div>
