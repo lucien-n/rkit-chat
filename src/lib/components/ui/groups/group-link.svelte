@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { cn } from '$cn';
 	import * as Avatar from '$shadcn/avatar';
 	import type { Group } from '$shared/modules/groups/group.entity';
 	import * as HoverCard from '$shadcn/hover-card';
@@ -19,15 +18,15 @@
 </script>
 
 <HoverCard.Root openDelay={50} closeDelay={50}>
-	<HoverCard.Trigger class="avatar relative flex" href={urls.groups + '/' + group.id}>
+	<HoverCard.Trigger class="relative flex" href={urls.groups + '/' + group.id}>
 		{#if isCurrent}
 			<div
 				class="absolute -left-3 h-5/6 w-2 self-center rounded-r-md bg-primary"
 				transition:scale
 			/>
 		{/if}
-		<Avatar.Root class={cn('h-full w-full', isCurrent && 'border-2 border-primary')}>
-			<Avatar.Image></Avatar.Image>
+		<Avatar.Root>
+			<Avatar.Image />
 			<Avatar.Fallback>{group.name?.slice(0, 2)}</Avatar.Fallback>
 		</Avatar.Root>
 	</HoverCard.Trigger>

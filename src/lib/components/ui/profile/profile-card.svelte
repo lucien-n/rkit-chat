@@ -7,7 +7,7 @@
 </script>
 
 <Dropdown.Root>
-	<Dropdown.Trigger class="avatar">
+	<Dropdown.Trigger>
 		<ProfileAvatar />
 	</Dropdown.Trigger>
 	<Dropdown.Content>

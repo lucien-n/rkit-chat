@@ -6,7 +6,7 @@
 	export let profile: Profile | null = $profileStore;
 </script>
 
-<Avatar.Root class="h-full w-full">
+<Avatar.Root>
 	<Avatar.Image
 		src={`https://api.dicebear.com/7.x/notionists-neutral/svg?seed=${profile?.username ?? 'default'}`}
 		alt="avatar"

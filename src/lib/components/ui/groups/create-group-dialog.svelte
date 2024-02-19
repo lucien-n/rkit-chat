@@ -9,7 +9,7 @@
 </script>
 
 <Dialog.Root>
-	<Dialog.Trigger class="avatar flex items-center justify-center rounded-full border">
+	<Dialog.Trigger class="flex items-center justify-center rounded-full border">
 		<Plus size={16} />
 	</Dialog.Trigger>
 	<Dialog.Content class="sm:max-w-[425px]">

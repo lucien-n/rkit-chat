@@ -18,7 +18,7 @@
 		isSelf ? 'flex-row-reverse self-end border-blue-300' : ''
 	)}
 >
-	<div class="avatar self-start rounded-2xl border">
+	<div class="self-start rounded-2xl border">
 		<ProfileAvatar profile={message.author} />
 	</div>
 	<Card class="flex flex-col p-2 px-3">
