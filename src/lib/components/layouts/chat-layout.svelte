@@ -11,6 +11,9 @@
 	import GroupCard from '$ui/groups/group-card.svelte';
 	import urls from '$lib/urls';
 	import { page } from '$app/stores';
+	import { Large, Muted } from '$typography';
+	import { Badge } from '$shadcn/badge';
+	import { userStore } from '$lib/stores/stores';
 
 	const messages = remultLive(remult.repo(Message));
 	const groups = remultLive(remult.repo(Group));
@@ -27,6 +30,8 @@
 			orderBy: { createdAt: 'asc' },
 			include: { profiles: true }
 		});
+
+	$: currentGroup = $groups.find(({ id }) => id === $page.params.groupId) ?? null;
 </script>
 
 <div class="grid h-full w-full grid-cols-4 gap-6 p-6">
@@ -44,7 +49,18 @@
 		</div>
 	</div>
 	<div class="col-span-3 flex h-full flex-col gap-4">
-		<div class="flex h-full w-full flex-col gap-6 overflow-y-scroll rounded-md border p-3">
+		<div class="relative flex h-full w-full flex-col gap-6 overflow-y-scroll rounded-md border p-3">
+			{#if currentGroup}
+				<div class="absolute left-0 top-0 w-full rounded-t-md border-b px-4 py-2">
+					<div class="flex items-center gap-2">
+						<Large>{currentGroup.name}</Large>
+						{#if currentGroup.adminId === $userStore?.id}
+							<Badge variant="outline">Admin</Badge>
+						{/if}
+					</div>
+					<Muted>{currentGroup.profiles?.length ?? 0} user(s)</Muted>
+				</div>
+			{/if}
 			{#each $messages.reverse().slice(0, 5).reverse() as message}
 				<MessageCard {message} />
 			{/each}
