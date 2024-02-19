@@ -30,6 +30,6 @@
 				{moment(message.createdAt).fromNow()}
 			</Muted>
 		</div>
-		<p>{message.content}</p>
+		<p class={cn(isSelf && 'self-end')}>{message.content}</p>
 	</Card>
 </div>
