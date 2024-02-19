@@ -10,7 +10,7 @@ export const handleRemult = remultSveltekit({
 	dataProvider: createPostgresDataProvider({ connectionString: DATABASE_URL }),
 	initApi: async (remult) => {
 		console.table(await remult.repo(AuthUser).find());
-		console.table(await remult.repo(Group).find());
+		console.table(await remult.repo(Group).find({ include: { profiles: true, admin: true } }));
 	},
 	getUser: async (event) => {
 		if (!event.locals.user) return undefined;
