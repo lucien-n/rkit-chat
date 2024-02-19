@@ -43,7 +43,7 @@
 			<CreateGroupDialog form={$page.data.groupForm} />
 		</div>
 	</div>
-	<div class="col-span-3 flex h-full flex-col gap-6">
+	<div class="col-span-3 flex h-full flex-col gap-4">
 		<div class="flex h-full w-full flex-col gap-6 overflow-y-scroll rounded-md border p-3">
 			{#each $messages.reverse().slice(0, 5).reverse() as message}
 				<MessageCard {message} />
