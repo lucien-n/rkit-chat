@@ -1,10 +1,8 @@
-import { Entity, Fields, Relations, remult } from 'remult';
+import { Allow, Entity, Fields, Relations } from 'remult';
 import { Profile } from '../profiles/profile.entity';
 import { Group } from '../groups/group.entity';
 
-@Entity<Message>('messages', {
-	apiPrefilter: () => ({ $or: [{ authorId: remult.user?.id }] }) // todo: try and implement something like { group: { profiles: { $contains: remult.user?.id } } }
-})
+@Entity<Message>('messages', { allowApiCrud: Allow.authenticated })
 export class Message {
 	@Fields.uuid()
 	id!: string;

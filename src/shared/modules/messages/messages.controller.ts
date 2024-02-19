@@ -23,7 +23,10 @@ export class MessagesController {
 		if (!user) throw Error.AuthRequired;
 
 		const group = await GroupsController.findById(groupId, { profiles: true });
-		if (group?.adminId !== user.id && !group?.profiles?.find(({ id }) => id === user.id))
+		if (
+			group?.adminId !== user.id &&
+			!group?.profiles?.find(({ profileId }) => profileId === user.id)
+		)
 			throw Error.Forbidden;
 
 		return remult.repo(Message).insert({ content, authorId: user.id, groupId });
