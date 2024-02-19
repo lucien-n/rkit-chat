@@ -14,7 +14,7 @@
 	import { userStore } from '$lib/stores/stores';
 	import { Separator } from '$shadcn/separator';
 	import GroupLink from '$ui/groups/group-link.svelte';
-	import { GroupsToProfileController } from '$shared/modules/groups-to-profiles/groups-to-profiles.controller';
+	import { GroupsController } from '$shared/modules/groups/groups.controller';
 
 	const messages = remultLive(remult.repo(Message));
 
@@ -31,7 +31,7 @@
 
 	userStore.subscribe(async (user) => {
 		if (!user) return;
-		groups = (await GroupsToProfileController.findByUser(user.id, { profiles: true })) ?? [];
+		groups = (await GroupsController.findByUser(user.id, { profiles: true })) ?? [];
 	});
 
 	$: console.table(groups);

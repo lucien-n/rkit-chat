@@ -1,21 +1,36 @@
-import { BackendMethod, Controller, remult, type MembersToInclude, type Repository } from 'remult';
+import { BackendMethod, Controller, remult, type MembersToInclude, Allow } from 'remult';
 import { createGroupSchema, type CreateGroupInput } from './schemas/create-group.schema';
 import { parseZSchema } from '$shared/helpers/zod';
 import { AuthError, Error } from '$shared/helpers/errors';
 import { Group } from './group.entity';
 import { ProfilesController } from '../profiles/profiles.controller';
+import { GroupsToProfiles } from '../groups-to-profiles/groups-to-profiles.entity';
 
 @Controller('GroupsController')
 export class GroupsController {
-	static repo: Repository<Group> = remult.repo(Group);
-
 	@BackendMethod({ allowed: false })
 	static async findById(
 		id: string,
 		include: MembersToInclude<Group> = {}
 	): Promise<Group | undefined> {
-		const profile = this.repo.findOne({ where: { id }, include });
-		return this.repo.toJson(profile);
+		const profile = remult.repo(Group).findOne({ where: { id }, include });
+		return remult.repo(Group).toJson(profile);
+	}
+
+	@BackendMethod({ allowed: Allow.authenticated })
+	static async findByUser(
+		profileId: string,
+		include: MembersToInclude<Group> = {}
+	): Promise<Group[] | undefined> {
+		const profileGroups = await remult.repo(GroupsToProfiles).find({
+			where: { profileId }
+		});
+
+		const groupsIds = profileGroups.map(({ groupId }) => groupId);
+
+		const groups = await remult.repo(Group).find({ where: { id: { $in: groupsIds } }, include });
+
+		return remult.repo(Group).toJson(groups);
 	}
 
 	@BackendMethod({ allowed: false })
@@ -28,11 +43,12 @@ export class GroupsController {
 		const profile = await ProfilesController.findById(user.id);
 		if (!profile) throw AuthError.UserNotFound;
 
-		const group = await this.repo.insert({ name, adminId: user.id });
-		await this.repo
+		const group = await remult.repo(Group).insert({ name, adminId: user.id });
+		await remult
+			.repo(Group)
 			.relations(group)
 			.profiles.insert([{ profileId: profile.id, groupId: group.id }]);
 
-		return this.repo.toJson(group);
+		return remult.repo(Group).toJson(group);
 	}
 }
