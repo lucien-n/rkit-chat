@@ -29,5 +29,5 @@ export class Group {
 	admin?: Profile;
 
 	@Relations.toMany(() => GroupsToProfiles, 'groupId')
-	profiles?: Profile[];
+	profiles?: GroupsToProfiles[];
 }

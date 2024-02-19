@@ -10,7 +10,7 @@ export const load: PageServerLoad = async () => {
 	const profile = await ProfilesController.findById(remult.user.id, { groups: true });
 	if (!profile) redirect(302, urls.home);
 
-	const firstGroupId = profile.groups?.[0].id;
+	const firstGroupId = profile.groups?.[0].groupId ?? 'default';
 	if (!firstGroupId) redirect(302, urls.home);
 
 	redirect(307, urls.groups + '/' + firstGroupId);

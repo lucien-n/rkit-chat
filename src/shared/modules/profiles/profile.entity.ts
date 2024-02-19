@@ -1,7 +1,6 @@
 import { Entity, Fields, Relations } from 'remult';
 import { AuthUser } from '../auth/auth_user.entity';
 import { GroupsToProfiles } from '../groups-to-profile/groups-to-profile.entity';
-import type { Group } from '../groups/group.entity';
 
 @Entity<Profile>('profiles', { allowApiCrud: true, id: { id: true } }) // !temp allowApiCrud
 export class Profile {
@@ -21,5 +20,5 @@ export class Profile {
 	user?: AuthUser;
 
 	@Relations.toMany(() => GroupsToProfiles, 'profileId')
-	groups?: Group[];
+	groups?: GroupsToProfiles[];
 }

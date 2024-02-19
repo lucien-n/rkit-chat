@@ -1,20 +1,21 @@
-import { BackendMethod, Controller, remult, type MembersToInclude } from 'remult';
+import { BackendMethod, Controller, remult, type MembersToInclude, type Repository } from 'remult';
 import { createGroupSchema, type CreateGroupInput } from './schemas/create-group.schema';
 import { parseZSchema } from '$shared/helpers/zod';
 import { AuthError, Error } from '$shared/helpers/errors';
 import { Group } from './group.entity';
-import { Profile } from '../profiles/profile.entity';
 import { ProfilesController } from '../profiles/profiles.controller';
 
 @Controller('GroupsController')
 export class GroupsController {
+	static repo: Repository<Group> = remult.repo(Group);
+
 	@BackendMethod({ allowed: false })
 	static async findById(
 		id: string,
 		include: MembersToInclude<Group> = {}
 	): Promise<Group | undefined> {
-		const profile = remult.repo(Group).findOne({ where: { id }, include });
-		return remult.repo(Group).toJson(profile);
+		const profile = this.repo.findOne({ where: { id }, include });
+		return this.repo.toJson(profile);
 	}
 
 	@BackendMethod({ allowed: false })
@@ -27,9 +28,13 @@ export class GroupsController {
 		const profile = await ProfilesController.findById(user.id);
 		if (!profile) throw AuthError.UserNotFound;
 
-		const group = await remult.repo(Group).insert({ name, adminId: user.id });
-		await remult.repo(Profile).relations(profile).groups.insert([group]);
+		const group = await this.repo.insert({ name, adminId: user.id });
+		console.log(group, profile);
+		const res = await this.repo
+			.relations(group)
+			.profiles.insert([{ profileId: profile.id, groupId: group.id }]);
+		console.log(res);
 
-		return remult.repo(Group).toJson(group);
+		return this.repo.toJson(group);
 	}
 }
