@@ -49,9 +49,9 @@
 		</div>
 	</div>
 	<div class="col-span-3 flex h-full flex-col gap-4">
-		<div class="relative flex h-full w-full flex-col gap-6 overflow-y-scroll rounded-md border p-3">
+		<div class="flex h-full w-full flex-col rounded-md border">
 			{#if currentGroup}
-				<div class="absolute left-0 top-0 w-full rounded-t-md border-b px-4 py-2">
+				<div class="w-full self-start rounded-t-md border-b px-4 py-2">
 					<div class="flex items-center gap-2">
 						<Large>{currentGroup.name}</Large>
 						{#if currentGroup.adminId === $userStore?.id}
@@ -61,9 +61,11 @@
 					<Muted>{currentGroup.profiles?.length ?? 0} user(s)</Muted>
 				</div>
 			{/if}
-			{#each $messages.reverse().slice(0, 5).reverse() as message}
-				<MessageCard {message} />
-			{/each}
+			<div class="flex h-full w-full flex-col gap-6 overflow-y-scroll p-3">
+				{#each $messages.reverse().slice(0, 5).reverse() as message}
+					<MessageCard {message} />
+				{/each}
+			</div>
 		</div>
 		<CreateMessageForm form={$page.data.messageForm} />
 	</div>
