@@ -33,11 +33,9 @@
 		if (!user) return;
 		groups = (await GroupsController.findByUser(user.id, { profiles: true })) ?? [];
 	});
-
-	$: console.table(groups);
 </script>
 
-<div class=" flex h-full w-full gap-6 p-6">
+<div class="flex h-full w-full gap-6 p-6">
 	<div class="flex h-full flex-col items-center gap-4 rounded-md border p-3">
 		<ProfileAvatar />
 		<Separator />
