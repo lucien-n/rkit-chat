@@ -9,7 +9,7 @@
 	import MessageCard from '$ui/chat/message-card.svelte';
 	import ProfileAvatar from '$ui/profile/profile-card.svelte';
 	import { page } from '$app/stores';
-	import { Large, Muted } from '$typography';
+	import { H3, Muted } from '$typography';
 	import { Badge } from '$shadcn/badge';
 	import { userStore } from '$lib/stores/stores';
 	import { Separator } from '$shadcn/separator';
@@ -53,7 +53,7 @@
 			{#if currentGroup}
 				<div class="w-full self-start rounded-t-md border-b px-4 py-2">
 					<div class="flex items-center gap-2">
-						<Large>{currentGroup.name}</Large>
+						<H3>{currentGroup.name}</H3>
 						{#if currentGroup.adminId === $userStore?.id}
 							<Badge variant="outline">Admin</Badge>
 						{/if}
