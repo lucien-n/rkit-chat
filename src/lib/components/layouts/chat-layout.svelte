@@ -1,5 +1,4 @@
 <script lang="ts">
-	import CreateMessageForm from '$ui/chat/create-message-form.svelte';
 	import { remultLive } from '$lib/stores/remultLive';
 	import { remult } from 'remult';
 	import { Message } from '$shared/modules/messages/message.entity';
@@ -13,8 +12,9 @@
 	import { Badge } from '$shadcn/badge';
 	import { userStore } from '$lib/stores/stores';
 	import { Separator } from '$shadcn/separator';
-	import GroupLink from '$ui/groups/group-link.svelte';
+	import GroupAvatar from '$ui/groups/group-avatar.svelte';
 	import { GroupsController } from '$shared/modules/groups/groups.controller';
+	import MessageInput from '$ui/chat/message-input.svelte';
 
 	const messages = remultLive(remult.repo(Message));
 
@@ -42,7 +42,7 @@
 		<div class="flex h-full flex-col justify-between">
 			<div class="flex flex-col gap-3">
 				{#each groups as group}
-					<GroupLink {group} />
+					<GroupAvatar {group} />
 				{/each}
 			</div>
 			<CreateGroupDialog form={$page.data.groupForm} />
@@ -67,6 +67,8 @@
 				{/each}
 			</div>
 		</div>
-		<CreateMessageForm form={$page.data.messageForm} />
+		{#if currentGroup}
+			<MessageInput group={currentGroup} />
+		{/if}
 	</div>
 </div>

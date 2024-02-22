@@ -1,8 +1,9 @@
-import { BackendMethod, Controller, remult, type MembersToInclude } from 'remult';
 import { Message } from './message.entity';
-import type { CreateMessageInput } from './schemas/create-message.schema';
 import { Error } from '$shared/helpers/errors';
+import { parseZSchema } from '$shared/helpers/zod';
 import { GroupsController } from '../groups/groups.controller';
+import { BackendMethod, Controller, remult, type MembersToInclude, Allow } from 'remult';
+import { createMessageSchema, type CreateMessageInput } from './schemas/create-message.schema';
 
 @Controller('MessagesController')
 export class MessagesController {
@@ -15,9 +16,9 @@ export class MessagesController {
 		return remult.repo(Message).toJson(profile);
 	}
 
-	@BackendMethod({ allowed: false })
+	@BackendMethod({ allowed: Allow.authenticated })
 	static async create(inputs: CreateMessageInput, groupId: string) {
-		const { content } = inputs;
+		const { content } = parseZSchema(inputs, createMessageSchema);
 
 		const user = remult.user;
 		if (!user) throw Error.AuthRequired;
