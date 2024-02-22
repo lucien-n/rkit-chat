@@ -12,7 +12,4 @@ export const _api = remultSveltekit({
 	controllers
 });
 
-export const GET = _api.GET;
-export const POST = _api.POST;
-export const PUT = _api.PUT;
-export const DELETE = _api.DELETE;
+export const { GET, POST, PUT, DELETE } = _api;
