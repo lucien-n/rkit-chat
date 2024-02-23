@@ -21,17 +21,17 @@
 		});
 </script>
 
-<div class="flex h-full w-full flex-col rounded-md border">
-	{#if group}
-		<GroupHeader {group} />
-	{/if}
-	<div class="flex h-full w-full flex-col gap-6 overflow-y-scroll p-3">
-		{#each $messages.reverse().slice(0, 5).reverse() as message}
-			<MessageCard {message} />
-		{/each}
-	</div>
+{#if group}
+	<GroupHeader {group} />
+{/if}
+<div class="flex h-full w-full flex-col gap-6 overflow-y-scroll p-3">
+	{#each $messages.reverse().slice(0, 5).reverse() as message}
+		<MessageCard {message} />
+	{/each}
 </div>
 
 {#if group}
-	<MessageInput {group} />
+	<div class="p-3">
+		<MessageInput {group} />
+	</div>
 {/if}
