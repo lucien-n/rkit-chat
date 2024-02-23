@@ -13,5 +13,5 @@ export const load: PageServerLoad = async () => {
 	const firstGroupId = profile.groups?.[0].groupId ?? 'default';
 	if (!firstGroupId) redirect(302, urls.home.root);
 
-	redirect(307, urls.groups.root + '/' + firstGroupId);
+	redirect(307, urls.app.groups.root + '/' + firstGroupId);
 };

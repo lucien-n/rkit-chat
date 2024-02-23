@@ -18,7 +18,7 @@
 </script>
 
 <HoverCard.Root openDelay={50} closeDelay={50}>
-	<HoverCard.Trigger class="relative flex" href={urls.groups.root + '/' + group.id}>
+	<HoverCard.Trigger class="relative flex" href={urls.app.groups.root + '/' + group.id}>
 		{#if isCurrent}
 			<div
 				class="absolute -left-3 h-5/6 w-2 self-center rounded-r-md bg-primary"

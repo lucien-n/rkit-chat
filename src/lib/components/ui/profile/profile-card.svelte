@@ -3,7 +3,7 @@
 	import urls from '$lib/urls';
 	import { Exit } from 'radix-icons-svelte';
 	import { enhance } from '$app/forms';
-	import ProfileAvatar from './profile-avatar.svelte';
+	import ProfileAvatar from './profile-link.svelte';
 </script>
 
 <Dropdown.Root>

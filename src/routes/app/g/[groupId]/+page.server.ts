@@ -1,15 +1,20 @@
-import { message, superValidate } from 'sveltekit-superforms/server';
-import type { Actions, PageServerLoad } from './$types';
-import { createMessageSchema } from '$shared/modules/messages/schemas/create-message.schema';
-import { MessagesController } from '$shared/modules/messages/messages.controller';
 import { fail } from '@sveltejs/kit';
-import { createGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
+import type { Actions, PageServerLoad } from './$types';
+import { message, superValidate } from 'sveltekit-superforms/server';
 import { GroupsController } from '$shared/modules/groups/groups.controller';
+import { MessagesController } from '$shared/modules/messages/messages.controller';
+import { createGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
+import { createMessageSchema } from '$shared/modules/messages/schemas/create-message.schema';
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async (event) => {
+	const { groupId } = event.params;
+
+	const currentGroup = (await GroupsController.findById(groupId)) ?? null;
+
 	return {
 		messageForm: await superValidate(createMessageSchema),
-		groupForm: await superValidate(createGroupSchema)
+		groupForm: await superValidate(createGroupSchema),
+		currentGroup
 	};
 };
 

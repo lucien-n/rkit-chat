@@ -4,7 +4,7 @@
 	import { Card } from '$shadcn/card';
 	import type { Message } from '$shared/modules/messages/message.entity';
 	import { Muted, Large } from '$typography';
-	import ProfileAvatar from '$ui/profile/profile-avatar.svelte';
+	import ProfileAvatar from '$ui/profile/profile-link.svelte';
 	import moment from 'moment';
 
 	export let message: Message;
