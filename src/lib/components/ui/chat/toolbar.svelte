@@ -4,13 +4,13 @@
 	import type { Group } from '$shared/modules/groups/group.entity';
 	import CreateGroupDialog from '$ui/group/create-group-dialog.svelte';
 	import GroupAvatar from '$ui/group/group-avatar.svelte';
-	import ProfileLink from '$ui/profile/profile-link.svelte';
+	import ProfileMini from '$ui/profile/profile-mini.svelte';
 
 	export let groups: Group[];
 </script>
 
 <div class="flex h-full flex-col items-center gap-4 rounded-md border p-3">
-	<ProfileLink />
+	<ProfileMini />
 	<Separator />
 	<div class="flex h-full flex-col justify-between">
 		<div class="flex flex-col gap-3">
