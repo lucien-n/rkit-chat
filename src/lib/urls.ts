@@ -1,6 +1,6 @@
 export default {
-	home: '/',
-	groups: '/g',
+	home: { root: '/' },
+	groups: { root: '/g', me: '/me' },
 	auth: {
 		signin: '/auth/signin',
 		signup: '/auth/signup',

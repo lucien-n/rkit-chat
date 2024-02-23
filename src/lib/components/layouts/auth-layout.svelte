@@ -6,7 +6,7 @@
 </script>
 
 <div class="container flex h-full items-center justify-center">
-	<Button variant="link" class="fixed left-0 top-0" href={urls.home}>
+	<Button variant="link" class="fixed left-0 top-0" href={urls.home.root}>
 		<CaretLeft />
 		Home
 	</Button>

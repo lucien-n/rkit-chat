@@ -18,7 +18,7 @@
 			<p class="text-xl">
 				{$page.error?.message}
 			</p>
-			<Button class="p-0 text-base text-muted-foreground" variant="link" href={urls.home}>
+			<Button class="p-0 text-base text-muted-foreground" variant="link" href={urls.home.root}>
 				<CaretRight class="mt-1" />
 				Navigate back home
 			</Button>
