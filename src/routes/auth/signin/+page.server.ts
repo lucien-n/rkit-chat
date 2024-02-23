@@ -1,14 +1,13 @@
+import urls from '$lib/urls';
+import { fail, redirect } from '@sveltejs/kit';
+import { createSession } from '$lib/server/lucia';
 import type { Actions, PageServerLoad } from './$types';
 import { superValidate } from 'sveltekit-superforms/server';
-import { createSession } from '$lib/server/lucia';
-import { fail, redirect } from '@sveltejs/kit';
 import { AuthController } from '$shared/modules/auth/auth.controller';
 import { signinSchema } from '$shared/modules/auth/schemas/signin.schema';
-import urls from '$lib/urls';
-import { remult } from 'remult';
 
-export const load: PageServerLoad = async () => {
-	if (remult.authenticated()) redirect(302, urls.home);
+export const load: PageServerLoad = async ({ locals: { session } }) => {
+	if (session) redirect(302, urls.home);
 
 	return {
 		form: await superValidate(signinSchema)

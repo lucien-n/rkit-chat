@@ -8,6 +8,8 @@ export const handleRemult: Handle = async ({ event, resolve }) => {
 		event.locals.profile = remult?.user
 			? (await ProfilesController.findById(remult.user.id)) ?? null
 			: null;
+
+		event.locals.remultUser = remult.user ?? null;
 	});
 
 	return resolve(event);
