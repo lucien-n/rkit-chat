@@ -1,16 +1,14 @@
-import { remult } from 'remult';
 import type { Handle } from '@sveltejs/kit';
-import { _api } from '../routes/api/[...remult]/+server';
-import { ProfilesController } from '$shared/modules/profiles/profiles.controller';
+import { controllers, entities } from '$shared';
+import { DATABASE_URL } from '$env/static/private';
+import { getUser, initApi } from '$lib/server/remult';
+import { remultSveltekit } from 'remult/remult-sveltekit';
+import { createPostgresDataProvider } from 'remult/postgres';
 
-export const handleRemult: Handle = async ({ event, resolve }) => {
-	_api.withRemult(event, async () => {
-		event.locals.profile = remult?.user
-			? (await ProfilesController.findById(remult.user.id)) ?? null
-			: null;
-
-		event.locals.remultUser = remult.user ?? null;
-	});
-
-	return resolve(event);
-};
+export const handleRemult: Handle = remultSveltekit({
+	dataProvider: createPostgresDataProvider({ connectionString: DATABASE_URL }),
+	initApi,
+	getUser,
+	entities,
+	controllers
+});
