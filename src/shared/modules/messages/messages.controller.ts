@@ -48,4 +48,17 @@ export class MessagesController {
 
 		await remult.repo(Message).delete(messageId);
 	}
+
+	@BackendMethod({ allowed: Allow.authenticated })
+	static async updateMessage(messageId: string, content: string) {
+		const authUser = remult.user;
+		if (!authUser) throw Error.AuthRequired;
+
+		const message = await MessagesController.findById(messageId, { group: true });
+		if (!message) throw 'Message not found';
+
+		const updatedMessage = await remult.repo(Message).update(messageId, { content, edited: true });
+
+		return remult.repo(Message).toJson(updatedMessage);
+	}
 }

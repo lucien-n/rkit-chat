@@ -17,6 +17,9 @@ export class Message {
 	@Fields.string({ minLength: messageRules.content.min, maxLength: messageRules.content.max })
 	content!: string;
 
+	@Fields.boolean()
+	edited: boolean = false;
+
 	@Fields.string()
 	groupId?: string;
 

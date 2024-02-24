@@ -2,25 +2,43 @@
 	import urls from '$lib/urls';
 	import { Button } from '$shadcn/button';
 	import { Message } from '$shared/modules/messages/message.entity';
-	import { Large, Muted } from '$typography';
+	import { Large, Muted, Tiny } from '$typography';
 	import UserMini from '$ui/user/user-mini.svelte';
 	import moment from 'moment';
 	import * as ContextMenu from '$shadcn/context-menu';
-	import { Trash } from 'radix-icons-svelte';
+	import { Pencil1, Trash } from 'radix-icons-svelte';
 	import { MessagesController } from '$shared/modules/messages/messages.controller';
 	import { contry } from '$lib/contry';
 	import { toast } from 'svelte-sonner';
+	import { Input } from '$shadcn/input';
 
 	export let message: Message;
+
+	let editing = false;
 
 	const handleDeleteMessage = () =>
 		contry(
 			async () => {
 				await MessagesController.deleteMessage(message.id);
 			},
-			() => toast.success('Message deleted!'),
-			() => toast.error('Failed to dedeleteMessagee')
+			() => toast.success('Message deleted!')
 		);
+
+	const handleSaveMessage = () =>
+		contry(
+			async () => {
+				await MessagesController.updateMessage(message.id, message.content);
+			},
+			() => {
+				editing = false;
+			}
+		);
+
+	const handleKeyDown = (event: KeyboardEvent) => {
+		if (event.key === 'Enter') {
+			handleSaveMessage();
+		}
+	};
 </script>
 
 <ContextMenu.Root>
@@ -40,13 +58,25 @@
 					</Button>
 					<Muted class="text-[.75rem]">
 						{moment(message.createdAt).fromNow()}
+						{#if message.edited}
+							<Tiny class="italic">(edited)</Tiny>
+						{/if}
 					</Muted>
 				</div>
-				<p>{message.content}</p>
+				{#if editing}
+					<Input bind:value={message.content} on:keydown={handleKeyDown} class="w-full" />
+				{:else}
+					<p>{message.content}</p>
+				{/if}
 			</div>
 		</div>
 	</ContextMenu.Trigger>
 	<ContextMenu.Content>
+		<ContextMenu.Item class="space-x-1" on:click={() => (editing = !editing)}>
+			<Pencil1 />
+			<p>Edit</p>
+		</ContextMenu.Item>
+		<ContextMenu.Separator class="mx-1" />
 		<ContextMenu.Item class="space-x-1" on:click={handleDeleteMessage}>
 			<Trash />
 			<p>Delete</p>
