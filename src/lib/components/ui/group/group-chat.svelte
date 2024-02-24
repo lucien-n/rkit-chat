@@ -20,7 +20,8 @@
 		messages.listen({
 			orderBy: { createdAt: 'asc' },
 			include: { author: true },
-			where: { groupId: $page.params.groupId }
+			where: { groupId: $page.params.groupId },
+			limit: 25,
 		});
 </script>
 
@@ -28,7 +29,7 @@
 	<GroupHeader {group} />
 {/if}
 <div class="flex h-full w-full flex-col gap-6 overflow-y-scroll p-3">
-	{#each $messages.reverse().slice(0, 5).reverse() as message}
+	{#each $messages as message}
 		<MessageCard {message} />
 	{/each}
 </div>
