@@ -21,7 +21,7 @@
 			orderBy: { createdAt: 'asc' },
 			include: { author: true },
 			where: { groupId: $page.params.groupId },
-			limit: 25,
+			limit: 25
 		});
 </script>
 
