@@ -1,4 +1,6 @@
 <script lang="ts">
+	import urls from '$lib/urls';
+	import { Button } from '$shadcn/button';
 	import { Message } from '$shared/modules/messages/message.entity';
 	import { Large, Muted } from '$typography';
 	import UserMini from '$ui/user/user-mini.svelte';
@@ -13,9 +15,11 @@
 	</div>
 	<div class="flex-col">
 		<div class="flex items-center gap-2">
-			<Large>
-				{message.author?.username}
-			</Large>
+			<Button variant="link" href={urls.app.user.root + '/' + message.author?.id} class="px-0">
+				<Large>
+					{message.author?.username}
+				</Large>
+			</Button>
 			<Muted class="text-[.75rem]">
 				{moment(message.createdAt).fromNow()}
 			</Muted>
