@@ -13,7 +13,6 @@ export const load: PageServerLoad = async (event) => {
 
 	return {
 		messageForm: await superValidate(createMessageSchema),
-		groupForm: await superValidate(createGroupSchema),
 		currentGroup
 	};
 };

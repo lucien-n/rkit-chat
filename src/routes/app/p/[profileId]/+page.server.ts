@@ -1,7 +1,10 @@
 import urls from '$lib/urls';
-import type { PageServerLoad } from './$types';
-import { error, redirect } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
+import type { Actions, PageServerLoad } from './$types';
+import { message, superValidate } from 'sveltekit-superforms/server';
+import { GroupsController } from '$shared/modules/groups/groups.controller';
 import { ProfilesController } from '$shared/modules/profiles/profiles.controller';
+import { createGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
 
 export const load: PageServerLoad = async ({ params, locals: { user } }) => {
 	const { profileId } = params;
@@ -18,4 +21,20 @@ export const load: PageServerLoad = async ({ params, locals: { user } }) => {
 	return {
 		profile
 	};
+};
+
+export const actions: Actions = {
+	createGroup: async (event) => {
+		const form = await superValidate(event, createGroupSchema);
+		if (!form.valid) {
+			return fail(400, {
+				form
+			});
+		}
+		const { name } = form.data;
+
+		await GroupsController.create({ name });
+
+		return message(form, 'Group created');
+	}
 };

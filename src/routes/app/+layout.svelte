@@ -4,11 +4,11 @@
 
 	export let data: LayoutData;
 
-	$: ({ groups } = data);
+	$: ({ groups, groupForm } = data);
 </script>
 
 <div class="flex h-full w-full gap-6 p-6">
-	<Toolbar {groups} />
+	<Toolbar {groups} {groupForm} />
 	<div class="flex h-full w-full flex-col gap-4 rounded-md border">
 		<slot />
 	</div>

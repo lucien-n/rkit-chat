@@ -1,7 +1,7 @@
-import urls from "$lib/urls";
-import { redirect } from "@sveltejs/kit";
-import type { PageServerLoad } from "./$types";
+import urls from '$lib/urls';
+import { redirect } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-    redirect(307, urls.app.profile.me)
+	redirect(307, urls.app.profile.me);
 };

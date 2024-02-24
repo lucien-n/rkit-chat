@@ -9,7 +9,7 @@
 
 	export let form: SuperValidated<CreateGroupSchema>;
 
-	$: console.log('create-group-form', form.message);
+	$: console.log('create-group-form', form);
 </script>
 
 <Form.Root {form} schema={createGroupSchema} let:config>
