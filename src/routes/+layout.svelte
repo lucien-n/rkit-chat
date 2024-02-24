@@ -3,6 +3,7 @@
 	import type { LayoutData } from './$types';
 	import { userStore } from '$lib/stores/stores';
 	import { browser } from '$app/environment';
+	import { Toaster } from '$shadcn/sonner';
 
 	export let data: LayoutData;
 
@@ -14,5 +15,7 @@
 		}
 	}
 </script>
+
+<Toaster richColors />
 
 <slot />
