@@ -32,7 +32,6 @@
 <Form.Root {form} schema={createMessageSchema} let:config>
 	<form
 		action="?/createMessage"
-		method="post"
 		class="flex items-end gap-2"
 		bind:this={formElement}
 		use:enhance={handleSubmit}
