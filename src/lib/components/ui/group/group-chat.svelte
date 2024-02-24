@@ -39,7 +39,7 @@
 	<GroupHeader {group} />
 {/if}
 <div
-	class="scrollbar-thin scrollbar-track-background scrollbar-thumb-primary scroll flex h-full w-full flex-col gap-6 overflow-y-scroll p-3"
+	class="scroll flex h-full w-full flex-col overflow-y-scroll p-3 scrollbar-thin scrollbar-track-background scrollbar-thumb-primary"
 	bind:this={container}
 >
 	{#each $messages as message}

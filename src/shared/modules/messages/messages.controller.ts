@@ -17,16 +17,35 @@ export class MessagesController {
 	}
 
 	@BackendMethod({ allowed: Allow.authenticated })
-	static async create(inputs: CreateMessageInput, groupId: string) {
+	static async createMessage(inputs: CreateMessageInput, groupId: string) {
 		const { content } = parseZSchema(inputs, createMessageSchema);
 
-		const user = remult.user;
-		if (!user) throw Error.AuthRequired;
+		const authUser = remult.user;
+		if (!authUser) throw Error.AuthRequired;
 
 		const group = await GroupsController.findById(groupId, { users: true });
-		if (group?.adminId !== user.id && !group?.users?.find(({ userId }) => userId === user.id))
+		if (
+			group?.adminId !== authUser.id &&
+			!group?.users?.find(({ userId }) => userId === authUser.id)
+		)
 			throw Error.Forbidden;
 
-		return remult.repo(Message).insert({ content, authorId: user.id, groupId });
+		return remult.repo(Message).insert({ content, authorId: authUser.id, groupId });
+	}
+
+	@BackendMethod({ allowed: Allow.authenticated })
+	static async deleteMessage(messageId: string) {
+		const authUser = remult.user;
+		if (!authUser) throw Error.AuthRequired;
+
+		const message = await MessagesController.findById(messageId, { group: true });
+		if (!message) throw 'Message not found';
+
+		const isAuthor = authUser.id === message.authorId;
+		const isAdmin = authUser.id === message.group?.adminId;
+
+		if (!isAdmin && !isAuthor) throw 'You are neither the author or an admin';
+
+		await remult.repo(Message).delete(messageId);
 	}
 }
