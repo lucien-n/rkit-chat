@@ -21,7 +21,7 @@ export class Group {
 	name?: string;
 
 	@Fields.integer({
-		sqlExpression: (e) => {
+		sqlExpression: () => {
 			const gtp = dbNames(GroupsToProfiles, true);
 			const p = dbNames(Profile);
 
@@ -29,7 +29,6 @@ export class Group {
 				SELECT COUNT(${p.id})
 				FROM public."${gtp}"
 				LEFT JOIN ${p} ON ${gtp.profileId} = ${p.id}
-				WHERE ${gtp.groupId} = '${e.fields.id.dbName}'
 			)`;
 		}
 	})
