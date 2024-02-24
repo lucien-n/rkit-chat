@@ -35,7 +35,7 @@
 		<Form.FieldErrors />
 	</Form.Field>
 	<br />
-	<Form.Button class="mb-2 space-x-2 self-end" disabled={$submitting}>
+	<Form.Button class="mb-2 flex gap-2 self-end" disabled={$submitting}>
 		<Plus />
 		Create
 	</Form.Button>
