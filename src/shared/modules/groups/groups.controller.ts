@@ -68,10 +68,8 @@ export class GroupsController {
 			throw 'Failed to add user to group';
 		}
 
-		await remult
-			.repo(Group)
-			.relations(group)
-			.users.insert([{ userId: userId, groupId: groupId }]);
+		await remult.repo(Group).relations(group).users.insert([{ userId, groupId }]);
+		await GroupsController.calculateUserCount(groupId);
 	}
 
 	@BackendMethod({ allowed: false })
@@ -92,5 +90,21 @@ export class GroupsController {
 		}
 
 		await remult.repo(Group).relations(group).users.delete({ userId, groupId });
+		await GroupsController.calculateUserCount(groupId);
+	}
+
+	@BackendMethod({ allowed: false })
+	static async calculateUserCount(groupId: string) {
+		const group = await GroupsController.findById(groupId, { users: true });
+		if (!group) {
+			throw 'Failed to calculate user count';
+		}
+
+		const userCount = group.users?.length;
+		if (userCount === undefined) {
+			throw 'Failed to calculate user count';
+		}
+
+		await remult.repo(Group).update(groupId, { userCount });
 	}
 }

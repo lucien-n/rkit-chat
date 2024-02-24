@@ -1,6 +1,5 @@
 import groupRules from './group.rules';
 import { User } from '../users/user.entity';
-import { dbNames } from '$shared/helpers/remult';
 import { Allow, Entity, Fields, Relations } from 'remult';
 import { GroupsToUsers } from '../groups-to-users/groups-to-users.entity';
 
@@ -20,18 +19,7 @@ export class Group {
 	@Fields.string({ minLength: groupRules.name.min, maxLength: groupRules.name.max })
 	name?: string;
 
-	@Fields.integer({
-		sqlExpression: () => {
-			const gtp = dbNames(GroupsToUsers, true);
-			const p = dbNames(User);
-
-			return `(
-				SELECT COUNT(${p.id})
-				FROM public."${gtp}"
-				LEFT JOIN ${p} ON ${gtp.userId} = ${p.id}
-			)`;
-		}
-	})
+	@Fields.integer()
 	userCount: number = 0;
 
 	@Fields.string()
