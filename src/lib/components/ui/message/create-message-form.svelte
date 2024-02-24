@@ -16,7 +16,7 @@
 		resetForm: true
 	});
 
-	const { form: formData, enhance, submitting } = form;
+	const { form: formData, enhance } = form;
 </script>
 
 <form action="?/createMessage" method="post" class="flex gap-1" use:enhance>
@@ -32,7 +32,7 @@
 		</Form.Control>
 	</Form.Field>
 	<br />
-	<Form.Button size="icon" class="self-end" disabled={$submitting}>
+	<Form.Button size="icon" class="self-end">
 		<PaperPlane />
 	</Form.Button>
 </form>
