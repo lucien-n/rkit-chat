@@ -27,7 +27,6 @@
 				type="text"
 				placeholder="Type your message..."
 				class="w-full"
-				required
 			/>
 		</Form.Control>
 	</Form.Field>
