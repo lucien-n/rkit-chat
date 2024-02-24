@@ -5,7 +5,7 @@
 	import { browser } from '$app/environment';
 	import { Toaster } from '$shadcn/sonner';
 	import { ModeWatcher } from 'mode-watcher';
-	import { Theme } from '$shared/modules/user-settings/enums/us-theme.enum';
+	import { Theme } from '$shared/modules/user-settings/enums/theme.enum';
 
 	export let data: LayoutData;
 

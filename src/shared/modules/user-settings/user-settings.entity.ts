@@ -1,5 +1,5 @@
 import { Entity, Fields } from 'remult';
-import { Theme } from './enums/us-theme.enum';
+import { Theme } from './enums/theme.enum';
 
 @Entity<UserSettings>('user_settings', { id: { id: true } })
 export class UserSettings {
