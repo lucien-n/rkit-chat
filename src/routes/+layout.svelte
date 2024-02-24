@@ -4,6 +4,8 @@
 	import { userStore } from '$lib/stores/stores';
 	import { browser } from '$app/environment';
 	import { Toaster } from '$shadcn/sonner';
+	import { ModeWatcher } from 'mode-watcher';
+	import { Theme } from '$shared/modules/user-settings/enums/us-theme.enum';
 
 	export let data: LayoutData;
 
@@ -16,6 +18,7 @@
 	}
 </script>
 
+<ModeWatcher defaultMode={user?.settings?.theme ?? Theme.Dark} />
 <Toaster richColors />
 
 <slot />

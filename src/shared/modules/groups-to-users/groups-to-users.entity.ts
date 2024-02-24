@@ -1,7 +1,7 @@
 import { Group } from '../groups/group.entity';
 import { Entity, Fields, Relations } from 'remult';
 
-@Entity<GroupsToUsers>('groupsToUsers', {
+@Entity<GroupsToUsers>('groups_to_users', {
 	id: {
 		userId: true,
 		groupId: true

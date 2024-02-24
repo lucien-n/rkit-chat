@@ -7,7 +7,8 @@ import { AuthSession } from './modules/auth/auth_session.entity';
 import { UsersController } from './modules/users/users.controller';
 import { GroupsController } from './modules/groups/groups.controller';
 import { MessagesController } from './modules/messages/messages.controller';
+import { UserSettings } from './modules/user-settings/user-settings.entity';
 import { GroupsToUsers } from './modules/groups-to-users/groups-to-users.entity';
 
-export const entities = [AuthUser, AuthSession, Message, User, Group, GroupsToUsers];
+export const entities = [AuthUser, AuthSession, Message, User, Group, GroupsToUsers, UserSettings];
 export const controllers = [AuthController, MessagesController, UsersController, GroupsController];
