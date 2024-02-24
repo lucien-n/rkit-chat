@@ -52,7 +52,7 @@ export class GroupsController {
 	}
 
 	@BackendMethod({ allowed: false })
-	static async add(userId: string, groupId: string) {
+	static async addUser(userId: string, groupId: string) {
 		const user = await UsersController.findById(userId);
 		if (!user) {
 			throw 'Failed to add user to group';
@@ -73,7 +73,7 @@ export class GroupsController {
 	}
 
 	@BackendMethod({ allowed: false })
-	static async remove(userId: string, groupId: string) {
+	static async removeUser(userId: string, groupId: string) {
 		const user = await UsersController.findById(userId);
 		if (!user) {
 			throw 'Failed to remove user from group';
