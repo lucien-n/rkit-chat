@@ -10,11 +10,14 @@
 	import { remult } from 'remult';
 	import type { Infer, SuperValidated } from 'sveltekit-superforms';
 	import GroupHeader from './group-chat-header.svelte';
+	import { afterUpdate, onMount } from 'svelte';
 
 	export let group: Group | null;
 	export let messageForm: SuperValidated<Infer<CreateMessageSchema>>;
 
 	const messages = remultLive(remult.repo(Message));
+
+	let container: HTMLDivElement;
 
 	$: browser &&
 		messages.listen({
@@ -23,12 +26,22 @@
 			where: { groupId: $page.params.groupId },
 			limit: 25
 		});
+
+	function scrollToBottom() {
+		container.scrollTop = container.scrollHeight;
+	}
+
+	onMount(scrollToBottom);
+	afterUpdate(scrollToBottom);
 </script>
 
 {#if group}
 	<GroupHeader {group} />
 {/if}
-<div class="flex h-full w-full flex-col gap-6 overflow-y-scroll p-3">
+<div
+	class="scrollbar-thin scrollbar-track-background scrollbar-thumb-primary scroll flex h-full w-full flex-col gap-6 overflow-y-scroll p-3"
+	bind:this={container}
+>
 	{#each $messages as message}
 		<MessageCard {message} />
 	{/each}
