@@ -50,4 +50,47 @@ export class GroupsController {
 
 		return remult.repo(Group).toJson(group);
 	}
+
+	@BackendMethod({ allowed: false })
+	static async add(profileId: string, groupId: string) {
+		const profile = await ProfilesController.findById(profileId);
+		if (!profile) {
+			throw 'Failed to add user to group';
+		}
+
+		const group = await GroupsController.findById(groupId, { profiles: true });
+		if (!group) {
+			throw 'Failed to add user to group';
+		}
+
+		const profileInGroup = group.profiles?.find((gtp) => gtp.profileId === profileId);
+		if (profileInGroup) {
+			throw 'Failed to add user to group';
+		}
+
+		await remult
+			.repo(Group)
+			.relations(group)
+			.profiles.insert([{ profileId: profileId, groupId: groupId }]);
+	}
+
+	@BackendMethod({ allowed: false })
+	static async remove(profileId: string, groupId: string) {
+		const profile = await ProfilesController.findById(profileId);
+		if (!profile) {
+			throw 'Failed to remove user from group';
+		}
+
+		const group = await GroupsController.findById(groupId, { profiles: true });
+		if (!group) {
+			throw 'Failed to remove user from group';
+		}
+
+		const profileInGroup = group.profiles?.find((gtp) => gtp.profileId === profileId);
+		if (!profileInGroup) {
+			throw 'Failed to remove user from group';
+		}
+
+		await remult.repo(Group).relations(group).profiles.delete({ profileId, groupId });
+	}
 }
