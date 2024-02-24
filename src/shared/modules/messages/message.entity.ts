@@ -1,8 +1,10 @@
-import { Allow, Entity, Fields, Relations } from 'remult';
-import { Profile } from '../profiles/profile.entity';
+import messageRules from './message.rules';
 import { Group } from '../groups/group.entity';
+import { Entity, Fields, Relations } from 'remult';
+import { Profile } from '../profiles/profile.entity';
+import { validateStringField } from '$shared/helpers/validate';
 
-@Entity<Message>('messages', { allowApiCrud: Allow.authenticated })
+@Entity<Message>('messages')
 export class Message {
 	@Fields.uuid()
 	id!: string;
@@ -13,7 +15,7 @@ export class Message {
 	@Fields.updatedAt()
 	updatedAt!: Date;
 
-	@Fields.string()
+	@Fields.string({ validate: (value) => validateStringField(value, messageRules.content) })
 	content!: string;
 
 	@Fields.string()
