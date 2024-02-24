@@ -3,14 +3,14 @@
 	import { page } from '$app/stores';
 	import { remultLive } from '$lib/stores/remultLive';
 	import type { Group } from '$shared/modules/groups/group.entity';
-	import { Message } from '$shared/modules/messages/message.entity';
 	import type { CreateMessageSchema } from '$shared/modules/messages/schemas/create-message.schema';
 	import CreateMessageForm from '$ui/message/create-message-form.svelte';
-	import MessageCard from '$ui/message/message-card.svelte';
 	import { remult } from 'remult';
+	import { afterUpdate, onMount } from 'svelte';
 	import type { Infer, SuperValidated } from 'sveltekit-superforms';
 	import GroupHeader from './group-chat-header.svelte';
-	import { afterUpdate, onMount } from 'svelte';
+	import MessageCard from '$ui/message/message-card.svelte';
+	import { Message } from '$shared/modules/messages/message.entity';
 
 	export let group: Group | null;
 	export let messageForm: SuperValidated<Infer<CreateMessageSchema>>;
