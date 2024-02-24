@@ -8,8 +8,6 @@
 	import type { SuperValidated } from 'sveltekit-superforms';
 
 	export let form: SuperValidated<CreateMessageSchema>;
-
-	$: console.log('create-message-form', form.message);
 </script>
 
 <Form.Root
