@@ -18,7 +18,7 @@
 	const { form: formData, enhance, submitting } = form;
 </script>
 
-<form action="?/createMessage" method="post" class="flex gap-2" use:enhance>
+<form action="?/createMessage" method="post" class="flex gap-1" use:enhance>
 	<Form.Field {form} name="content" class="w-full">
 		<Form.Control let:attrs>
 			<Input
@@ -30,12 +30,9 @@
 				required
 			/>
 		</Form.Control>
-		<Form.Description />
-		<Form.FieldErrors />
 	</Form.Field>
 	<br />
-	<Form.Button class="mb-2 flex gap-2 self-end" disabled={$submitting}>
+	<Form.Button size="icon" class="self-end" disabled={$submitting}>
 		<PaperPlane />
-		Send
 	</Form.Button>
 </form>
