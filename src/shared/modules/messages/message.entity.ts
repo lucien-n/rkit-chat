@@ -2,7 +2,6 @@ import messageRules from './message.rules';
 import { Group } from '../groups/group.entity';
 import { Entity, Fields, Relations } from 'remult';
 import { Profile } from '../profiles/profile.entity';
-import { validateStringField } from '$shared/helpers/validate';
 
 @Entity<Message>('messages')
 export class Message {
@@ -15,7 +14,7 @@ export class Message {
 	@Fields.updatedAt()
 	updatedAt!: Date;
 
-	@Fields.string({ validate: (value) => validateStringField(value, messageRules.content) })
+	@Fields.string({ minLength: messageRules.content.min, maxLength: messageRules.content.max })
 	content!: string;
 
 	@Fields.string()
