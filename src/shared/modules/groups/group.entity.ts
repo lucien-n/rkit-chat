@@ -1,5 +1,6 @@
-import { Allow, Entity, Fields, Relations } from 'remult';
+import groupRules from './group.rules';
 import { Profile } from '../profiles/profile.entity';
+import { Allow, Entity, Fields, Relations } from 'remult';
 import { GroupsToProfiles } from '../groups-to-profiles/groups-to-profiles.entity';
 
 @Entity<Group>('groups', {
@@ -15,7 +16,7 @@ export class Group {
 	@Fields.updatedAt()
 	updatedAt!: Date;
 
-	@Fields.string()
+	@Fields.string({ minLength: groupRules.name.min, maxLength: groupRules.name.max })
 	name?: string;
 
 	@Fields.string()
