@@ -1,15 +1,18 @@
 <script lang="ts">
-	import type { Group } from '$shared/modules/groups/group.entity';
-	import MessageCard from '$ui/message/message-card.svelte';
-	import MessageInput from '$ui/message/message-input.svelte';
-	import { remult } from 'remult';
-	import GroupHeader from './group-chat-header.svelte';
-	import { remultLive } from '$lib/stores/remultLive';
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
+	import { remultLive } from '$lib/stores/remultLive';
+	import type { Group } from '$shared/modules/groups/group.entity';
 	import { Message } from '$shared/modules/messages/message.entity';
+	import type { CreateMessageSchema } from '$shared/modules/messages/schemas/create-message.schema';
+	import CreateMessageForm from '$ui/message/create-message-form.svelte';
+	import MessageCard from '$ui/message/message-card.svelte';
+	import { remult } from 'remult';
+	import type { SuperValidated } from 'sveltekit-superforms';
+	import GroupHeader from './group-chat-header.svelte';
 
 	export let group: Group | null;
+	export let messageForm: SuperValidated<CreateMessageSchema>;
 
 	const messages = remultLive(remult.repo(Message));
 
@@ -32,6 +35,6 @@
 
 {#if group}
 	<div class="p-3">
-		<MessageInput {group} />
+		<CreateMessageForm form={messageForm} />
 	</div>
 {/if}
