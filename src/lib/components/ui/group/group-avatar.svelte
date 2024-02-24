@@ -39,7 +39,7 @@
 		</div>
 		<div class="flex items-center gap-1">
 			<Person />
-			<Muted>{group.profileCount}</Muted>
+			<Muted>{group.userCount}</Muted>
 		</div>
 	</HoverCard.Content>
 </HoverCard.Root>

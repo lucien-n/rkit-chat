@@ -1,10 +1,10 @@
 <script lang="ts">
 	import * as Avatar from '$shadcn/avatar';
 	import { profileStore } from '$lib/stores/stores';
-	import type { Profile } from '$shared/modules/profiles/profile.entity';
+	import type { User } from '$shared/modules/profiles/profile.entity';
 	import urls from '$lib/urls';
 
-	export let profile: Profile | null = $profileStore;
+	export let profile: User | null = $profileStore;
 </script>
 
 <a href={urls.app.profile.root + '/' + profile?.id}>

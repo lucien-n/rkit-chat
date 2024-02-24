@@ -12,8 +12,8 @@ export class MessagesController {
 		id: string,
 		include: MembersToInclude<Message> = {}
 	): Promise<Message | undefined> {
-		const profile = remult.repo(Message).findOne({ where: { id }, include });
-		return remult.repo(Message).toJson(profile);
+		const user = remult.repo(Message).findOne({ where: { id }, include });
+		return remult.repo(Message).toJson(user);
 	}
 
 	@BackendMethod({ allowed: Allow.authenticated })
@@ -23,11 +23,8 @@ export class MessagesController {
 		const user = remult.user;
 		if (!user) throw Error.AuthRequired;
 
-		const group = await GroupsController.findById(groupId, { profiles: true });
-		if (
-			group?.adminId !== user.id &&
-			!group?.profiles?.find(({ profileId }) => profileId === user.id)
-		)
+		const group = await GroupsController.findById(groupId, { users: true });
+		if (group?.adminId !== user.id && !group?.users?.find(({ userId }) => userId === user.id))
 			throw Error.Forbidden;
 
 		return remult.repo(Message).insert({ content, authorId: user.id, groupId });

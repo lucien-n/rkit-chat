@@ -1,8 +1,8 @@
 import { Group } from './group.entity';
 import { parseZSchema } from '$shared/helpers/zod';
 import { AuthError, Error } from '$shared/helpers/errors';
-import { ProfilesController } from '../profiles/profiles.controller';
-import { GroupsToProfiles } from '../groups-to-profiles/groups-to-profiles.entity';
+import { UsersController } from '../users/users.controller';
+import { GroupsToUsers } from '../groups-to-users/groups-to-users.entity';
 import { BackendMethod, Controller, remult, type MembersToInclude, Allow } from 'remult';
 import { createGroupSchema, type CreateGroupInput } from './schemas/create-group.schema';
 
@@ -13,20 +13,20 @@ export class GroupsController {
 		id: string,
 		include: MembersToInclude<Group> = {}
 	): Promise<Group | undefined> {
-		const profile = remult.repo(Group).findOne({ where: { id }, include });
-		return remult.repo(Group).toJson(profile);
+		const group = remult.repo(Group).findOne({ where: { id }, include });
+		return remult.repo(Group).toJson(group);
 	}
 
 	@BackendMethod({ allowed: Allow.authenticated })
 	static async findByUser(
-		profileId: string,
+		userId: string,
 		include: MembersToInclude<Group> = {}
 	): Promise<Group[] | undefined> {
-		const profileGroups = await remult.repo(GroupsToProfiles).find({
-			where: { profileId }
+		const userGroups = await remult.repo(GroupsToUsers).find({
+			where: { userId: userId }
 		});
 
-		const groupsIds = profileGroups.map(({ groupId }) => groupId);
+		const groupsIds = userGroups.map(({ groupId }) => groupId);
 		const groups = await remult.repo(Group).find({ where: { id: { $in: groupsIds } }, include });
 
 		return remult.repo(Group).toJson(groups);
@@ -36,61 +36,61 @@ export class GroupsController {
 	static async create(inputs: CreateGroupInput) {
 		const { name } = parseZSchema(inputs, createGroupSchema);
 
-		const user = remult.user;
-		if (!user) throw Error.AuthRequired;
+		const authUser = remult.user;
+		if (!authUser) throw Error.AuthRequired;
 
-		const profile = await ProfilesController.findById(user.id);
-		if (!profile) throw AuthError.UserNotFound;
+		const user = await UsersController.findById(authUser.id);
+		if (!user) throw AuthError.UserNotFound;
 
-		const group = await remult.repo(Group).insert({ name, adminId: user.id });
+		const group = await remult.repo(Group).insert({ name, adminId: authUser.id });
 		await remult
 			.repo(Group)
 			.relations(group)
-			.profiles.insert([{ profileId: profile.id, groupId: group.id }]);
+			.users.insert([{ userId: user.id, groupId: group.id }]);
 
 		return remult.repo(Group).toJson(group);
 	}
 
 	@BackendMethod({ allowed: false })
-	static async add(profileId: string, groupId: string) {
-		const profile = await ProfilesController.findById(profileId);
-		if (!profile) {
+	static async add(userId: string, groupId: string) {
+		const user = await UsersController.findById(userId);
+		if (!user) {
 			throw 'Failed to add user to group';
 		}
 
-		const group = await GroupsController.findById(groupId, { profiles: true });
+		const group = await GroupsController.findById(groupId, { users: true });
 		if (!group) {
 			throw 'Failed to add user to group';
 		}
 
-		const profileInGroup = group.profiles?.find((gtp) => gtp.profileId === profileId);
-		if (profileInGroup) {
+		const userInGroup = group.users?.find((gtp) => gtp.userId === userId);
+		if (userInGroup) {
 			throw 'Failed to add user to group';
 		}
 
 		await remult
 			.repo(Group)
 			.relations(group)
-			.profiles.insert([{ profileId: profileId, groupId: groupId }]);
+			.users.insert([{ userId: userId, groupId: groupId }]);
 	}
 
 	@BackendMethod({ allowed: false })
-	static async remove(profileId: string, groupId: string) {
-		const profile = await ProfilesController.findById(profileId);
-		if (!profile) {
+	static async remove(userId: string, groupId: string) {
+		const user = await UsersController.findById(userId);
+		if (!user) {
 			throw 'Failed to remove user from group';
 		}
 
-		const group = await GroupsController.findById(groupId, { profiles: true });
+		const group = await GroupsController.findById(groupId, { users: true });
 		if (!group) {
 			throw 'Failed to remove user from group';
 		}
 
-		const profileInGroup = group.profiles?.find((gtp) => gtp.profileId === profileId);
-		if (!profileInGroup) {
+		const userInGroup = group.users?.find((gtp) => gtp.userId === userId);
+		if (!userInGroup) {
 			throw 'Failed to remove user from group';
 		}
 
-		await remult.repo(Group).relations(group).profiles.delete({ profileId, groupId });
+		await remult.repo(Group).relations(group).users.delete({ userId, groupId });
 	}
 }

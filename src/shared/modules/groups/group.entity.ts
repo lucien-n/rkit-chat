@@ -1,8 +1,8 @@
 import groupRules from './group.rules';
+import { User } from '../users/user.entity';
 import { dbNames } from '$shared/helpers/remult';
-import { Profile } from '../profiles/profile.entity';
 import { Allow, Entity, Fields, Relations } from 'remult';
-import { GroupsToProfiles } from '../groups-to-profiles/groups-to-profiles.entity';
+import { GroupsToUsers } from '../groups-to-users/groups-to-users.entity';
 
 @Entity<Group>('groups', {
 	allowApiCrud: Allow.authenticated
@@ -22,24 +22,24 @@ export class Group {
 
 	@Fields.integer({
 		sqlExpression: () => {
-			const gtp = dbNames(GroupsToProfiles, true);
-			const p = dbNames(Profile);
+			const gtp = dbNames(GroupsToUsers, true);
+			const p = dbNames(User);
 
 			return `(
 				SELECT COUNT(${p.id})
 				FROM public."${gtp}"
-				LEFT JOIN ${p} ON ${gtp.profileId} = ${p.id}
+				LEFT JOIN ${p} ON ${gtp.userId} = ${p.id}
 			)`;
 		}
 	})
-	profileCount: number = 0;
+	userCount: number = 0;
 
 	@Fields.string()
 	adminId?: string;
 
-	@Relations.toOne(() => Profile, { field: 'adminId' })
-	admin?: Profile;
+	@Relations.toOne(() => User, { field: 'adminId' })
+	admin?: User;
 
-	@Relations.toMany(() => GroupsToProfiles, 'groupId')
-	profiles?: GroupsToProfiles[];
+	@Relations.toMany(() => GroupsToUsers, 'groupId')
+	users?: GroupsToUsers[];
 }

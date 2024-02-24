@@ -1,11 +1,11 @@
 import { remult } from 'remult';
 import type { LayoutServerLoad } from './$types';
-import { ProfilesController } from '$shared/modules/profiles/profiles.controller';
+import { UsersController } from '$shared/modules/users/users.controller';rs.controller';
 
 export const load: LayoutServerLoad = async ({ locals: { session } }) => {
 	return {
 		session,
 		user: remult.user,
-		profile: remult.user ? await ProfilesController.findById(remult.user?.id) : null
+		profile: remult.user ? await UsersController.findById(remult.user?.id) : null
 	};
 };

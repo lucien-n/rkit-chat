@@ -1,11 +1,11 @@
-import { BackendMethod, Controller, remult, type MembersToInclude } from 'remult';
-import { signupSchema, type SignupInput } from './schemas/signup.schema';
+import { Argon2id } from 'oslo/password';
+import { AuthUser } from './auth_user.entity';
 import { parseZSchema } from '$shared/helpers/zod';
 import { AuthError } from '$shared/helpers/errors';
-import { Argon2id } from 'oslo/password';
+import { UsersController } from '../users/users.controller';
+import { signupSchema, type SignupInput } from './schemas/signup.schema';
 import { signinSchema, type SigninInput } from './schemas/signin.schema';
-import { AuthUser } from './auth_user.entity';
-import { ProfilesController } from '../profiles/profiles.controller';
+import { BackendMethod, Controller, remult, type MembersToInclude } from 'remult';
 
 @Controller('AuthController')
 export class AuthController {
@@ -23,8 +23,8 @@ export class AuthController {
 		id: string,
 		include: MembersToInclude<AuthUser> = {}
 	): Promise<AuthUser | undefined> {
-		const profile = remult.repo(AuthUser).findOne({ where: { id }, include });
-		return remult.repo(AuthUser).toJson(profile);
+		const user = remult.repo(AuthUser).findOne({ where: { id }, include });
+		return remult.repo(AuthUser).toJson(user);
 	}
 
 	@BackendMethod({ allowed: false })
@@ -38,7 +38,7 @@ export class AuthController {
 
 		const authUser = await remult.repo(AuthUser).insert({ email, hashedPassword });
 
-		await ProfilesController.create(authUser, username);
+		await UsersController.create(authUser, username);
 
 		return authUser;
 	}

@@ -2,9 +2,9 @@ import urls from '$lib/urls';
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { message, superValidate } from 'sveltekit-superforms/server';
+import { UsersController } from '$shared/modules/users/users.controller';
 import { GroupsController } from '$shared/modules/groups/groups.controller';
-import { ProfilesController } from '$shared/modules/profiles/profiles.controller';
-import { createGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
+import { createGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';oupSchema } from '$shared/modules/groups/schemas/create-group.schema';$shared/modules/groups/schemas/create-group.schema';oupSchema } from '$shared/modules/groups/schemas/create-group.schema';pSchema } from '$shared/modules/groups/schemas/create-group.schema';$shared/modules/groups/schemas/create-group.schema';oupSchema } from '$shared/modules/groups/schemas/create-group.schema';
 
 export const load: PageServerLoad = async ({ params, locals: { user } }) => {
 	const { profileId } = params;
@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ({ params, locals: { user } }) => {
 		redirect(307, user ? urls.app.profile.root + '/' + user.id : urls.auth.signin);
 	}
 
-	const profile = await ProfilesController.findById(profileId);
+	const profile = await UsersController.findById(profileId);
 	if (!profile) {
 		error(404, 'Profile not found');
 	}
