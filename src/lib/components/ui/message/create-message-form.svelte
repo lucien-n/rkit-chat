@@ -12,7 +12,8 @@
 	export let data: SuperValidated<Infer<CreateMessageSchema>>;
 
 	const form = superForm(data, {
-		validators: zodClient(createMessageSchema)
+		validators: zodClient(createMessageSchema),
+		resetForm: true
 	});
 
 	const { form: formData, enhance, submitting } = form;
