@@ -23,7 +23,7 @@
 	const handleDeleteGroup = async () => {
 		try {
 			await GroupsController.delete(group.id);
-			toast.success('Deleted group successfully');
+			toast.success(`Group "${group.name}" deleted`);
 		} catch (e) {
 			const error = e as RemultError;
 			toast.error(error.message);
