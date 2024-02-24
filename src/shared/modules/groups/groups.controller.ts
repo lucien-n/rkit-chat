@@ -54,19 +54,13 @@ export class GroupsController {
 	@BackendMethod({ allowed: false })
 	static async addUser(userId: string, groupId: string) {
 		const user = await UsersController.findById(userId);
-		if (!user) {
-			throw 'Failed to add user to group';
-		}
+		if (!user) throw 'Failed to add user to group';
 
 		const group = await GroupsController.findById(groupId, { users: true });
-		if (!group) {
-			throw 'Failed to add user to group';
-		}
+		if (!group) throw 'Failed to add user to group';
 
 		const userInGroup = group.users?.find((gtp) => gtp.userId === userId);
-		if (userInGroup) {
-			throw 'Failed to add user to group';
-		}
+		if (userInGroup) throw 'Failed to add user to group';
 
 		await remult.repo(Group).relations(group).users.insert([{ userId, groupId }]);
 		await GroupsController.calculateUserCount(groupId);
@@ -75,19 +69,13 @@ export class GroupsController {
 	@BackendMethod({ allowed: false })
 	static async removeUser(userId: string, groupId: string) {
 		const user = await UsersController.findById(userId);
-		if (!user) {
-			throw 'Failed to remove user from group';
-		}
+		if (!user) throw 'Failed to remove user from group';
 
 		const group = await GroupsController.findById(groupId, { users: true });
-		if (!group) {
-			throw 'Failed to remove user from group';
-		}
+		if (!group) throw 'Failed to remove user from group';
 
 		const userInGroup = group.users?.find((gtp) => gtp.userId === userId);
-		if (!userInGroup) {
-			throw 'Failed to remove user from group';
-		}
+		if (!userInGroup) throw 'Failed to remove user from group';
 
 		await remult.repo(Group).relations(group).users.delete({ userId, groupId });
 		await GroupsController.calculateUserCount(groupId);
@@ -96,14 +84,10 @@ export class GroupsController {
 	@BackendMethod({ allowed: false })
 	static async calculateUserCount(groupId: string) {
 		const group = await GroupsController.findById(groupId, { users: true });
-		if (!group) {
-			throw 'Failed to calculate user count';
-		}
+		if (!group) throw 'Failed to calculate user count';
 
 		const userCount = group.users?.length;
-		if (userCount === undefined) {
-			throw 'Failed to calculate user count';
-		}
+		if (userCount === undefined) throw 'Failed to calculate user count';
 
 		await remult.repo(Group).update(groupId, { userCount });
 	}
