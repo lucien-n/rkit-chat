@@ -8,11 +8,11 @@
 	import CreateMessageForm from '$ui/message/create-message-form.svelte';
 	import MessageCard from '$ui/message/message-card.svelte';
 	import { remult } from 'remult';
-	import type { SuperValidated } from 'sveltekit-superforms';
+	import type { Infer, SuperValidated } from 'sveltekit-superforms';
 	import GroupHeader from './group-chat-header.svelte';
 
 	export let group: Group | null;
-	export let messageForm: SuperValidated<CreateMessageSchema>;
+	export let messageForm: SuperValidated<Infer<CreateMessageSchema>>;
 
 	const messages = remultLive(remult.repo(Message));
 
@@ -35,6 +35,6 @@
 
 {#if group}
 	<div class="p-3">
-		<CreateMessageForm form={messageForm} />
+		<CreateMessageForm data={messageForm} />
 	</div>
 {/if}

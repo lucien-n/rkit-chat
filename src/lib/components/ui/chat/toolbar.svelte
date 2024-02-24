@@ -5,10 +5,10 @@
 	import CreateGroupDialog from '$ui/group/create-group-dialog.svelte';
 	import GroupMini from '$ui/group/group-mini.svelte';
 	import UserMini from '$ui/user/user-mini.svelte';
-	import type { SuperValidated } from 'sveltekit-superforms';
+	import type { Infer, SuperValidated } from 'sveltekit-superforms';
 
 	export let groups: Group[];
-	export let groupForm: SuperValidated<CreateGroupSchema>;
+	export let groupForm: SuperValidated<Infer<CreateGroupSchema>>;
 </script>
 
 <div class="flex h-full flex-col items-center gap-4 rounded-md border p-3">

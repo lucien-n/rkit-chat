@@ -1,6 +1,7 @@
 import urls from '$lib/urls';
 import { redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
+import { zod } from 'sveltekit-superforms/adapters';
 import { superValidate } from 'sveltekit-superforms/server';
 import { GroupsController } from '$shared/modules/groups/groups.controller';
 import { createGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
@@ -12,6 +13,6 @@ export const load: LayoutServerLoad = async ({ locals: { authUser } }) => {
 
 	return {
 		groups,
-		groupForm: await superValidate(createGroupSchema)
+		groupForm: await superValidate(zod(createGroupSchema))
 	};
 };

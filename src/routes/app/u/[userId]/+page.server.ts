@@ -1,4 +1,5 @@
 import urls from '$lib/urls';
+import { zod } from 'sveltekit-superforms/adapters';
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { message, superValidate } from 'sveltekit-superforms/server';
@@ -25,7 +26,7 @@ export const load: PageServerLoad = async ({ params, locals: { authUser: autUser
 
 export const actions: Actions = {
 	createGroup: async (event) => {
-		const form = await superValidate(event, createGroupSchema);
+		const form = await superValidate(event, zod(createGroupSchema));
 		if (!form.valid) {
 			return fail(400, {
 				form

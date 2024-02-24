@@ -1,11 +1,11 @@
 <script lang="ts">
 	import * as Dialog from '$shadcn/dialog';
-	import type { SuperValidated } from 'sveltekit-superforms';
+	import type { Infer, SuperValidated } from 'sveltekit-superforms';
 	import CreateGroupForm from './create-group-form.svelte';
 	import type { CreateGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
 	import { Plus } from 'radix-icons-svelte';
 
-	export let form: SuperValidated<CreateGroupSchema>;
+	export let form: SuperValidated<Infer<CreateGroupSchema>>;
 </script>
 
 <Dialog.Root>
@@ -17,6 +17,6 @@
 			<Dialog.Title>New group</Dialog.Title>
 			<Dialog.Description>Create a chat group</Dialog.Description>
 		</Dialog.Header>
-		<CreateGroupForm {form} />
+		<CreateGroupForm data={form} />
 	</Dialog.Content>
 </Dialog.Root>

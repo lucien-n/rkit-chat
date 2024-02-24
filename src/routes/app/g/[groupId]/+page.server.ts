@@ -1,4 +1,5 @@
 import { fail } from '@sveltejs/kit';
+import { zod } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import { GroupsController } from '$shared/modules/groups/groups.controller';
@@ -11,14 +12,14 @@ export const load: PageServerLoad = async (event) => {
 	const group = (await GroupsController.findById(groupId)) ?? null;
 
 	return {
-		messageForm: await superValidate(createMessageSchema),
+		messageForm: await superValidate(zod(createMessageSchema)),
 		group
 	};
 };
 
 export const actions: Actions = {
 	createMessage: async (event) => {
-		const form = await superValidate(event, createMessageSchema);
+		const form = await superValidate(event, zod(createMessageSchema));
 		if (!form.valid) {
 			return fail(400, {
 				form
@@ -32,7 +33,7 @@ export const actions: Actions = {
 		return message(form, 'Message sent');
 	},
 	createGroup: async (event) => {
-		const form = await superValidate(event, createGroupSchema);
+		const form = await superValidate(event, zod(createGroupSchema));
 		if (!form.valid) {
 			return fail(400, {
 				form

@@ -1,29 +1,42 @@
 <script lang="ts">
 	import * as Form from '$shadcn/form';
+	import { Input } from '$shadcn/input';
 	import {
 		createGroupSchema,
 		type CreateGroupSchema
 	} from '$shared/modules/groups/schemas/create-group.schema';
 	import { Plus } from 'radix-icons-svelte';
-	import type { SuperValidated } from 'sveltekit-superforms';
+	import { superForm, type SuperValidated } from 'sveltekit-superforms';
+	import { zodClient, type Infer } from 'sveltekit-superforms/adapters';
 
-	export let form: SuperValidated<CreateGroupSchema>;
+	export let data: SuperValidated<Infer<CreateGroupSchema>>;
 
-	$: console.log('create-group-form', form);
+	const form = superForm(data, {
+		validators: zodClient(createGroupSchema)
+	});
+
+	const { form: formData, enhance, submitting } = form;
 </script>
 
-<Form.Root {form} schema={createGroupSchema} let:config>
-	<form action="?/createGroup" method="post" class="flex items-end gap-2">
-		<Form.Field {config} name="name">
-			<Form.Item class="w-full">
-				<Form.Validation />
-				<Form.Input type="text" placeholder="Group name" class="w-full" required />
-			</Form.Item>
-		</Form.Field>
-		<br />
-		<Form.Button class="flex gap-2">
-			<Plus />
-			Create
-		</Form.Button>
-	</form>
-</Form.Root>
+<form action="?/createGroup" method="post" class="flex gap-2" use:enhance>
+	<Form.Field {form} name="name" class="w-full">
+		<Form.Control let:attrs>
+			<Form.Label>Name</Form.Label>
+			<Input
+				{...attrs}
+				bind:value={$formData.name}
+				type="text"
+				placeholder="Group name"
+				class="w-full"
+				required
+			/>
+		</Form.Control>
+		<Form.Description />
+		<Form.FieldErrors />
+	</Form.Field>
+	<br />
+	<Form.Button class="mb-2 space-x-2 self-end" disabled={$submitting}>
+		<Plus />
+		Create
+	</Form.Button>
+</form>

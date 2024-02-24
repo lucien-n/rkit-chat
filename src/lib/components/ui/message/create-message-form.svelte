@@ -1,58 +1,41 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import * as Form from '$shadcn/form';
+	import { Input } from '$shadcn/input';
 	import {
 		createMessageSchema,
 		type CreateMessageSchema
 	} from '$shared/modules/messages/schemas/create-message.schema';
-	import type { SubmitFunction } from '@sveltejs/kit';
 	import { PaperPlane } from 'radix-icons-svelte';
-	import type { SuperValidated } from 'sveltekit-superforms';
+	import { superForm, type Infer, type SuperValidated } from 'sveltekit-superforms';
+	import { zodClient } from 'sveltekit-superforms/adapters';
 
-	export let form: SuperValidated<CreateMessageSchema>;
+	export let data: SuperValidated<Infer<CreateMessageSchema>>;
 
-	let formElement: HTMLFormElement;
-	let loading = false;
+	const form = superForm(data, {
+		validators: zodClient(createMessageSchema)
+	});
 
-	const handleSubmit: SubmitFunction = () => {
-		loading = true;
-
-		return async () => {
-			loading = false;
-		};
-	};
-
-	const handleKeydown = (event: KeyboardEvent) => {
-		if (event.key === 'Enter') {
-			formElement.submit();
-		}
-	};
+	const { form: formData, enhance, submitting } = form;
 </script>
 
-<Form.Root {form} schema={createMessageSchema} let:config>
-	<form
-		action="?/createMessage"
-		method="post"
-		class="flex items-end gap-2"
-		bind:this={formElement}
-		use:enhance={handleSubmit}
-	>
-		<Form.Field {config} name="content">
-			<Form.Item class="w-full">
-				<Form.Validation />
-				<Form.Input
-					type="text"
-					placeholder="Type your message..."
-					class="w-full"
-					required
-					on:keydown={handleKeydown}
-				/>
-			</Form.Item>
-		</Form.Field>
-		<br />
-		<Form.Button class="flex gap-2" disabled={loading}>
-			<PaperPlane />
-			Send
-		</Form.Button>
-	</form>
-</Form.Root>
+<form action="?/createMessage" method="post" class="flex gap-2" use:enhance>
+	<Form.Field {form} name="content" class="w-full">
+		<Form.Control let:attrs>
+			<Input
+				{...attrs}
+				bind:value={$formData.content}
+				type="text"
+				placeholder="Type your message..."
+				class="w-full"
+				required
+			/>
+		</Form.Control>
+		<Form.Description />
+		<Form.FieldErrors />
+	</Form.Field>
+	<br />
+	<Form.Button class="mb-2 space-x-2 self-end" disabled={$submitting}>
+		<PaperPlane />
+		Send
+	</Form.Button>
+</form>
