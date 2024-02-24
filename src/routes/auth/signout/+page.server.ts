@@ -5,11 +5,11 @@ import { fail, redirect } from '@sveltejs/kit';
 
 export const actions: Actions = {
 	default: async (event) => {
-		if (!event.locals.session) {
+		if (!event.locals.authSession) {
 			return fail(401);
 		}
 
-		await lucia.invalidateSession(event.locals.session.id);
+		await lucia.invalidateSession(event.locals.authSession.id);
 		const sessionCookie = lucia.createBlankSessionCookie();
 		event.cookies.set(sessionCookie.name, sessionCookie.value, {
 			path: '.',

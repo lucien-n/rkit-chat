@@ -1,9 +1,9 @@
-import { Lucia, type Session } from 'lucia';
-import { NodePostgresAdapter } from '@lucia-auth/adapter-postgresql';
 import pg from 'pg';
 import { dev } from '$app/environment';
+import { Lucia, type Session } from 'lucia';
 import type { RequestEvent } from '@sveltejs/kit';
 import { DATABASE_URL } from '$env/static/private';
+import { NodePostgresAdapter } from '@lucia-auth/adapter-postgresql';
 import type { AuthUser } from '$shared/modules/auth/auth_user.entity';
 
 const pool = new pg.Pool({
@@ -22,7 +22,7 @@ export const lucia = new Lucia(adapter, {
 	},
 	getUserAttributes: (attributes) => {
 		return {
-			username: attributes.username
+			email: attributes.email
 		};
 	}
 });

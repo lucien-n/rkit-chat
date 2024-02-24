@@ -3,5 +3,5 @@ import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-	redirect(303, urls.app.profile.me);
+	redirect(303, urls.app.user.me);
 };

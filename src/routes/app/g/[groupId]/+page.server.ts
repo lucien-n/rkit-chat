@@ -8,12 +8,11 @@ import { createMessageSchema } from '$shared/modules/messages/schemas/create-mes
 
 export const load: PageServerLoad = async (event) => {
 	const { groupId } = event.params;
-
-	const currentGroup = (await GroupsController.findById(groupId)) ?? null;
+	const group = (await GroupsController.findById(groupId)) ?? null;
 
 	return {
 		messageForm: await superValidate(createMessageSchema),
-		currentGroup
+		group
 	};
 };
 

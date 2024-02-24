@@ -1,11 +1,11 @@
-import { createBlankSession, lucia, refreshSession } from '$lib/server/lucia';
 import type { Handle } from '@sveltejs/kit';
+import { createBlankSession, lucia, refreshSession } from '$lib/server/lucia';
 
 export const handleLucia: Handle = async ({ event, resolve }) => {
 	const sessionId = event.cookies.get(lucia.sessionCookieName);
 	if (!sessionId) {
-		event.locals.user = null;
-		event.locals.session = null;
+		event.locals.authUser = null;
+		event.locals.authSession = null;
 		return resolve(event);
 	}
 
@@ -18,8 +18,8 @@ export const handleLucia: Handle = async ({ event, resolve }) => {
 		await createBlankSession(event);
 	}
 
-	event.locals.user = user;
-	event.locals.session = session;
+	event.locals.authUser = user;
+	event.locals.authSession = session;
 
 	return resolve(event);
 };

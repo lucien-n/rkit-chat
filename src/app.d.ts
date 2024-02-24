@@ -1,8 +1,8 @@
 declare global {
 	namespace App {
 		interface Locals {
-			session: import('lucia').Session | null;
-			user: import('lucia').User | null;
+			authSession: import('lucia').Session | null;
+			authUser: import('lucia').User | null;
 		}
 	}
 }

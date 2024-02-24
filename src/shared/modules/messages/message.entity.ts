@@ -1,6 +1,5 @@
 import messageRules from './message.rules';
 import { User } from '../users/user.entity';
-import { User } from '../users/user.entity';
 import { Group } from '../groups/group.entity';
 import { Entity, Fields, Relations } from 'remult';
 

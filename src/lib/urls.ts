@@ -2,7 +2,7 @@ export default {
 	home: { root: '/' },
 	app: {
 		groups: { root: '/app/g' },
-		profile: { root: '/app/p', me: '/app/p/me' }
+		user: { root: '/app/u', me: '/app/u/me' }
 	},
 	auth: {
 		signin: '/auth/signin',

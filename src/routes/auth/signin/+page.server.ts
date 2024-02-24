@@ -6,7 +6,7 @@ import { superValidate } from 'sveltekit-superforms/server';
 import { AuthController } from '$shared/modules/auth/auth.controller';
 import { signinSchema } from '$shared/modules/auth/schemas/signin.schema';
 
-export const load: PageServerLoad = async ({ locals: { session } }) => {
+export const load: PageServerLoad = async ({ locals: { authSession: session } }) => {
 	if (session) redirect(302, urls.home.root);
 
 	return {

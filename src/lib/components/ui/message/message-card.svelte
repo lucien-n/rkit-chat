@@ -4,7 +4,7 @@
 	import { Card } from '$shadcn/card';
 	import type { Message } from '$shared/modules/messages/message.entity';
 	import { Muted, Large } from '$typography';
-	import ProfileMini from '$ui/profile/profile-mini.svelte';
+	import UserMini from '$ui/user/user-mini.svelte';
 	import moment from 'moment';
 
 	export let message: Message;
@@ -19,7 +19,7 @@
 	)}
 >
 	<div class="self-start rounded-2xl border">
-		<ProfileMini profile={message.author} />
+		<UserMini user={message.author} />
 	</div>
 	<Card class="flex flex-col p-2 px-3">
 		<div class={cn('flex items-center gap-2', isSelf && 'flex-row-reverse')}>

@@ -4,9 +4,9 @@
 
 	export let data: PageData;
 
-	$: ({ profile } = data);
+	$: ({ user } = data);
 </script>
 
 <div class="p-3">
-	<H1>{profile?.username}</H1>
+	<H1>{user?.username}</H1>
 </div>

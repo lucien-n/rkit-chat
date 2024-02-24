@@ -4,7 +4,7 @@
 	import type { CreateGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
 	import CreateGroupDialog from '$ui/group/create-group-dialog.svelte';
 	import GroupAvatar from '$ui/group/group-avatar.svelte';
-	import ProfileMini from '$ui/profile/profile-mini.svelte';
+	import UserMini from '$ui/user/user-mini.svelte';
 	import type { SuperValidated } from 'sveltekit-superforms';
 
 	export let groups: Group[];
@@ -12,7 +12,7 @@
 </script>
 
 <div class="flex h-full flex-col items-center gap-4 rounded-md border p-3">
-	<ProfileMini />
+	<UserMini />
 	<Separator />
 	<div class="flex h-full flex-col justify-between">
 		<div class="flex flex-col gap-3">

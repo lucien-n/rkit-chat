@@ -4,7 +4,7 @@
 
 	export let data: PageData;
 
-	$: ({ currentGroup, messageForm } = data);
+	$: ({ group, messageForm } = data);
 </script>
 
-<GroupChat group={currentGroup} {messageForm} />
+<GroupChat {group} {messageForm} />
