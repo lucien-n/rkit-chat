@@ -1,4 +1,5 @@
 import groupRules from './group.rules';
+import { dbNames } from '$shared/helpers/remult';
 import { Profile } from '../profiles/profile.entity';
 import { Allow, Entity, Fields, Relations } from 'remult';
 import { GroupsToProfiles } from '../groups-to-profiles/groups-to-profiles.entity';
@@ -18,6 +19,21 @@ export class Group {
 
 	@Fields.string({ minLength: groupRules.name.min, maxLength: groupRules.name.max })
 	name?: string;
+
+	@Fields.integer({
+		sqlExpression: (e) => {
+			const gtp = dbNames(GroupsToProfiles, true);
+			const p = dbNames(Profile);
+
+			return `(
+				SELECT COUNT(${p.id})
+				FROM public."${gtp}"
+				LEFT JOIN ${p} ON ${gtp.profileId} = ${p.id}
+				WHERE ${gtp.groupId} = '${e.fields.id.dbName}'
+			)`;
+		}
+	})
+	profileCount: number = 0;
 
 	@Fields.string()
 	adminId?: string;

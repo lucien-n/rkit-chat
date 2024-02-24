@@ -14,5 +14,5 @@
 			<Badge variant="outline">Admin</Badge>
 		{/if}
 	</div>
-	<Muted>{group.profiles?.length ?? 0} user(s)</Muted>
+	<Muted>{group.profileCount} user(s)</Muted>
 </div>

@@ -1,10 +1,10 @@
-import { BackendMethod, Controller, remult, type MembersToInclude, Allow } from 'remult';
-import { createGroupSchema, type CreateGroupInput } from './schemas/create-group.schema';
+import { Group } from './group.entity';
 import { parseZSchema } from '$shared/helpers/zod';
 import { AuthError, Error } from '$shared/helpers/errors';
-import { Group } from './group.entity';
 import { ProfilesController } from '../profiles/profiles.controller';
 import { GroupsToProfiles } from '../groups-to-profiles/groups-to-profiles.entity';
+import { BackendMethod, Controller, remult, type MembersToInclude, Allow } from 'remult';
+import { createGroupSchema, type CreateGroupInput } from './schemas/create-group.schema';
 
 @Controller('GroupsController')
 export class GroupsController {
@@ -27,7 +27,6 @@ export class GroupsController {
 		});
 
 		const groupsIds = profileGroups.map(({ groupId }) => groupId);
-
 		const groups = await remult.repo(Group).find({ where: { id: { $in: groupsIds } }, include });
 
 		return remult.repo(Group).toJson(groups);
