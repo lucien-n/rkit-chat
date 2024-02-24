@@ -42,7 +42,7 @@ export class GroupsController {
 		const user = await UsersController.findById(authUser.id);
 		if (!user) throw AuthError.UserNotFound;
 
-		const group = await remult.repo(Group).insert({ name, adminId: authUser.id });
+		const group = await remult.repo(Group).insert({ name, adminId: authUser.id, userCount: 1 });
 		await remult
 			.repo(Group)
 			.relations(group)
