@@ -1,23 +1,23 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
+	import { getGroup } from '$lib/contexts/group';
 	import { remultLive } from '$lib/stores/remultLive';
-	import type { Group } from '$shared/modules/groups/group.entity';
+	import { Message } from '$shared/modules/messages/message.entity';
 	import type { CreateMessageSchema } from '$shared/modules/messages/schemas/create-message.schema';
 	import CreateMessageForm from '$ui/message/create-message-form.svelte';
+	import MessageCard from '$ui/message/message-card.svelte';
 	import { remult } from 'remult';
 	import { afterUpdate, onMount } from 'svelte';
 	import type { Infer, SuperValidated } from 'sveltekit-superforms';
 	import GroupHeader from './group-chat-header.svelte';
-	import MessageCard from '$ui/message/message-card.svelte';
-	import { Message } from '$shared/modules/messages/message.entity';
 
-	export let group: Group | null;
 	export let messageForm: SuperValidated<Infer<CreateMessageSchema>>;
 
 	const messages = remultLive(remult.repo(Message));
 
 	let container: HTMLDivElement;
+	let group = getGroup();
 
 	$: browser &&
 		messages.listen({
@@ -35,8 +35,8 @@
 	afterUpdate(scrollToBottom);
 </script>
 
-{#if group}
-	<GroupHeader {group} />
+{#if $group}
+	<GroupHeader />
 {/if}
 <div
 	class="scroll flex h-full w-full flex-col overflow-y-scroll p-3 scrollbar-thin scrollbar-track-background scrollbar-thumb-primary"
