@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onFormFailure } from '$helpers/forms';
 	import * as Dialog from '$shadcn/dialog';
 	import type { CreateGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
 	import { Plus } from 'radix-icons-svelte';
@@ -19,6 +20,6 @@
 			<Dialog.Title>New group</Dialog.Title>
 			<Dialog.Description>Create a chat group</Dialog.Description>
 		</Dialog.Header>
-		<CreateGroupForm data={form} on:success={() => (open = false)} />
+		<CreateGroupForm data={form} on:success={() => (open = false)} on:failure={onFormFailure} />
 	</Dialog.Content>
 </Dialog.Root>

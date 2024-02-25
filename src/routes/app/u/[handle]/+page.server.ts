@@ -1,10 +1,10 @@
-import { GroupsController } from '$shared/modules/groups/groups.controller';
-import { createGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
-import { UsersController } from '$shared/modules/users/users.controller';
 import { error, fail } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
-import { message, superValidate } from 'sveltekit-superforms/server';
 import type { Actions, PageServerLoad } from './$types';
+import { message, superValidate } from 'sveltekit-superforms/server';
+import { UsersController } from '$shared/modules/users/users.controller';
+import { GroupsController } from '$shared/modules/groups/groups.controller';
+import { createGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const { handle } = params;
@@ -29,7 +29,7 @@ export const actions: Actions = {
 		}
 		const { name } = form.data;
 
-		await GroupsController.create({ name });
+		await GroupsController.createGroup({ name });
 
 		return message(form, 'Group created');
 	}
