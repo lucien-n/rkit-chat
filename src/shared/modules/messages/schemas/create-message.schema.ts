@@ -1,8 +1,9 @@
 import { z } from 'zod';
 import messageRules from '../message.rules';
+import { getZString } from '$shared/helpers/zod';
 
 export const createMessageSchema = z.object({
-	content: z.string().min(messageRules.content.min).max(messageRules.content.max)
+	content: getZString('content', messageRules.content)
 });
 
 export type CreateMessageSchema = typeof createMessageSchema;

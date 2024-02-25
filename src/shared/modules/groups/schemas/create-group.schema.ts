@@ -1,7 +1,9 @@
 import { z } from 'zod';
+import groupRules from '../group.rules';
+import { getZString } from '$shared/helpers/zod';
 
 export const createGroupSchema = z.object({
-	name: z.string().min(1).max(32)
+	name: getZString('name', groupRules.name)
 });
 
 export type CreateGroupSchema = typeof createGroupSchema;
