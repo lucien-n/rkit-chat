@@ -1,12 +1,13 @@
+import { rejson } from '$lib/helpers/rejson';
+import { UsersController } from '$shared/modules/users/users.controller';
 import { remult } from 'remult';
 import type { LayoutServerLoad } from './$types';
-import { UsersController } from '$shared/modules/users/users.controller';
 
 export const load: LayoutServerLoad = async ({ locals: { authSession: session } }) => {
-	const user = remult.user ? await UsersController.findById(remult.user?.id) : null;
+	const user = remult.user && (await UsersController.findById(remult.user?.id, { settings: true }));
 
 	return {
 		session,
-		user
+		user: rejson(user)
 	};
 };
