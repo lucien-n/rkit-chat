@@ -15,7 +15,7 @@
 		<a href={urls.app.user.root + '/' + user?.id}>
 			<Avatar.Root class="h-12 w-12">
 				<Avatar.Image
-					src={`https://api.dicebear.com/7.x/notionists-neutral/svg?seed=${user?.username ?? 'default'}`}
+					src={`https://api.dicebear.com/7.x/notionists-neutral/svg?seed=${user?.handle ?? 'default'}`}
 					alt="avatar"
 				/>
 				<Avatar.Fallback>UK</Avatar.Fallback>
