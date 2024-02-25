@@ -1,24 +1,27 @@
 <script lang="ts">
-	import * as Avatar from '$shadcn/avatar';
-	import type { Group } from '$shared/modules/groups/group.entity';
-	import * as HoverCard from '$shadcn/hover-card';
-	import { Large } from '$typography';
-	import urls from '$lib/urls';
 	import { page } from '$app/stores';
-	import { scale } from 'svelte/transition';
-	import Muted from '$typography/muted.svelte';
-	import { Person, Trash } from 'radix-icons-svelte';
-	import { userStore } from '$stores/stores';
+	import urls from '$lib/urls';
+	import * as Avatar from '$shadcn/avatar';
 	import { Badge } from '$shadcn/badge';
 	import * as ContextMenu from '$shadcn/context-menu';
-	import { GroupsController } from '$shared/modules/groups/groups.controller';
-	import { toast } from 'svelte-sonner';
+	import * as HoverCard from '$shadcn/hover-card';
 	import type { RemultError } from '$shared/helpers/types';
+	import type { Group } from '$shared/modules/groups/group.entity';
+	import { GroupsController } from '$shared/modules/groups/groups.controller';
+	import { userStore } from '$stores/stores';
+	import { Large } from '$typography';
+	import Muted from '$typography/muted.svelte';
+	import { Person, Trash } from 'radix-icons-svelte';
+	import { toast } from 'svelte-sonner';
+	import { scale } from 'svelte/transition';
+	import ConfirmDeleteGroupDialog from './confirm-delete-group-dialog.svelte';
 
 	export let group: Group;
 
 	$: isCurrent = $page.params.groupId === group.id;
 	$: isAdmin = $userStore?.id === group.adminId;
+
+	let openDeleteDialog = false;
 
 	const handleDeleteGroup = async () => {
 		try {
@@ -28,6 +31,10 @@
 			const error = e as RemultError;
 			toast.error(error.message);
 		}
+	};
+
+	const handleDeleteClick = () => {
+		openDeleteDialog = true;
 	};
 </script>
 
@@ -61,9 +68,11 @@
 		</HoverCard.Root>
 	</ContextMenu.Trigger>
 	<ContextMenu.Content class="w-64">
-		<ContextMenu.Item class="space-x-1" on:click={handleDeleteGroup}>
+		<ContextMenu.Item class="space-x-1" on:click={handleDeleteClick}>
 			<Trash />
 			<p>Delete</p>
 		</ContextMenu.Item>
 	</ContextMenu.Content>
 </ContextMenu.Root>
+
+<ConfirmDeleteGroupDialog {group} bind:open={openDeleteDialog} on:confirm={handleDeleteGroup} />
