@@ -1,16 +1,16 @@
 <script lang="ts">
+	import { contry } from '$lib/contry';
 	import urls from '$lib/urls';
 	import { Button } from '$shadcn/button';
+	import * as ContextMenu from '$shadcn/context-menu';
+	import { Input } from '$shadcn/input';
 	import { Message } from '$shared/modules/messages/message.entity';
+	import { MessagesController } from '$shared/modules/messages/messages.controller';
 	import { Large, Muted, Tiny } from '$typography';
 	import UserMini from '$ui/user/user-mini.svelte';
 	import moment from 'moment';
-	import * as ContextMenu from '$shadcn/context-menu';
-	import { Pencil1, Trash } from 'radix-icons-svelte';
-	import { MessagesController } from '$shared/modules/messages/messages.controller';
-	import { contry } from '$lib/contry';
+	import { Cross2, Pencil1, Trash } from 'radix-icons-svelte';
 	import { toast } from 'svelte-sonner';
-	import { Input } from '$shadcn/input';
 
 	export let message: Message;
 
@@ -28,6 +28,10 @@
 	const enterEditMode = () => {
 		editing = true;
 		updatedMessageContent = message.content;
+	};
+
+	const exitEditMode = () => {
+		editing = false;
 	};
 
 	const handleSaveMessage = () =>
@@ -76,11 +80,16 @@
 				</div>
 				<div class="w-full">
 					{#if editing}
-						<Input
-							bind:value={updatedMessageContent}
-							on:keydown={handleKeyDown}
-							class="w-full border-0 bg-muted/20"
-						/>
+						<div class="flex gap-2">
+							<Input
+								bind:value={updatedMessageContent}
+								on:keydown={handleKeyDown}
+								class="w-full border-0 bg-muted/20"
+							/>
+							<Button size="icon" variant="ghost" on:click={exitEditMode}>
+								<Cross2 />
+							</Button>
+						</div>
 					{:else}
 						<p>{message.content}</p>
 					{/if}
