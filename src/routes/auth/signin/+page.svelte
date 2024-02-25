@@ -1,20 +1,18 @@
 <script lang="ts">
-	import SigninForm from '$lib/components/ui/auth/signin-form.svelte';
 	import AuthLayout from '$layouts/auth-layout.svelte';
-	import type { PageData } from './$types';
+	import SigninForm from '$lib/components/ui/auth/signin-form.svelte';
+	import urls from '$lib/urls';
+	import { Button } from '$shadcn/button';
 	import { Separator } from '$shadcn/separator';
 	import { QuestionMarkCircled } from 'radix-icons-svelte';
-	import { Button } from '$shadcn/button';
-	import urls from '$lib/urls';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
-
-	$: ({ form } = data);
 </script>
 
 <AuthLayout>
 	<svelte:fragment slot="header">Sign In</svelte:fragment>
-	<SigninForm {form} />
+	<SigninForm data={data.form} />
 	<svelte:fragment slot="footer">
 		<div class="flex flex-col">
 			<Separator class="my-3" />

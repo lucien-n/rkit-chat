@@ -1,35 +1,66 @@
 <script lang="ts">
-	import { signupSchema, type SignupSchema } from '$shared/modules/auth/schemas/signup.schema';
 	import * as Form from '$shadcn/form';
-	import type { SuperValidated } from 'sveltekit-superforms';
+	import { Input } from '$shadcn/input';
+	import { signupSchema, type SignupSchema } from '$shared/modules/auth/schemas/signup.schema';
+	import { superForm, type Infer, type SuperValidated } from 'sveltekit-superforms';
+	import { zodClient } from 'sveltekit-superforms/adapters';
 
-	export let form: SuperValidated<SignupSchema>;
+	export let data: SuperValidated<Infer<SignupSchema>>;
+
+	const form = superForm(data, {
+		validators: zodClient(signupSchema)
+	});
+
+	const { form: formData, enhance, submitting } = form;
 </script>
 
-<Form.Root {form} schema={signupSchema} let:config>
-	<Form.Field {config} name="username">
-		<Form.Item>
+<form method="post" use:enhance>
+	<Form.Field {form} name="username" class="w-full">
+		<Form.Control let:attrs>
 			<Form.Label>Username</Form.Label>
-			<Form.Validation />
-			<Form.Input type="text" placeholder="Username" autocomplete="additional-name" required />
-		</Form.Item>
+			<Input
+				{...attrs}
+				bind:value={$formData.username}
+				type="text"
+				placeholder="Username"
+				class="w-full"
+				required
+			/>
+		</Form.Control>
+		<Form.Description />
+		<Form.FieldErrors />
 	</Form.Field>
-	<br />
-	<Form.Field {config} name="email">
-		<Form.Item>
+	<Form.Field {form} name="email" class="w-full">
+		<Form.Control let:attrs>
 			<Form.Label>Email</Form.Label>
-			<Form.Validation />
-			<Form.Input type="email" placeholder="john.doe@mail.com" autocomplete="username" required />
-		</Form.Item>
+			<Input
+				{...attrs}
+				bind:value={$formData.email}
+				type="email"
+				placeholder="john.doe@mail.com"
+				class="w-full"
+				required
+			/>
+		</Form.Control>
+		<Form.Description />
+		<Form.FieldErrors />
 	</Form.Field>
 	<br />
-	<Form.Field {config} name="password">
-		<Form.Item>
+	<Form.Field {form} name="password" class="w-full">
+		<Form.Control let:attrs>
 			<Form.Label>Password</Form.Label>
-			<Form.Validation />
-			<Form.Input type="password" placeholder="●●●●●●●●" autocomplete="current-password" required />
-		</Form.Item>
+			<Input
+				{...attrs}
+				bind:value={$formData.password}
+				type="password"
+				placeholder="●●●●●●●●"
+				class="w-full"
+				required
+			/>
+		</Form.Control>
+		<Form.Description />
+		<Form.FieldErrors />
 	</Form.Field>
 	<br />
-	<Form.Button class="w-full">Sign Up</Form.Button>
-</Form.Root>
+	<Form.Button class="w-full">{$submitting ? 'Signing Up...' : 'Sign Up'}</Form.Button>
+</form>

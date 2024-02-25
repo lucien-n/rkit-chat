@@ -1,27 +1,51 @@
 <script lang="ts">
-	import { signinSchema, type SigninSchema } from '$shared/modules/auth/schemas/signin.schema';
 	import * as Form from '$shadcn/form';
-	import type { SuperValidated } from 'sveltekit-superforms';
+	import { Input } from '$shadcn/input';
+	import { signinSchema, type SigninSchema } from '$shared/modules/auth/schemas/signin.schema';
+	import { superForm, type Infer, type SuperValidated } from 'sveltekit-superforms';
+	import { zodClient } from 'sveltekit-superforms/adapters';
 
-	export let form: SuperValidated<SigninSchema>;
+	export let data: SuperValidated<Infer<SigninSchema>>;
+
+	const form = superForm(data, {
+		validators: zodClient(signinSchema)
+	});
+
+	const { form: formData, enhance, submitting } = form;
 </script>
 
-<Form.Root {form} schema={signinSchema} let:config>
-	<Form.Field {config} name="email">
-		<Form.Item>
+<form method="post" use:enhance>
+	<Form.Field {form} name="email" class="w-full">
+		<Form.Control let:attrs>
 			<Form.Label>Email</Form.Label>
-			<Form.Validation />
-			<Form.Input type="email" placeholder="john.doe@mail.com" required />
-		</Form.Item>
+			<Input
+				{...attrs}
+				bind:value={$formData.email}
+				type="email"
+				placeholder="john.doe@mail.com"
+				class="w-full"
+				required
+			/>
+		</Form.Control>
+		<Form.Description />
+		<Form.FieldErrors />
 	</Form.Field>
 	<br />
-	<Form.Field {config} name="password">
-		<Form.Item>
+	<Form.Field {form} name="password" class="w-full">
+		<Form.Control let:attrs>
 			<Form.Label>Password</Form.Label>
-			<Form.Validation />
-			<Form.Input type="password" placeholder="●●●●●●●●" required />
-		</Form.Item>
+			<Input
+				{...attrs}
+				bind:value={$formData.password}
+				type="password"
+				placeholder="●●●●●●●●"
+				class="w-full"
+				required
+			/>
+		</Form.Control>
+		<Form.Description />
+		<Form.FieldErrors />
 	</Form.Field>
 	<br />
-	<Form.Button class="w-full">Sign In</Form.Button>
-</Form.Root>
+	<Form.Button class="w-full">{$submitting ? 'Signing In...' : 'Sign In'}</Form.Button>
+</form>
