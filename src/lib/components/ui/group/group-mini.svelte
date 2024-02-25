@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { urls } from '$lib/urls';
+	import { getGroupUrl } from '$lib/urls';
 	import * as Avatar from '$shadcn/avatar';
 	import { Badge } from '$shadcn/badge';
 	import * as ContextMenu from '$shadcn/context-menu';
@@ -41,7 +41,7 @@
 <ContextMenu.Root>
 	<ContextMenu.Trigger>
 		<HoverCard.Root openDelay={50} closeDelay={50}>
-			<HoverCard.Trigger class="relative flex" href={urls.app.groups.root + '/' + group.id}>
+			<HoverCard.Trigger class="relative flex" href={getGroupUrl(group)}>
 				{#if isCurrent}
 					<div
 						class="absolute -left-3 h-5/6 w-[.4rem] self-center rounded-r-md bg-primary"

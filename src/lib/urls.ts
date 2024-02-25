@@ -1,9 +1,10 @@
+import type { Group } from '$shared/modules/groups/group.entity';
 import type { User } from '$shared/modules/users/user.entity';
 
 export const urls = {
 	home: { root: '/' },
 	app: {
-		groups: { root: '/app/g' },
+		group: { root: '/app/g' },
 		user: { root: '/app/u', me: '/app/u/me' }
 	},
 	auth: {
@@ -15,3 +16,6 @@ export const urls = {
 
 export const getUserUrl = (user: User | undefined | null) =>
 	user ? `${urls.app.user.root}/${user.handle}` : urls.home.root;
+
+export const getGroupUrl = (group: Group | undefined | null) =>
+	group ? `${urls.app.group.root}/${group.id}` : urls.home.root;
