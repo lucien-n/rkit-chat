@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import { getGroup } from '$lib/contexts/group';
-	import { remultLive } from '$lib/stores/remultLive';
+	import { getGroup } from '$contexts/group';
+	import { remultLive } from '$helpers/remultLive';
 	import { Message } from '$shared/modules/messages/message.entity';
 	import type { CreateMessageSchema } from '$shared/modules/messages/schemas/create-message.schema';
 	import CreateMessageForm from '$ui/message/create-message-form.svelte';

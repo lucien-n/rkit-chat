@@ -8,7 +8,7 @@
 	import { scale } from 'svelte/transition';
 	import Muted from '$typography/muted.svelte';
 	import { Person, Trash } from 'radix-icons-svelte';
-	import { userStore } from '$lib/stores/stores';
+	import { userStore } from '$stores/stores';
 	import { Badge } from '$shadcn/badge';
 	import * as ContextMenu from '$shadcn/context-menu';
 	import { GroupsController } from '$shared/modules/groups/groups.controller';

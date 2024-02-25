@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { setGroup } from '$lib/contexts/group';
+	import { setGroup } from '$contexts/group';
 	import GroupChat from '$ui/group/group-chat.svelte';
 	import type { PageData } from './$types';
 

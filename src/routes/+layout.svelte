@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.pcss';
 	import type { LayoutData } from './$types';
-	import { userStore } from '$lib/stores/stores';
+	import { userStore } from '$stores/stores';
 	import { browser } from '$app/environment';
 	import { Toaster } from '$shadcn/sonner';
 	import { ModeWatcher } from 'mode-watcher';

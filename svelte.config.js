@@ -18,7 +18,10 @@ const config = {
 			$shared: './src/shared',
 			$typography: './src/lib/components/typography',
 			$ui: './src/lib/components/ui',
-			$layouts: './src/lib/components/layouts'
+			$layouts: './src/lib/components/layouts',
+			$helpers: './src/lib/helpers',
+			$contexts: './src/lib/contexts',
+			$stores: './src/lib/stores'
 		}
 	}
 };

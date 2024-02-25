@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { userStore } from '$lib/stores/stores';
+	import { userStore } from '$stores/stores';
 	import * as HoverCard from '$shadcn/hover-card';
 	import * as Avatar from '$shadcn/avatar';
 	import type { User } from '$shared/modules/users/user.entity';

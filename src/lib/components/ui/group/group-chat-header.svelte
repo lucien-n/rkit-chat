@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { getGroup } from '$lib/contexts/group';
-	import { userStore } from '$lib/stores/stores';
+	import { getGroup } from '$contexts/group';
+	import { userStore } from '$stores/stores';
 	import { Badge } from '$shadcn/badge';
 	import { H3, Muted } from '$typography';
 

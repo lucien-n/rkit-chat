@@ -1,4 +1,4 @@
-import { rejson } from '$lib/helpers/rejson';
+import { rejson } from '$helpers/rejson';
 import { UsersController } from '$shared/modules/users/users.controller';
 import { remult } from 'remult';
 import type { LayoutServerLoad } from './$types';

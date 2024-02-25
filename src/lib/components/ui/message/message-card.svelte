@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { contry } from '$lib/contry';
+	import { contry } from '$helpers/contry';
 	import urls from '$lib/urls';
 	import { Button } from '$shadcn/button';
 	import * as ContextMenu from '$shadcn/context-menu';
