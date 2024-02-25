@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { userStore } from '$stores/stores';
-	import * as HoverCard from '$shadcn/hover-card';
+	import urls from '$lib/urls';
 	import * as Avatar from '$shadcn/avatar';
+	import * as HoverCard from '$shadcn/hover-card';
 	import type { User } from '$shared/modules/users/user.entity';
+	import { userStore } from '$stores/stores';
 	import { Large, Muted } from '$typography';
 	import moment from 'moment';
-	import urls from '$lib/urls';
 
 	export let user: User | null = $userStore;
 </script>
@@ -22,7 +22,7 @@
 			</Avatar.Root>
 		</a>
 	</HoverCard.Trigger>
-	<HoverCard.Content>
+	<HoverCard.Content align="center" side="right" class="ml-2">
 		<Large>{user?.username}</Large>
 		<Muted><strong> {moment(user?.createdAt).format('MMMM DD YYYY')}</strong></Muted>
 	</HoverCard.Content>

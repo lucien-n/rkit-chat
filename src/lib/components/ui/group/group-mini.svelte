@@ -53,7 +53,7 @@
 					<Avatar.Fallback>{group.name?.slice(0, 2)}</Avatar.Fallback>
 				</Avatar.Root>
 			</HoverCard.Trigger>
-			<HoverCard.Content align="end" sideOffset={-72} alignOffset={64}>
+			<HoverCard.Content align="center" side="right" class="ml-2">
 				<div class="flex gap-2">
 					<Large>{group.name}</Large>
 					{#if isAdmin}
