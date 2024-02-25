@@ -1,16 +1,12 @@
-import { toast } from 'svelte-sonner';
 import type { RemultError } from '$shared/helpers/types';
+import { toast } from 'svelte-sonner';
 
 /**
  * Try Controller
  *
  * @param {() => Promise<void>} action
- * @param {VoidFunction} [onSuccess=() => {
- * 		toast.success('Success!');
- * 	}]
- * @param {(error: RemultError) => void} [onError=(error) => {
- * 		toast.error(error.message);
- * 	}]
+ * @param {VoidFunction} [onSuccess] toast by default, action result as param
+ * @param {(error: RemultError) => void} [onError] toast by default, error messaged as param
  */
 export const contry = async <T>(
 	action: () => Promise<void>,
