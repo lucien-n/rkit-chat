@@ -1,6 +1,6 @@
 <script lang="ts">
 	import AuthLayout from '$layouts/auth-layout.svelte';
-	import urls from '$lib/urls';
+	import { urls } from '$lib/urls';
 	import { Button } from '$shadcn/button';
 	import { Separator } from '$shadcn/separator';
 	import SignupForm from '$ui/auth/signup-form.svelte';

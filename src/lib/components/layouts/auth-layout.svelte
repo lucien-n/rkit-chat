@@ -1,5 +1,5 @@
 <script lang="ts">
-	import urls from '$lib/urls';
+	import { urls } from '$lib/urls';
 	import { Button } from '$shadcn/button';
 	import * as Card from '$shadcn/card';
 	import { CaretLeft } from 'radix-icons-svelte';

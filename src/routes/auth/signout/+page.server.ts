@@ -1,4 +1,4 @@
-import urls from '$lib/urls';
+import { urls } from '$lib/urls';
 import type { Actions } from './$types';
 import { lucia } from '$lib/server/lucia';
 import { fail, redirect } from '@sveltejs/kit';

@@ -1,10 +1,10 @@
-import urls from '$lib/urls';
-import { redirect } from '@sveltejs/kit';
-import type { LayoutServerLoad } from './$types';
-import { zod } from 'sveltekit-superforms/adapters';
-import { superValidate } from 'sveltekit-superforms/server';
+import { urls } from '$lib/urls';
 import { GroupsController } from '$shared/modules/groups/groups.controller';
 import { createGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
+import { redirect } from '@sveltejs/kit';
+import { zod } from 'sveltekit-superforms/adapters';
+import { superValidate } from 'sveltekit-superforms/server';
+import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ locals: { authUser } }) => {
 	if (!authUser) redirect(303, urls.auth.signin);

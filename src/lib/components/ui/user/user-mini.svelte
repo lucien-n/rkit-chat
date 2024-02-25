@@ -1,5 +1,5 @@
 <script lang="ts">
-	import urls from '$lib/urls';
+	import { getUserUrl } from '$lib/urls';
 	import * as Avatar from '$shadcn/avatar';
 	import * as HoverCard from '$shadcn/hover-card';
 	import type { User } from '$shared/modules/users/user.entity';
@@ -12,7 +12,7 @@
 
 <HoverCard.Root>
 	<HoverCard.Trigger>
-		<a href={urls.app.user.root + '/' + user?.id}>
+		<a href={getUserUrl(user)}>
 			<Avatar.Root class="h-12 w-12">
 				<Avatar.Image
 					src={`https://api.dicebear.com/7.x/notionists-neutral/svg?seed=${user?.handle ?? 'default'}`}

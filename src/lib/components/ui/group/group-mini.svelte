@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import urls from '$lib/urls';
+	import { urls } from '$lib/urls';
 	import * as Avatar from '$shadcn/avatar';
 	import { Badge } from '$shadcn/badge';
 	import * as ContextMenu from '$shadcn/context-menu';

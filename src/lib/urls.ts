@@ -1,4 +1,6 @@
-export default {
+import type { User } from '$shared/modules/users/user.entity';
+
+export const urls = {
 	home: { root: '/' },
 	app: {
 		groups: { root: '/app/g' },
@@ -10,3 +12,6 @@ export default {
 		signout: '/auth/signout'
 	}
 };
+
+export const getUserUrl = (user: User | undefined | null) =>
+	user ? `${urls.app.user.root}/${user.handle}` : urls.home.root;

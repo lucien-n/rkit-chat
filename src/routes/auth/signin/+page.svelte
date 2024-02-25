@@ -1,7 +1,7 @@
 <script lang="ts">
 	import AuthLayout from '$layouts/auth-layout.svelte';
 	import SigninForm from '$lib/components/ui/auth/signin-form.svelte';
-	import urls from '$lib/urls';
+	import { urls } from '$lib/urls';
 	import { Button } from '$shadcn/button';
 	import { Separator } from '$shadcn/separator';
 	import { QuestionMarkCircled } from 'radix-icons-svelte';

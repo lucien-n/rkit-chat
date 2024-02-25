@@ -1,4 +1,4 @@
-import urls from '$lib/urls';
+import { urls } from '$lib/urls';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 

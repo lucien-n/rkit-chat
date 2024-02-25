@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { contry } from '$helpers/contry';
-	import urls from '$lib/urls';
+	import { getUserUrl } from '$lib/urls';
 	import { Button } from '$shadcn/button';
 	import * as ContextMenu from '$shadcn/context-menu';
 	import { Input } from '$shadcn/input';
@@ -66,7 +66,7 @@
 			</div>
 			<div class="w-full flex-col">
 				<div class="flex items-center gap-2">
-					<Button variant="link" href={urls.app.user.root + '/' + message.author?.id} class="px-0">
+					<Button variant="link" href={getUserUrl(message.author)} class="px-0">
 						<Large>
 							{message.author?.username}
 						</Large>

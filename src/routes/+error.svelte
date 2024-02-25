@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import urls from '$lib/urls';
+	import { urls } from '$lib/urls';
 	import { Button } from '$shadcn/button';
 	import { Separator } from '$shadcn/separator';
 	import { CaretRight } from 'radix-icons-svelte';

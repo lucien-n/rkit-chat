@@ -1,12 +1,12 @@
+import { remult } from 'remult';
+import { urls } from '$lib/urls';
+import { fail, redirect } from '@sveltejs/kit';
 import { createSession } from '$lib/server/lucia';
-import urls from '$lib/urls';
+import { zod } from 'sveltekit-superforms/adapters';
+import type { Actions, PageServerLoad } from './$types';
+import { superValidate } from 'sveltekit-superforms/server';
 import { AuthController } from '$shared/modules/auth/auth.controller';
 import { signupSchema } from '$shared/modules/auth/schemas/signup.schema';
-import { fail, redirect } from '@sveltejs/kit';
-import { remult } from 'remult';
-import { zod } from 'sveltekit-superforms/adapters';
-import { superValidate } from 'sveltekit-superforms/server';
-import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
 	if (remult.authenticated()) redirect(302, urls.home.root);
