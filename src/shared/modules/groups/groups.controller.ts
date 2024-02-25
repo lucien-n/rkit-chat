@@ -33,7 +33,7 @@ export class GroupsController {
 	}
 
 	@BackendMethod({ allowed: false })
-	static async creategGroup(inputs: CreateGroupInput) {
+	static async createGroup(inputs: CreateGroupInput) {
 		const { name } = parseZSchema(inputs, createGroupSchema);
 
 		const authUser = remult.user;
