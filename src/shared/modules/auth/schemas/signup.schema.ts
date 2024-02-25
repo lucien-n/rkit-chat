@@ -1,10 +1,12 @@
 import { z } from 'zod';
+import authRules from '../auth.rules';
+import { getZString } from '$shared/helpers/zod';
 import userRules from '$shared/modules/users/user.rules';
 
 export const signupSchema = z.object({
-	username: z.string().min(userRules.username.min).max(userRules.username.max),
+	username: getZString('username', userRules.username),
 	email: z.string().email(),
-	password: z.string().min(8).max(255)
+	password: getZString('password', authRules.password)
 });
 
 export type SignupSchema = typeof signupSchema;
