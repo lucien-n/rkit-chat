@@ -24,6 +24,8 @@
 			() => toast.success('Message deleted!')
 		);
 
+	const toggleEditMode = () => (editing = !editing);
+
 	const handleSaveMessage = () =>
 		contry(
 			async () => {
@@ -35,8 +37,13 @@
 		);
 
 	const handleKeyDown = (event: KeyboardEvent) => {
-		if (event.key === 'Enter') {
-			handleSaveMessage();
+		switch (event.key) {
+			case 'Enter':
+				handleSaveMessage();
+				break;
+			case 'Escape':
+				editing = false;
+				break;
 		}
 	};
 </script>
@@ -72,7 +79,7 @@
 		</div>
 	</ContextMenu.Trigger>
 	<ContextMenu.Content>
-		<ContextMenu.Item class="space-x-1" on:click={() => (editing = !editing)}>
+		<ContextMenu.Item class="space-x-1" on:click={toggleEditMode}>
 			<Pencil1 />
 			<p>Edit</p>
 		</ContextMenu.Item>
