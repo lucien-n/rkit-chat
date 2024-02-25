@@ -1,9 +1,15 @@
+import { toHandle, validateString } from '$shared/helpers/helpers';
+import {
+	remult,
+	Controller,
+	BackendMethod,
+	type EntityFilter,
+	type MembersToInclude
+} from 'remult';
 import { User } from './user.entity';
 import userRules from './user.rules';
 import type { AuthUser } from '../auth/auth_user.entity';
-import { toHandle, validateString } from '$shared/helpers/helpers';
 import { UserSettings } from '../user-settings/user-settings.entity';
-import { BackendMethod, Controller, remult, type MembersToInclude } from 'remult';
 
 @Controller('UsersController')
 export class UsersController {
@@ -13,6 +19,15 @@ export class UsersController {
 		include: MembersToInclude<User> = {}
 	): Promise<User | undefined> {
 		const user = remult.repo(User).findOne({ where: { id }, include });
+		return remult.repo(User).toJson(user);
+	}
+
+	@BackendMethod({ allowed: false })
+	static async findOne(
+		where: EntityFilter<User>,
+		include: MembersToInclude<User> = {}
+	): Promise<User | undefined> {
+		const user = remult.repo(User).findOne({ where, include });
 		return remult.repo(User).toJson(user);
 	}
 
