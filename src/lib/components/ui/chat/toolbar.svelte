@@ -2,7 +2,7 @@
 	import { Separator } from '$shadcn/separator';
 	import type { Group } from '$shared/modules/groups/group.entity';
 	import type { CreateGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
-	import CreateGroupDialog from '$ui/group/create-group-dialog.svelte';
+	import CreateGroupDialog from '$ui/group/dialogs/create-group-dialog.svelte';
 	import GroupMini from '$ui/group/group-mini.svelte';
 	import UserMini from '$ui/user/user-mini.svelte';
 	import type { Infer, SuperValidated } from 'sveltekit-superforms';

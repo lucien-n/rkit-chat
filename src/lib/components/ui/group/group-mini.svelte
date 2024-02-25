@@ -14,7 +14,7 @@
 	import { Person, Trash } from 'radix-icons-svelte';
 	import { toast } from 'svelte-sonner';
 	import { scale } from 'svelte/transition';
-	import ConfirmDeleteGroupDialog from './confirm-delete-group-dialog.svelte';
+	import ConfirmDeleteGroupDialog from './dialogs/confirm-delete-group-dialog.svelte';
 
 	export let group: Group;
 

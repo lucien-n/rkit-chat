@@ -1,9 +1,9 @@
 <script lang="ts">
 	import * as Dialog from '$shadcn/dialog';
-	import type { Infer, SuperValidated } from 'sveltekit-superforms';
-	import CreateGroupForm from './create-group-form.svelte';
 	import type { CreateGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
 	import { Plus } from 'radix-icons-svelte';
+	import type { Infer, SuperValidated } from 'sveltekit-superforms';
+	import CreateGroupForm from '../forms/create-group-form.svelte';
 
 	export let form: SuperValidated<Infer<CreateGroupSchema>>;
 </script>
