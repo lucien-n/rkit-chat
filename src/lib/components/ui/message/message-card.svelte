@@ -25,7 +25,10 @@
 			() => toast.success('Message deleted!')
 		);
 
-	const toggleEditMode = () => (editing = !editing);
+	const enterEditMode = () => {
+		editing = true;
+		updatedMessageContent = message.content;
+	};
 
 	const handleSaveMessage = () =>
 		contry(
@@ -86,7 +89,7 @@
 		</div>
 	</ContextMenu.Trigger>
 	<ContextMenu.Content>
-		<ContextMenu.Item class="space-x-1" on:click={toggleEditMode}>
+		<ContextMenu.Item class="space-x-1" on:click={enterEditMode}>
 			<Pencil1 />
 			<p>Edit</p>
 		</ContextMenu.Item>
