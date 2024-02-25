@@ -1,4 +1,6 @@
-import type { ZodType, z } from 'zod';
+import type { Rule } from './types';
+import { z, type ZodType } from 'zod';
+import { capitalize } from './helpers';
 
 export const parseZSchema = <Schema extends ZodType>(inputs: z.infer<Schema>, schema: Schema) => {
 	const result = schema.safeParse(inputs);
@@ -7,4 +9,23 @@ export const parseZSchema = <Schema extends ZodType>(inputs: z.infer<Schema>, sc
 	}
 
 	return result.data as z.infer<Schema>;
+};
+
+export const getZString = (
+	name: string,
+	rule: Rule,
+	defaultValue: string | undefined = undefined
+): z.ZodString => {
+	const capitalizedName = capitalize(name);
+	const zString = z
+		.string({
+			invalid_type_error: `${capitalizedName} needs to be a string`,
+			required_error: `${capitalizedName} is required`
+		})
+		.min(rule.min)
+		.max(rule.max);
+
+	if (defaultValue) zString.default(defaultValue);
+
+	return zString;
 };
