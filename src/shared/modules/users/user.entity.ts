@@ -16,6 +16,9 @@ export class User {
 	@Fields.updatedAt()
 	updatedAt!: Date;
 
+	@Fields.string()
+	handle!: string;
+
 	@Fields.string(getStringOptions(userRules.username))
 	username!: string;
 

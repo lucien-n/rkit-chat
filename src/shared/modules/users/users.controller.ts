@@ -1,5 +1,7 @@
 import { User } from './user.entity';
+import userRules from './user.rules';
 import type { AuthUser } from '../auth/auth_user.entity';
+import { toHandle, validateString } from '$shared/helpers/helpers';
 import { UserSettings } from '../user-settings/user-settings.entity';
 import { BackendMethod, Controller, remult, type MembersToInclude } from 'remult';
 
@@ -19,7 +21,10 @@ export class UsersController {
 		const existingUser = await remult.repo(User).findOne({ where: { id: authUser.id } });
 		if (existingUser) return existingUser;
 
-		const user = await remult.repo(User).insert({ id: authUser.id, username });
+		const handle = toHandle(username);
+		if (!validateString(handle, userRules.handle)) throw 'Invalid username';
+
+		const user = await remult.repo(User).insert({ id: authUser.id, username, handle });
 
 		const settings = await remult.repo(UserSettings).insert({ id: user.id });
 		await remult.repo(User).update(user.id, { settings });
