@@ -23,7 +23,7 @@
 		</a>
 	</HoverCard.Trigger>
 	<HoverCard.Content align="center" side="right" class="ml-2">
-		<Large>{user?.username}</Large>
+		<Large>@{user?.handle}</Large>
 		<Muted><strong> {moment(user?.createdAt).format('MMMM DD YYYY')}</strong></Muted>
 	</HoverCard.Content>
 </HoverCard.Root>
