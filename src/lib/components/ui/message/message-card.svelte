@@ -51,12 +51,12 @@
 <ContextMenu.Root>
 	<ContextMenu.Trigger>
 		<div
-			class="duration-50 my-1 flex w-full gap-3 rounded-2xl px-2 py-1 transition-all ease-in-out hover:bg-muted/30"
+			class="duration-50 my-1 flex w-full gap-3 rounded-2xl px-2 py-1 transition-all ease-in-out hover:bg-muted/10"
 		>
 			<div class="self-center">
 				<UserMini user={message.author} />
 			</div>
-			<div class="flex-col">
+			<div class="w-full flex-col">
 				<div class="flex items-center gap-2">
 					<Button variant="link" href={urls.app.user.root + '/' + message.author?.id} class="px-0">
 						<Large>
@@ -70,11 +70,17 @@
 						{/if}
 					</Muted>
 				</div>
-				{#if editing}
-					<Input bind:value={message.content} on:keydown={handleKeyDown} class="w-full" />
-				{:else}
-					<p>{message.content}</p>
-				{/if}
+				<div class="w-full">
+					{#if editing}
+						<Input
+							bind:value={message.content}
+							on:keydown={handleKeyDown}
+							class="w-full border-0 bg-muted/20"
+						/>
+					{:else}
+						<p>{message.content}</p>
+					{/if}
+				</div>
 			</div>
 		</div>
 	</ContextMenu.Trigger>
