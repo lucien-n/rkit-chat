@@ -6,13 +6,19 @@
 		type CreateGroupSchema
 	} from '$shared/modules/groups/schemas/create-group.schema';
 	import { Plus } from 'radix-icons-svelte';
+	import { createEventDispatcher } from 'svelte';
 	import { superForm, type SuperValidated } from 'sveltekit-superforms';
 	import { zodClient, type Infer } from 'sveltekit-superforms/adapters';
 
 	export let data: SuperValidated<Infer<CreateGroupSchema>>;
 
+	const dispatch = createEventDispatcher();
+
 	const form = superForm(data, {
-		validators: zodClient(createGroupSchema)
+		validators: zodClient(createGroupSchema),
+		onResult: ({ result }) => {
+			dispatch(result.type, result);
+		}
 	});
 
 	const { form: formData, enhance, submitting } = form;
