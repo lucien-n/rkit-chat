@@ -1,7 +1,8 @@
-import messageRules from './message.rules';
-import { User } from '../users/user.entity';
-import { Group } from '../groups/group.entity';
+import { getStringOptions } from '$shared/helpers/helpers';
 import { Entity, Fields, Relations } from 'remult';
+import { Group } from '../groups/group.entity';
+import { User } from '../users/user.entity';
+import messageRules from './message.rules';
 
 @Entity<Message>('messages')
 export class Message {
@@ -14,7 +15,7 @@ export class Message {
 	@Fields.updatedAt()
 	updatedAt!: Date;
 
-	@Fields.string({ minLength: messageRules.content.min, maxLength: messageRules.content.max })
+	@Fields.string(getStringOptions(messageRules.content))
 	content!: string;
 
 	@Fields.boolean()

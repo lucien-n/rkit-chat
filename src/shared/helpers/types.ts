@@ -3,6 +3,6 @@ export type Rule = {
 	max: number;
 };
 
-export type RuleSet = Record<string, Rule>;
+export type RuleSet<T extends object, K extends keyof T> = Record<K, Rule>;
 
 export type RemultError = { message: string; url: string; status: number };

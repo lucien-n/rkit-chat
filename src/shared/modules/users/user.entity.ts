@@ -1,5 +1,7 @@
+import userRules from './user.rules';
 import { Entity, Fields, Relations } from 'remult';
 import { AuthUser } from '../auth/auth_user.entity';
+import { getStringOptions } from '$shared/helpers/helpers';
 import { UserSettings } from '../user-settings/user-settings.entity';
 import { GroupsToUsers } from '../groups-to-users/groups-to-users.entity';
 
@@ -14,8 +16,8 @@ export class User {
 	@Fields.updatedAt()
 	updatedAt!: Date;
 
-	@Fields.string()
-	username?: string;
+	@Fields.string(getStringOptions(userRules.username))
+	username!: string;
 
 	@Relations.toOne(() => AuthUser, { field: 'id' })
 	user?: AuthUser;
