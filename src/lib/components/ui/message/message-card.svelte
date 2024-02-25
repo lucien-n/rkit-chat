@@ -14,6 +14,7 @@
 
 	export let message: Message;
 
+	let updatedMessageContent: string = message.content;
 	let editing = false;
 
 	const handleDeleteMessage = () =>
@@ -29,7 +30,7 @@
 	const handleSaveMessage = () =>
 		contry(
 			async () => {
-				await MessagesController.updateMessage(message.id, message.content);
+				await MessagesController.updateMessage(message.id, updatedMessageContent);
 			},
 			() => {
 				editing = false;
@@ -73,7 +74,7 @@
 				<div class="w-full">
 					{#if editing}
 						<Input
-							bind:value={message.content}
+							bind:value={updatedMessageContent}
 							on:keydown={handleKeyDown}
 							class="w-full border-0 bg-muted/20"
 						/>
