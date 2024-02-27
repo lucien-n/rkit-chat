@@ -11,10 +11,11 @@
 	import { userStore } from '$stores/stores';
 	import { Large } from '$typography';
 	import Muted from '$typography/muted.svelte';
-	import { Person, Trash } from 'radix-icons-svelte';
+	import { Exit, Person, Trash } from 'radix-icons-svelte';
 	import { toast } from 'svelte-sonner';
 	import { scale } from 'svelte/transition';
 	import ConfirmDeleteGroupDialog from './dialogs/confirm-delete-group-dialog.svelte';
+	import type { MenuItem } from '$custom/menu/types';
 
 	export let group: Group;
 
@@ -36,11 +37,19 @@
 	const handleDeleteClick = () => {
 		openDeleteDialog = true;
 	};
+
+	const handleLeaveClick = () => {
+		toast.info(`leaving ${group.id}`);
+	};
+
+	const menuItems: MenuItem[] = [
+		{ label: 'Leave', icon: Exit, onClick: handleLeaveClick },
+		{ type: 'separator', hidden: !isAdmin },
+		{ label: 'Delete', icon: Trash, onClick: handleDeleteClick, hidden: !isAdmin }
+	];
 </script>
 
-<CustomContextMenu
-	items={[{ label: 'Delete', icon: Trash, onClick: handleDeleteClick, hidden: !isAdmin }]}
->
+<CustomContextMenu items={menuItems}>
 	<HoverCard.Root openDelay={50} closeDelay={50}>
 		<HoverCard.Trigger class="relative flex" href={getGroupUrl(group)}>
 			{#if isCurrent}
