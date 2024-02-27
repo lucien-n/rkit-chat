@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { getPercentage } from '$helpers/helper';
 	import * as Form from '$shadcn/form';
-	import { Textarea } from '$shadcn/textarea';
 	import messageRules from '$shared/modules/messages/message.rules';
 	import {
 		createMessageSchema,
 		type CreateMessageSchema
 	} from '$shared/modules/messages/schemas/create-message.schema';
+	import DynamicTextarea from '$ui/chat/dynamic-textarea.svelte';
 	import { PaperPlane } from 'radix-icons-svelte';
 	import { fade } from 'svelte/transition';
 	import { superForm, type Infer, type SuperValidated } from 'sveltekit-superforms';
@@ -20,22 +20,19 @@
 	});
 
 	const { form: formData, enhance } = form;
-
-	$: rows = $formData.content.split('\n').length;
 </script>
 
 <form action="?/createMessage" method="post" class="flex gap-1" use:enhance>
 	<Form.Field {form} name="content" class="w-full">
 		<Form.Control let:attrs>
 			<div class="relative">
-				<Textarea
+				<DynamicTextarea
 					{...attrs}
 					bind:value={$formData.content}
 					placeholder="Type your message..."
 					class="min-h-0 w-full resize-none overflow-hidden"
 					minlength={messageRules.content.min}
 					maxlength={messageRules.content.max}
-					{rows}
 				/>
 
 				{#if getPercentage($formData.content.length, messageRules.content.max) > 75}
