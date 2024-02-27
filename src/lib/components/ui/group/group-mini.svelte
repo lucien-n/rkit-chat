@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import CustomContextMenu from '$custom/menu/custom-context-menu.svelte';
 	import { getGroupUrl } from '$lib/urls';
 	import * as Avatar from '$shadcn/avatar';
 	import { Badge } from '$shadcn/badge';
-	import * as ContextMenu from '$shadcn/context-menu';
 	import * as HoverCard from '$shadcn/hover-card';
 	import type { RemultError } from '$shared/helpers/types';
 	import type { Group } from '$shared/modules/groups/group.entity';
@@ -19,7 +19,7 @@
 	export let group: Group;
 
 	$: isCurrent = $page.params.groupId === group.id;
-	$: isAdmin = $userStore?.id === group.adminId;
+	const isAdmin = $userStore?.id === group.adminId;
 
 	let openDeleteDialog = false;
 
@@ -38,41 +38,35 @@
 	};
 </script>
 
-<ContextMenu.Root>
-	<ContextMenu.Trigger>
-		<HoverCard.Root openDelay={50} closeDelay={50}>
-			<HoverCard.Trigger class="relative flex" href={getGroupUrl(group)}>
-				{#if isCurrent}
-					<div
-						class="absolute -left-3 h-5/6 w-[.4rem] self-center rounded-r-md bg-primary"
-						transition:scale
-					/>
+<CustomContextMenu
+	items={[{ label: 'Delete', icon: Trash, onClick: handleDeleteClick, hidden: !isAdmin }]}
+>
+	<HoverCard.Root openDelay={50} closeDelay={50}>
+		<HoverCard.Trigger class="relative flex" href={getGroupUrl(group)}>
+			{#if isCurrent}
+				<div
+					class="absolute -left-3 h-5/6 w-[.4rem] self-center rounded-r-md bg-primary"
+					transition:scale
+				/>
+			{/if}
+			<Avatar.Root>
+				<Avatar.Image />
+				<Avatar.Fallback>{group.name?.slice(0, 2)}</Avatar.Fallback>
+			</Avatar.Root>
+		</HoverCard.Trigger>
+		<HoverCard.Content align="center" side="right" class="ml-2">
+			<div class="flex gap-2">
+				<Large>{group.name}</Large>
+				{#if isAdmin}
+					<Badge>Admin</Badge>
 				{/if}
-				<Avatar.Root>
-					<Avatar.Image />
-					<Avatar.Fallback>{group.name?.slice(0, 2)}</Avatar.Fallback>
-				</Avatar.Root>
-			</HoverCard.Trigger>
-			<HoverCard.Content align="center" side="right" class="ml-2">
-				<div class="flex gap-2">
-					<Large>{group.name}</Large>
-					{#if isAdmin}
-						<Badge>Admin</Badge>
-					{/if}
-				</div>
-				<div class="flex items-center gap-1">
-					<Person />
-					<Muted>{group.userCount}</Muted>
-				</div>
-			</HoverCard.Content>
-		</HoverCard.Root>
-	</ContextMenu.Trigger>
-	<ContextMenu.Content class="w-64">
-		<ContextMenu.Item class="space-x-1" on:click={handleDeleteClick}>
-			<Trash />
-			<p>Delete</p>
-		</ContextMenu.Item>
-	</ContextMenu.Content>
-</ContextMenu.Root>
+			</div>
+			<div class="flex items-center gap-1">
+				<Person />
+				<Muted>{group.userCount}</Muted>
+			</div>
+		</HoverCard.Content>
+	</HoverCard.Root>
+</CustomContextMenu>
 
 <ConfirmDeleteGroupDialog {group} bind:open={openDeleteDialog} on:confirm={handleDeleteGroup} />
