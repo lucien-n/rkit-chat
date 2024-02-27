@@ -8,6 +8,7 @@
 	import * as ContextMenu from '$shadcn/context-menu';
 	import { Message } from '$shared/modules/messages/message.entity';
 	import { MessagesController } from '$shared/modules/messages/messages.controller';
+	import { userStore } from '$stores/stores';
 	import { Large, Muted, Tiny } from '$typography';
 	import DynamicTextarea from '$ui/chat/dynamic-textarea.svelte';
 	import UserMini from '$ui/user/user-mini.svelte';
@@ -102,15 +103,17 @@
 			</div>
 		</div>
 	</ContextMenu.Trigger>
-	<ContextMenu.Content>
-		<ContextMenu.Item class="space-x-1" on:click={enterEditMode}>
-			<Pencil1 />
-			<p>Edit</p>
-		</ContextMenu.Item>
-		<ContextMenu.Separator class="mx-1" />
-		<ContextMenu.Item class="space-x-1" on:click={handleDeleteMessage}>
-			<Trash />
-			<p>Delete</p>
-		</ContextMenu.Item>
-	</ContextMenu.Content>
+	{#if message.authorId === $userStore?.id}
+		<ContextMenu.Content>
+			<ContextMenu.Item class="space-x-1" on:click={enterEditMode}>
+				<Pencil1 />
+				<p>Edit</p>
+			</ContextMenu.Item>
+			<ContextMenu.Separator class="mx-1" />
+			<ContextMenu.Item class="space-x-1" on:click={handleDeleteMessage}>
+				<Trash />
+				<p>Delete</p>
+			</ContextMenu.Item>
+		</ContextMenu.Content>
+	{/if}
 </ContextMenu.Root>
