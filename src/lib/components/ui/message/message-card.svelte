@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { contry } from '$helpers/contry';
 	import CodeRenderer from '$lib/components/marked/code-renderer.svelte';
+	import CodespanRenderer from '$lib/components/marked/codespan-renderer.svelte';
 	import LinkRenderer from '$lib/components/marked/link-renderer.svelte';
 	import { getUserUrl } from '$lib/urls';
 	import { Button } from '$shadcn/button';
@@ -94,7 +95,7 @@
 					{:else}
 						<SvelteMarkdown
 							source={message.content}
-							renderers={{ link: LinkRenderer, code: CodeRenderer }}
+							renderers={{ link: LinkRenderer, code: CodeRenderer, codespan: CodespanRenderer }}
 						/>
 					{/if}
 				</div>
