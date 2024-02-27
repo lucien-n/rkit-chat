@@ -1,4 +1,3 @@
-import { toast } from 'svelte-sonner';
 import type { RemultError } from '$shared/helpers/types';
 
 /**
@@ -10,12 +9,8 @@ import type { RemultError } from '$shared/helpers/types';
  */
 export const contry = async <T>(
 	action: () => Promise<void>,
-	onSuccess: (result: T) => void = () => {
-		toast.success('Success!');
-	},
-	onError: (error: RemultError) => void = (error) => {
-		toast.error(error.message);
-	}
+	onSuccess: (result: T) => void = () => ({}),
+	onError: (error: RemultError) => void = () => ({})
 ) => {
 	try {
 		const result = await action();
