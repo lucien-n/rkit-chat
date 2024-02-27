@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import { Group } from './group.entity';
 import { parseZSchema } from '$shared/helpers/zod';
 import { AuthError, Error } from '$shared/helpers/errors';
@@ -42,7 +43,8 @@ export class GroupsController {
 		const user = await UsersController.findById(authUser.id);
 		if (!user) throw AuthError.UserNotFound;
 
-		const group = await remult.repo(Group).insert({ name, adminId: authUser.id, userCount: 1 });
+		const id = nanoid();
+		const group = await remult.repo(Group).insert({ id, name, adminId: authUser.id, userCount: 1 });
 		await remult
 			.repo(Group)
 			.relations(group)
