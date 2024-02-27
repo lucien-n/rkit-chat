@@ -26,7 +26,10 @@
 				{:else}
 					{@const { label, onClick, icon } = item}
 
-					<ContextMenu.Item class="space-x-1" on:click={onClick}>
+					<ContextMenu.Item
+						class={cn('space-x-1', onClick && 'hover:cursor-pointer')}
+						on:click={onClick}
+					>
 						{#if icon}
 							<svelte:component this={icon} />
 						{/if}
