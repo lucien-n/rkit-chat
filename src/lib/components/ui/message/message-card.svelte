@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { contry } from '$helpers/contry';
-	import LinkRenderer from '$lib/components/marked-renderers/link-renderer.svelte';
+	import CodeRenderer from '$lib/components/marked/code-renderer.svelte';
+	import LinkRenderer from '$lib/components/marked/link-renderer.svelte';
 	import { getUserUrl } from '$lib/urls';
 	import { Button } from '$shadcn/button';
 	import * as ContextMenu from '$shadcn/context-menu';
@@ -93,7 +94,10 @@
 							</Button>
 						</div>
 					{:else}
-						<SvelteMarkdown source={message.content} renderers={{ link: LinkRenderer }} />
+						<SvelteMarkdown
+							source={message.content}
+							renderers={{ link: LinkRenderer, code: CodeRenderer }}
+						/>
 					{/if}
 				</div>
 			</div>
