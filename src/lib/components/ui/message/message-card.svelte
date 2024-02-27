@@ -25,7 +25,8 @@
 			async () => {
 				await MessagesController.deleteMessage(message.id);
 			},
-			() => toast.success('Message deleted!')
+			() => toast.success('Message deleted!'),
+			() => toast.success('An error occured')
 		);
 
 	const enterEditMode = () => {
@@ -38,18 +39,15 @@
 	};
 
 	const handleSaveMessage = () =>
-		contry(
-			async () => {
-				await MessagesController.updateMessage(message.id, updatedMessageContent);
-			},
-			() => {
-				editing = false;
-			}
-		);
+		contry(async () => {
+			await MessagesController.updateMessage(message.id, updatedMessageContent);
+		});
 
-	const handleKeyDown = (event: CustomEvent<KeyboardEvent>) => {
-		switch (event.detail.key) {
+	const handleKeyDown = (event: KeyboardEvent) => {
+		switch (event.key) {
 			case 'Enter':
+				if (event.shiftKey) break;
+				editing = false;
 				handleSaveMessage();
 				break;
 			case 'Escape':
