@@ -1,8 +1,8 @@
-import { getStringOptions } from '$shared/helpers/helpers';
-import { Entity, Fields, Relations } from 'remult';
-import { Group } from '../groups/group.entity';
-import { User } from '../users/user.entity';
 import messageRules from './message.rules';
+import { User } from '../users/user.entity';
+import { Group } from '../groups/group.entity';
+import { Entity, Fields, Relations } from 'remult';
+import { getStringOptions } from '$shared/helpers/helpers';
 
 @Entity<Message>('messages')
 export class Message {
