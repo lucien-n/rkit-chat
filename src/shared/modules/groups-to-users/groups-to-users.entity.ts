@@ -2,6 +2,7 @@ import { Group } from '../groups/group.entity';
 import { Entity, Fields, Relations } from 'remult';
 
 @Entity<GroupsToUsers>('groups_to_users', {
+	allowApiCrud: false,
 	id: {
 		userId: true,
 		groupId: true

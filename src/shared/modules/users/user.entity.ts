@@ -1,11 +1,11 @@
 import userRules from './user.rules';
-import { Entity, Fields, Relations } from 'remult';
 import { AuthUser } from '../auth/auth_user.entity';
+import { Entity, Fields, Relations, remult } from 'remult';
 import { getStringOptions } from '$shared/helpers/helpers';
 import { UserSettings } from '../user-settings/user-settings.entity';
 import { GroupsToUsers } from '../groups-to-users/groups-to-users.entity';
 
-@Entity<User>('users', { allowApiCrud: true, id: { id: true } }) // !temp allowApiCrud
+@Entity<User>('users', { apiPrefilter: () => ({ id: remult.user?.id }), id: { id: true } }) // !temp allowApiCrud
 export class User {
 	@Fields.string()
 	id!: string;

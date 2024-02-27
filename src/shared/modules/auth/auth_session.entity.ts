@@ -1,7 +1,7 @@
-import { Entity, Fields, Relations } from 'remult';
 import { AuthUser } from './auth_user.entity';
+import { Entity, Fields, Relations } from 'remult';
 
-@Entity<AuthSession>('auth_sessions')
+@Entity<AuthSession>('auth_sessions', { allowApiCrud: false })
 export class AuthSession {
 	@Fields.uuid()
 	id!: string;

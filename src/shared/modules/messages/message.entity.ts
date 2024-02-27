@@ -4,7 +4,7 @@ import { Group } from '../groups/group.entity';
 import { Entity, Fields, Relations } from 'remult';
 import { getStringOptions } from '$shared/helpers/helpers';
 
-@Entity<Message>('messages')
+@Entity<Message>('messages', { allowApiCrud: false })
 export class Message {
 	@Fields.uuid()
 	id!: string;

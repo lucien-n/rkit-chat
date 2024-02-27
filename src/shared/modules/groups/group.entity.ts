@@ -4,7 +4,7 @@ import { Entity, Fields, Relations } from 'remult';
 import { getStringOptions } from '$shared/helpers/helpers';
 import { GroupsToUsers } from '../groups-to-users/groups-to-users.entity';
 
-@Entity<Group>('groups', { id: { id: true } })
+@Entity<Group>('groups', { allowApiCrud: false, id: { id: true } })
 export class Group {
 	@Fields.string()
 	id!: string;

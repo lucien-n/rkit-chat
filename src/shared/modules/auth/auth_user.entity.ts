@@ -1,6 +1,6 @@
 import { Entity, Fields } from 'remult';
 
-@Entity<AuthUser>('auth_users')
+@Entity<AuthUser>('auth_users', { allowApiCrud: false })
 export class AuthUser {
 	@Fields.uuid()
 	id!: string;
