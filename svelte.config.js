@@ -18,6 +18,8 @@ const config = {
 			$shared: './src/shared',
 			$typography: './src/lib/components/typography',
 			$ui: './src/lib/components/ui',
+			$custom: './src/lib/components/custom',
+			$marked: './src/lib/components/marked',
 			$layouts: './src/lib/components/layouts',
 			$helpers: './src/lib/helpers',
 			$contexts: './src/lib/contexts',
