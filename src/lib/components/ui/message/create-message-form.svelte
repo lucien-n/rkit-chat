@@ -19,7 +19,14 @@
 		resetForm: true
 	});
 
-	const { form: formData, enhance } = form;
+	const { form: formData, enhance, submit } = form;
+
+	const handleKeyDown = (e: KeyboardEvent) => {
+		if (e.key === 'Enter' && !e.shiftKey) {
+			e.preventDefault();
+			submit();
+		}
+	};
 </script>
 
 <form action="?/createMessage" method="post" class="flex gap-1" use:enhance>
@@ -33,6 +40,7 @@
 					class="min-h-0 w-full resize-none overflow-hidden"
 					minlength={messageRules.content.min}
 					maxlength={messageRules.content.max}
+					on:keydown={handleKeyDown}
 				/>
 
 				{#if getPercentage($formData.content.length, messageRules.content.max) > 75}
