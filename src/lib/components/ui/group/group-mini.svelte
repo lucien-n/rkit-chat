@@ -50,7 +50,6 @@
 
 	const menuItems: MenuItem[] = [
 		{ label: 'Leave', icon: Exit, onClick: handleLeaveClick, hidden: isAdmin },
-		{ type: 'separator', hidden: !isAdmin },
 		{ label: 'Delete', icon: Trash, onClick: handleDeleteClick, hidden: !isAdmin }
 	];
 </script>
