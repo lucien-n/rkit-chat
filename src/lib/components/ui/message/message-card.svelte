@@ -5,10 +5,10 @@
 	import { getUserUrl } from '$lib/urls';
 	import { Button } from '$shadcn/button';
 	import * as ContextMenu from '$shadcn/context-menu';
-	import { Input } from '$shadcn/input';
 	import { Message } from '$shared/modules/messages/message.entity';
 	import { MessagesController } from '$shared/modules/messages/messages.controller';
 	import { Large, Muted, Tiny } from '$typography';
+	import DynamicTextarea from '$ui/chat/dynamic-textarea.svelte';
 	import UserMini from '$ui/user/user-mini.svelte';
 	import moment from 'moment';
 	import { Cross2, Pencil1, Trash } from 'radix-icons-svelte';
@@ -47,8 +47,8 @@
 			}
 		);
 
-	const handleKeyDown = (event: KeyboardEvent) => {
-		switch (event.key) {
+	const handleKeyDown = (event: CustomEvent<KeyboardEvent>) => {
+		switch (event.detail.key) {
 			case 'Enter':
 				handleSaveMessage();
 				break;
@@ -83,11 +83,11 @@
 				</div>
 				<div class="w-full">
 					{#if editing}
-						<div class="flex gap-2">
-							<Input
+						<div class="my-2 flex gap-2">
+							<DynamicTextarea
 								bind:value={updatedMessageContent}
 								on:keydown={handleKeyDown}
-								class="w-full border-0 bg-muted/20"
+								class="w-full border-0 bg-muted/20 text-base"
 							/>
 							<Button size="icon" variant="ghost" on:click={exitEditMode}>
 								<Cross2 />
