@@ -1,10 +1,20 @@
 <script lang="ts">
+	import { copyToClipboard } from '$helpers/helper';
 	import { Button } from '$shadcn/button';
 	import { ClipboardCopy } from 'radix-icons-svelte';
+	import { toast } from 'svelte-sonner';
 
 	export let text: string;
 
-	const handleCopy = () => {};
+	const handleCopy = async () => {
+		copyToClipboard(
+			text,
+			() => {
+				toast.success('Codespan copied to clipboard!');
+			},
+			(_, reason) => toast.error(`Couldn't copy to clipboard: ${reason}`)
+		);
+	};
 </script>
 
 <div class="inline-block w-fit rounded-lg border">
