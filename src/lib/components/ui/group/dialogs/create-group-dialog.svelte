@@ -12,7 +12,7 @@
 </script>
 
 <Dialog.Root bind:open>
-	<Dialog.Trigger class="flex h-14 w-14 items-center justify-center rounded-2xl border">
+	<Dialog.Trigger class="flex h-14 w-14 items-center justify-center rounded-lg border">
 		<Plus size={16} />
 	</Dialog.Trigger>
 	<Dialog.Content class="sm:max-w-[425px]">

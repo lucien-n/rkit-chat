@@ -35,7 +35,7 @@
 		}
 
 		.hljs {
-			@apply rounded-2xl bg-[#282c34] text-[#abb2bf];
+			@apply rounded-lg bg-[#282c34] text-[#abb2bf];
 		}
 
 		.hljs-comment,

@@ -9,7 +9,7 @@
 
 <div class="flex h-full w-full gap-6 p-6">
 	<Toolbar {groups} {groupForm} />
-	<div class="flex h-full w-full flex-col gap-4 rounded-md border">
+	<div class="flex h-full w-full flex-col gap-4 rounded-lg border">
 		<slot />
 	</div>
 </div>

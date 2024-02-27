@@ -62,7 +62,7 @@
 <ContextMenu.Root>
 	<ContextMenu.Trigger>
 		<div
-			class="duration-50 my-1 flex w-full gap-3 rounded-2xl px-2 py-1 transition-all ease-in-out hover:bg-muted/10"
+			class="duration-50 my-1 flex w-full gap-3 rounded-lg px-2 py-1 transition-all ease-in-out hover:bg-muted/10"
 		>
 			<div class="mt-2 self-start">
 				<UserMini user={message.author} />
