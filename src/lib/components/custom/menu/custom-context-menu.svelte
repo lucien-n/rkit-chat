@@ -10,26 +10,30 @@
 	export { className as class };
 
 	export let items: MenuItem[];
+
+	$: shownItems = items.filter(({ hidden }) => !hidden);
 </script>
 
 <ContextMenu.Root>
 	<ContextMenu.Trigger>
 		<slot />
 	</ContextMenu.Trigger>
-	<ContextMenu.Content class={cn(className)}>
-		{#each items as item}
-			{#if item.type === 'separator'}
-				<ContextMenu.Separator class="mx-1" />
-			{:else}
-				{@const { label, onClick, icon } = item}
+	{#if shownItems.filter(({ type }) => type !== 'separator').length}
+		<ContextMenu.Content class={cn(className)}>
+			{#each shownItems as item}
+				{#if item.type === 'separator'}
+					<ContextMenu.Separator class="mx-1" />
+				{:else}
+					{@const { label, onClick, icon } = item}
 
-				<ContextMenu.Item class="space-x-1" on:click={onClick}>
-					{#if icon}
-						<svelte:component this={icon} />
-					{/if}
-					<p>{label}</p>
-				</ContextMenu.Item>
-			{/if}
-		{/each}
-	</ContextMenu.Content>
+					<ContextMenu.Item class="space-x-1" on:click={onClick}>
+						{#if icon}
+							<svelte:component this={icon} />
+						{/if}
+						<p>{label}</p>
+					</ContextMenu.Item>
+				{/if}
+			{/each}
+		</ContextMenu.Content>
+	{/if}
 </ContextMenu.Root>

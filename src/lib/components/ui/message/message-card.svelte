@@ -16,11 +16,14 @@
 	import { toast } from 'svelte-sonner';
 	import type { MenuItem } from '$custom/menu/types';
 	import CustomContextMenu from '$custom/menu/custom-context-menu.svelte';
+	import { userStore } from '$stores/stores';
 
 	export let message: Message;
 
 	let updatedMessageContent: string = message.content;
 	let editing = false;
+
+	const isAuthor = () => message.authorId === $userStore?.id;
 
 	const handleDeleteMessage = () =>
 		contry(
@@ -62,13 +65,15 @@
 		{
 			label: 'Edit',
 			onClick: enterEditMode,
-			icon: Pencil1
+			icon: Pencil1,
+			hidden: !isAuthor()
 		},
 		{ type: 'separator' },
 		{
 			label: 'Delete',
 			onClick: handleDeleteMessage,
-			icon: Trash
+			icon: Trash,
+			hidden: !isAuthor()
 		}
 	];
 </script>
