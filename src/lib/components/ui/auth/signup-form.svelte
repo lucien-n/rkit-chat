@@ -24,6 +24,7 @@
 				type="text"
 				placeholder="Username"
 				class="w-full"
+				autocomplete="additional-name"
 				required
 			/>
 		</Form.Control>
@@ -39,6 +40,7 @@
 				type="email"
 				placeholder="john.doe@mail.com"
 				class="w-full"
+				autocomplete="username"
 				required
 			/>
 		</Form.Control>
@@ -55,6 +57,7 @@
 				type="password"
 				placeholder="●●●●●●●●"
 				class="w-full"
+				autocomplete="new-password"
 				required
 			/>
 		</Form.Control>

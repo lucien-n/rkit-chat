@@ -24,6 +24,7 @@
 				type="email"
 				placeholder="john.doe@mail.com"
 				class="w-full"
+				autocomplete="username"
 				required
 			/>
 		</Form.Control>
@@ -40,6 +41,7 @@
 				type="password"
 				placeholder="●●●●●●●●"
 				class="w-full"
+				autocomplete="current-password"
 				required
 			/>
 		</Form.Control>
