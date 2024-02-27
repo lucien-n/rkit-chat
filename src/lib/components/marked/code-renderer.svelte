@@ -29,8 +29,7 @@
 			@apply px-[3px] py-[5px];
 		}
 
-		code.hljs > *,
-		hljs-built_in {
+		code.hljs > * {
 			@apply font-mono;
 		}
 
@@ -92,7 +91,7 @@
 		.hljs-built_in,
 		.hljs-title.class_,
 		.hljs-class .hljs-title {
-			@apply text-[#e6c07b];
+			@apply font-mono text-[#e6c07b];
 		}
 
 		.hljs-emphasis {
