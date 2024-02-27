@@ -3,6 +3,10 @@
 	import { markedHighlight } from 'marked-highlight';
 	import hljs from 'highlight.js';
 	import { Badge } from '$shadcn/badge';
+	import { copyToClipboard } from '$helpers/helper';
+	import { toast } from 'svelte-sonner';
+	import { Button } from '$shadcn/button';
+	import { ClipboardCopy } from 'radix-icons-svelte';
 
 	export let raw: string;
 	export let lang: string = 'plaintext';
@@ -16,6 +20,19 @@
 			}
 		})
 	);
+
+	const handleCopy = async () => {
+		const lines = raw.split('\n');
+		const code = lines.slice(1, lines.length > 1 ? lines.length - 2 : 1).join('\n');
+
+		copyToClipboard(
+			code,
+			() => {
+				toast.success('Code copied to clipboard!');
+			},
+			(_, reason) => toast.error(`Couldn't copy to clipboard: ${reason}`)
+		);
+	};
 </script>
 
 <svelte:head>
@@ -111,7 +128,10 @@
 <div class="relative my-2">
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	{@html marked.parse(raw)}
-	<div class="absolute right-2 top-1 p-3">
+	<div class="absolute right-2 top-1 flex gap-2 p-2">
+		<Button variant="ghost" class="h-6 w-6 p-1" on:click={handleCopy}>
+			<ClipboardCopy />
+		</Button>
 		<Badge>{lang}</Badge>
 	</div>
 </div>
