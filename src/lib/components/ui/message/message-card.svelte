@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { contry } from '$helpers/contry';
+	import LinkRenderer from '$lib/components/marked-renderers/link-renderer.svelte';
 	import { getUserUrl } from '$lib/urls';
 	import { Button } from '$shadcn/button';
 	import * as ContextMenu from '$shadcn/context-menu';
@@ -10,6 +11,7 @@
 	import UserMini from '$ui/user/user-mini.svelte';
 	import moment from 'moment';
 	import { Cross2, Pencil1, Trash } from 'radix-icons-svelte';
+	import SvelteMarkdown from 'svelte-markdown';
 	import { toast } from 'svelte-sonner';
 
 	export let message: Message;
@@ -91,7 +93,7 @@
 							</Button>
 						</div>
 					{:else}
-						<p>{message.content}</p>
+						<SvelteMarkdown source={message.content} renderers={{ link: LinkRenderer }} />
 					{/if}
 				</div>
 			</div>
