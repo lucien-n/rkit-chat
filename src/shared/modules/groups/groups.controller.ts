@@ -83,6 +83,25 @@ export class GroupsController {
 		await GroupsController.calculateUserCount(groupId);
 	}
 
+	@BackendMethod({ allowed: Allow.authenticated })
+	static async leave(groupId: string) {
+		const failMessage = 'Failed to leave group';
+
+		const authUser = remult.user;
+		if (!authUser) throw failMessage;
+
+		const user = await UsersController.findById(authUser.id);
+		if (!user) throw failMessage;
+
+		const group = await GroupsController.findById(groupId);
+		if (!group) throw failMessage;
+
+		const isAdmin = authUser.id === group.adminId;
+		if (isAdmin) throw failMessage;
+
+		await GroupsController.removeUser(authUser.id, groupId);
+	}
+
 	@BackendMethod({ allowed: false })
 	static async calculateUserCount(groupId: string) {
 		const group = await GroupsController.findById(groupId, { users: true });

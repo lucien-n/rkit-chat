@@ -16,6 +16,7 @@
 	import { scale } from 'svelte/transition';
 	import ConfirmDeleteGroupDialog from './dialogs/confirm-delete-group-dialog.svelte';
 	import type { MenuItem } from '$custom/menu/types';
+	import { contry } from '$helpers/contry';
 
 	export let group: Group;
 
@@ -38,12 +39,17 @@
 		openDeleteDialog = true;
 	};
 
-	const handleLeaveClick = () => {
-		toast.info(`leaving ${group.id}`);
-	};
+	const handleLeaveClick = async () =>
+		await contry(
+			async () => {
+				await GroupsController.leave(group.id);
+			},
+			() => toast.success(`Left "${group.name}"`),
+			(error) => toast.error(error.message)
+		);
 
 	const menuItems: MenuItem[] = [
-		{ label: 'Leave', icon: Exit, onClick: handleLeaveClick },
+		{ label: 'Leave', icon: Exit, onClick: handleLeaveClick, hidden: isAdmin },
 		{ type: 'separator', hidden: !isAdmin },
 		{ label: 'Delete', icon: Trash, onClick: handleDeleteClick, hidden: !isAdmin }
 	];
