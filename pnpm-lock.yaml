@@ -20,6 +20,9 @@ dependencies:
   lucia:
     specifier: ^3.0.1
     version: 3.0.1
+  marked-highlight:
+    specifier: ^2.1.1
+    version: 2.1.1(marked@5.1.2)
   mode-watcher:
     specifier: ^0.2.1
     version: 0.2.1(svelte@4.2.12)
@@ -115,9 +118,6 @@ devDependencies:
   svelte-check:
     specifier: ^3.6.4
     version: 3.6.4(postcss-load-config@5.0.3)(postcss@8.4.35)(svelte@4.2.12)
-  svelte-highlight:
-    specifier: ^7.6.0
-    version: 7.6.0
   svelte-radix:
     specifier: ^1.0.1
     version: 1.0.1(svelte@4.2.12)
@@ -2558,6 +2558,14 @@ packages:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
 
+  /marked-highlight@2.1.1(marked@5.1.2):
+    resolution: {integrity: sha512-ktdqwtBne8rim5mb+vvZ9FzElGFb+CHCgkx/g6DSzTjaSrVnxsJdSzB5YgCkknFrcOW+viocM1lGyIjC0oa3fg==}
+    peerDependencies:
+      marked: '>=4 <13'
+    dependencies:
+      marked: 5.1.2
+    dev: false
+
   /marked@5.1.2:
     resolution: {integrity: sha512-ahRPGXJpjMjwSOlBoTMZAK7ATXkli5qCPxZ21TG44rx1KEo44bii4ekgTDQPNRQ4Kh7JMb9Ub1PVk1NxRSsorg==}
     engines: {node: '>= 16'}
@@ -3441,12 +3449,6 @@ packages:
       postcss: 8.4.35
       postcss-scss: 4.0.9(postcss@8.4.35)
       svelte: 4.2.12
-    dev: true
-
-  /svelte-highlight@7.6.0:
-    resolution: {integrity: sha512-J9X1d07iMIKZMAqNAhlkjLX/FS+7R2lPrqVul7i+EleVZIOYvBhtx7ES62bc661a70nKNOS05yr9JAvyQPPOIA==}
-    dependencies:
-      highlight.js: 11.9.0
     dev: true
 
   /svelte-hmr@0.15.3(svelte@4.2.12):
