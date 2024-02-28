@@ -1,10 +1,11 @@
 import { nanoid } from 'nanoid';
 import { Group } from './group.entity';
+import groupRules from './group.rules';
 import { parseZSchema } from '$shared/helpers/zod';
 import { AuthError, Error } from '$shared/helpers/errors';
 import { UsersController } from '../users/users.controller';
 import { GroupsToUsers } from '../groups-to-users/groups-to-users.entity';
-import { BackendMethod, Controller, remult, type MembersToInclude, Allow } from 'remult';
+import { Allow, BackendMethod, Controller, remult, type MembersToInclude } from 'remult';
 import { createGroupSchema, type CreateGroupInput } from './schemas/create-group.schema';
 
 @Controller('GroupsController')
@@ -43,6 +44,9 @@ export class GroupsController {
 		const user = await UsersController.findById(authUser.id);
 		if (!user) throw AuthError.UserNotFound;
 
+		if (user.groupCount >= groupRules.maxGroups)
+			throw `You've reached your group quota (${groupRules.maxGroups})`;
+
 		const id = nanoid();
 		const group = await remult.repo(Group).insert({ id, name, adminId: authUser.id, userCount: 1 });
 		await remult
@@ -61,11 +65,15 @@ export class GroupsController {
 		const group = await GroupsController.findById(groupId, { users: true });
 		if (!group) throw 'Failed to add user to group';
 
+		if (user.groupCount >= groupRules.maxGroups)
+			throw `This user reach his group quota (${groupRules.maxGroups})`;
+
 		const userInGroup = group.users?.find((gtp) => gtp.userId === userId);
 		if (userInGroup) throw 'Failed to add user to group';
 
 		await remult.repo(Group).relations(group).users.insert([{ userId, groupId }]);
 		await GroupsController.calculateUserCount(groupId);
+		await UsersController.calculateGroupCount(userId);
 	}
 
 	@BackendMethod({ allowed: false })
@@ -81,6 +89,7 @@ export class GroupsController {
 
 		await remult.repo(Group).relations(group).users.delete({ userId, groupId });
 		await GroupsController.calculateUserCount(groupId);
+		await UsersController.calculateGroupCount(userId);
 	}
 
 	@BackendMethod({ allowed: Allow.authenticated })

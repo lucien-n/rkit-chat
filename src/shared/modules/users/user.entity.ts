@@ -1,7 +1,7 @@
 import userRules from './user.rules';
 import { AuthUser } from '../auth/auth_user.entity';
-import { Entity, Fields, Relations, remult } from 'remult';
 import { getStringOptions } from '$shared/helpers/helpers';
+import { Entity, Fields, Relations, remult } from 'remult';
 import { UserSettings } from '../user-settings/user-settings.entity';
 import { GroupsToUsers } from '../groups-to-users/groups-to-users.entity';
 
@@ -21,6 +21,9 @@ export class User {
 
 	@Fields.string(getStringOptions(userRules.field.username))
 	username!: string;
+
+	@Fields.integer()
+	groupCount: number = 50;
 
 	@Relations.toOne(() => AuthUser, { field: 'id' })
 	user?: AuthUser;

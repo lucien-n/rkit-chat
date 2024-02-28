@@ -7,5 +7,6 @@ export default {
 			min: 3,
 			max: 32
 		}
-	}
+	},
+	maxGroups: 30
 } satisfies Rule<Group, 'name'>;
