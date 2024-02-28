@@ -12,5 +12,6 @@ export {};
 declare module 'remult' {
 	export interface UserInfo {
 		email: string;
+		groups: string[];
 	}
 }

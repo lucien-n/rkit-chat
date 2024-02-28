@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
 	import { getGroup } from '$contexts/group';
 	import { remultLive } from '$helpers/remultLive';
 	import { Message } from '$shared/modules/messages/message.entity';
@@ -20,10 +19,11 @@
 	let group = getGroup();
 
 	$: browser &&
+		$group &&
 		messages.listen({
 			orderBy: { createdAt: 'asc' },
 			include: { author: true },
-			where: { groupId: $page.params.groupId },
+			where: { groupId: $group.id },
 			limit: 25
 		});
 

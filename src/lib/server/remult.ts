@@ -3,6 +3,7 @@ import type { RequestEvent } from '@sveltejs/kit';
 import { Group } from '$shared/modules/groups/group.entity';
 import { AuthUser } from '$shared/modules/auth/auth_user.entity';
 import { UsersController } from '$shared/modules/users/users.controller';
+import { GroupsController } from '$shared/modules/groups/groups.controller';
 
 export const initApi = async (remult: Remult) => {
 	console.table(await remult.repo(AuthUser).find());
@@ -15,12 +16,14 @@ export const getUser = async (event: RequestEvent): Promise<UserInfo | undefined
 	const { id } = event.locals.authUser;
 
 	const user = await UsersController.findById(id, { user: true });
-
 	if (!user?.user) return undefined;
+
+	const groups = (await GroupsController.findByUser(user.id)) ?? [];
 
 	return {
 		id,
 		name: user.username ?? 'Unknown',
-		email: user.user.email ?? 'unknown-mail'
+		email: user.user.email ?? 'unknown-mail',
+		groups: groups.map(({ id }) => id)
 	};
 };
