@@ -23,7 +23,7 @@ export class User {
 	username!: string;
 
 	@Fields.integer()
-	groupCount: number = 50;
+	groupCount: number = 0;
 
 	@Relations.toOne(() => AuthUser, { field: 'id' })
 	user?: AuthUser;
