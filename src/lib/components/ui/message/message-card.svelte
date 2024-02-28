@@ -36,7 +36,7 @@
 
 	const enterEditMode = () => {
 		editing = true;
-		updatedMessageContent = messdelete;
+		updatedMessageContent = message.content;
 	};
 
 	const exitEditMode = () => {
@@ -53,7 +53,7 @@
 			case 'Enter':
 				if (event.shiftKey) break;
 				editing = false;
-				hupdateage();
+				handleSaveMessage();
 				break;
 			case 'Escape':
 				editing = false;
