@@ -1,5 +1,5 @@
 import type { AuthUser } from './auth_user.entity';
-import type { RuleSet } from '$shared/helpers/types';
+import type { Rule } from '$shared/helpers/types';
 
 export default {
 	field: {
@@ -8,11 +8,9 @@ export default {
 			max: 255
 		}
 	}
-} satisfies {
-	field: RuleSet<
-		AuthUser & {
-			password: string;
-		},
-		'password'
-	>;
-};
+} satisfies Rule<
+	AuthUser & {
+		password: string;
+	},
+	'password'
+>;

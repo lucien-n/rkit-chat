@@ -1,6 +1,6 @@
-import type { Rule } from './types';
 import { z, type ZodType } from 'zod';
 import { capitalize } from './helpers';
+import type { FieldRule } from './types';
 
 export const parseZSchema = <Schema extends ZodType>(inputs: z.infer<Schema>, schema: Schema) => {
 	const result = schema.safeParse(inputs);
@@ -13,7 +13,7 @@ export const parseZSchema = <Schema extends ZodType>(inputs: z.infer<Schema>, sc
 
 export const getZString = (
 	name: string,
-	{ min, max }: Rule,
+	{ min, max }: FieldRule,
 	defaultValue: string | undefined = undefined
 ): z.ZodString => {
 	const capitalizedName = capitalize(name);

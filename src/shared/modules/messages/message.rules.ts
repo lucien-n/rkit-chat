@@ -1,5 +1,5 @@
 import type { Message } from './message.entity';
-import type { RuleSet } from '$shared/helpers/types';
+import type { Rule } from '$shared/helpers/types';
 
 export default {
 	field: {
@@ -8,4 +8,4 @@ export default {
 			max: 1024
 		}
 	}
-} satisfies { field: RuleSet<Message, 'content'> };
+} satisfies Rule<Message, 'content'>;

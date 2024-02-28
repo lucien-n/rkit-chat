@@ -38,17 +38,17 @@
 					bind:value={$formData.content}
 					placeholder="Type your message..."
 					class="min-h-0 w-full resize-none overflow-hidden"
-					minlength={messageRules.content.min}
-					maxlength={messageRules.content.max}
+					minlength={messageRules.field.content.min}
+					maxlength={messageRules.field.content.max}
 					on:keydown={handleKeyDown}
 				/>
 
-				{#if getPercentage($formData.content.length, messageRules.content.max) > 75}
+				{#if getPercentage($formData.content.length, messageRules.field.content.max) > 75}
 					<div
 						transition:fade={{ duration: 150 }}
 						class="absolute bottom-0 right-1 select-none p-1 text-sm text-muted-foreground"
 					>
-						<p>{$formData.content.length}/{messageRules.content.max}</p>
+						<p>{$formData.content.length}/{messageRules.field.content.max}</p>
 					</div>
 				{/if}
 			</div>

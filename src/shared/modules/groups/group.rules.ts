@@ -1,5 +1,5 @@
 import type { Group } from './group.entity';
-import type { RuleSet } from '$shared/helpers/types';
+import type { Rule } from '$shared/helpers/types';
 
 export default {
 	field: {
@@ -8,4 +8,4 @@ export default {
 			max: 32
 		}
 	}
-} satisfies { field: RuleSet<Group, 'name'> };
+} satisfies Rule<Group, 'name'>;

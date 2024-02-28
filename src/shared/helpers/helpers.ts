@@ -1,12 +1,13 @@
-import type { Rule } from './types';
+import type { FieldRule } from './types';
+import type { StringFieldOptions } from 'remult';
 import type { StringFieldOptions } from 'remult';
 
-export const getStringOptions = (rule: Rule): StringFieldOptions => ({
+export const getStringOptions = (rule: FieldRule): StringFieldOptions => ({
 	minLength: rule.min,
 	maxLength: rule.max
 });
 
-export const validateString = (str: string, rule: Rule) =>
+export const validateString = (str: string, rule: FieldRule) =>
 	str.length >= rule.min && str.length <= rule.max;
 
 export const toHandle = (username: string) => username.replace(/[^a-zA-Z0-9]/g, '');
