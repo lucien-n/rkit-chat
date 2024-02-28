@@ -24,7 +24,7 @@ export class Message {
 	@Fields.updatedAt()
 	updatedAt!: Date;
 
-	@Fields.string(getStringOptions(messageRules.content))
+	@Fields.string(getStringOptions(messageRules.field.content))
 	content!: string;
 
 	@Fields.boolean()

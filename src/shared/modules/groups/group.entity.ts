@@ -15,7 +15,7 @@ export class Group {
 	@Fields.updatedAt()
 	updatedAt!: Date;
 
-	@Fields.string(getStringOptions(groupRules.name))
+	@Fields.string(getStringOptions(groupRules.field.name))
 	name?: string;
 
 	@Fields.integer()

@@ -3,7 +3,7 @@ import groupRules from '../group.rules';
 import { getZString } from '$shared/helpers/zod';
 
 export const createGroupSchema = z.object({
-	name: getZString('name', groupRules.name)
+	name: getZString('name', groupRules.field.name)
 });
 
 export type CreateGroupSchema = typeof createGroupSchema;

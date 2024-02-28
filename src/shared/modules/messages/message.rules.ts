@@ -1,9 +1,11 @@
-import type { RuleSet } from '$shared/helpers/types';
 import type { Message } from './message.entity';
+import type { RuleSet } from '$shared/helpers/types';
 
 export default {
-	content: {
-		min: 1,
-		max: 1024
+	field: {
+		content: {
+			min: 1,
+			max: 1024
+		}
 	}
-} satisfies RuleSet<Message, 'content'>;
+} satisfies { field: RuleSet<Message, 'content'> };

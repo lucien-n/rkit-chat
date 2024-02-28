@@ -19,7 +19,7 @@ export class User {
 	@Fields.string()
 	handle!: string;
 
-	@Fields.string(getStringOptions(userRules.username))
+	@Fields.string(getStringOptions(userRules.field.username))
 	username!: string;
 
 	@Relations.toOne(() => AuthUser, { field: 'id' })
