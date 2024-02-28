@@ -9,7 +9,10 @@ import { Entity, Fields, Relations, remult } from 'remult';
 		return {
 			groupId: { $in: remult.user?.groups }
 		};
-	}
+	},
+	allowApiDelete: false,
+	allowApiUpdate: false,
+	allowApiInsert: false
 })
 export class Message {
 	@Fields.uuid()
