@@ -29,7 +29,7 @@ export const actions: Actions = {
 		}
 		const { name } = form.data;
 
-		await GroupsController.createGroup({ name });
+		await GroupsController.create({ name });
 
 		return message(form, 'Group created');
 	}

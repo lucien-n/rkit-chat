@@ -13,7 +13,7 @@ import { UserSettings } from '../user-settings/user-settings.entity';
 
 @Controller('UsersController')
 export class UsersController {
-	@BackendMethod({ allowed: false })
+	@BackendMethod({ apiPrefix: '/users', allowed: false })
 	static async findById(
 		id: string,
 		include: MembersToInclude<User> = {}
@@ -22,7 +22,7 @@ export class UsersController {
 		return remult.repo(User).toJson(user);
 	}
 
-	@BackendMethod({ allowed: false })
+	@BackendMethod({ apiPrefix: '/users', allowed: false })
 	static async findOne(
 		where: EntityFilter<User>,
 		include: MembersToInclude<User> = {}
@@ -31,7 +31,7 @@ export class UsersController {
 		return remult.repo(User).toJson(user);
 	}
 
-	@BackendMethod({ allowed: false })
+	@BackendMethod({ apiPrefix: '/users', allowed: false })
 	static async create(authUser: AuthUser, username: string) {
 		const existingUser = await remult.repo(User).findOne({ where: { id: authUser.id } });
 		if (existingUser) return existingUser;
@@ -47,7 +47,7 @@ export class UsersController {
 		return UsersController.findById(user.id);
 	}
 
-	@BackendMethod({ allowed: false })
+	@BackendMethod({ apiPrefix: '/users', allowed: false })
 	static async calculateGroupCount(userId: string) {
 		const user = await UsersController.findById(userId, { groups: true });
 		if (!user) throw 'Failed to calculate group count';

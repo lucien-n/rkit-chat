@@ -28,7 +28,7 @@
 	const handleDeleteMessage = () =>
 		contry(
 			async () => {
-				await MessagesController.deleteMessage(message.id);
+				await MessagesController.delete(message.id);
 			},
 			() => toast.success('Message deleted!'),
 			() => toast.success('An error occured')
@@ -36,7 +36,7 @@
 
 	const enterEditMode = () => {
 		editing = true;
-		updatedMessageContent = message.content;
+		updatedMessageContent = messdelete;
 	};
 
 	const exitEditMode = () => {
@@ -45,7 +45,7 @@
 
 	const handleSaveMessage = () =>
 		contry(async () => {
-			await MessagesController.updateMessage(message.id, updatedMessageContent);
+			await MessagesController.update(message.id, updatedMessageContent);
 		});
 
 	const handleKeyDown = (event: KeyboardEvent) => {
@@ -53,7 +53,7 @@
 			case 'Enter':
 				if (event.shiftKey) break;
 				editing = false;
-				handleSaveMessage();
+				hupdateage();
 				break;
 			case 'Escape':
 				editing = false;

@@ -33,7 +33,7 @@ export const actions: Actions = {
 		const { content } = form.data;
 		const { groupId } = event.params;
 
-		await MessagesController.createMessage({ content }, groupId);
+		await MessagesController.create({ content }, groupId);
 
 		return message(form, 'Message sent');
 	},
@@ -47,7 +47,7 @@ export const actions: Actions = {
 		const { name } = form.data;
 
 		try {
-			await GroupsController.createGroup({ name });
+			await GroupsController.create({ name });
 		} catch (e) {
 			const err = e as RemultError;
 			return message(form, err.message, { status: err.status ?? 500 });

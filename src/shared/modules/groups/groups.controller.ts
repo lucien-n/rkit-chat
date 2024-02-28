@@ -10,7 +10,7 @@ import { createGroupSchema, type CreateGroupInput } from './schemas/create-group
 
 @Controller('GroupsController')
 export class GroupsController {
-	@BackendMethod({ allowed: false })
+	@BackendMethod({ apiPrefix: '/groups', allowed: false })
 	static async findById(
 		id: string,
 		include: MembersToInclude<Group> = {}
@@ -19,7 +19,7 @@ export class GroupsController {
 		return remult.repo(Group).toJson(group);
 	}
 
-	@BackendMethod({ allowed: Allow.authenticated })
+	@BackendMethod({ apiPrefix: '/groups', allowed: Allow.authenticated })
 	static async findByUser(
 		userId: string,
 		include: MembersToInclude<Group> = {}
@@ -34,8 +34,8 @@ export class GroupsController {
 		return remult.repo(Group).toJson(groups);
 	}
 
-	@BackendMethod({ allowed: false })
-	static async createGroup(inputs: CreateGroupInput) {
+	@BackendMethod({ apiPrefix: '/groups', allowed: false })
+	static async create(inputs: CreateGroupInput) {
 		const { name } = parseZSchema(inputs, createGroupSchema);
 
 		const authUser = remult.user;
@@ -57,8 +57,8 @@ export class GroupsController {
 		return remult.repo(Group).toJson(group);
 	}
 
-	@BackendMethod({ allowed: false })
-	static async addUser(userId: string, groupId: string) {
+	@BackendMethod({ apiPrefix: '/groups', allowed: false })
+	static async add(userId: string, groupId: string) {
 		const user = await UsersController.findById(userId);
 		if (!user) throw 'Failed to add user to group';
 
@@ -76,8 +76,8 @@ export class GroupsController {
 		await UsersController.calculateGroupCount(userId);
 	}
 
-	@BackendMethod({ allowed: false })
-	static async removeUser(userId: string, groupId: string) {
+	@BackendMethod({ apiPrefix: '/groups', allowed: false })
+	static async remove(userId: string, groupId: string) {
 		const user = await UsersController.findById(userId);
 		if (!user) throw 'Failed to remove user from group';
 
@@ -92,7 +92,7 @@ export class GroupsController {
 		await UsersController.calculateGroupCount(userId);
 	}
 
-	@BackendMethod({ allowed: Allow.authenticated })
+	@BackendMethod({ apiPrefix: '/groups', allowed: Allow.authenticated })
 	static async leave(groupId: string) {
 		const failMessage = 'Failed to leave group';
 
@@ -108,10 +108,10 @@ export class GroupsController {
 		const isAdmin = authUser.id === group.adminId;
 		if (isAdmin) throw failMessage;
 
-		await GroupsController.removeUser(authUser.id, groupId);
+		await GroupsController.remove(authUser.id, groupId);
 	}
 
-	@BackendMethod({ allowed: false })
+	@BackendMethod({ apiPrefix: '/groups', allowed: false })
 	static async calculateUserCount(groupId: string) {
 		const group = await GroupsController.findById(groupId, { users: true });
 		if (!group) throw 'Failed to calculate user count';
@@ -122,7 +122,7 @@ export class GroupsController {
 		await remult.repo(Group).update(groupId, { userCount });
 	}
 
-	@BackendMethod({ allowed: Allow.authenticated })
+	@BackendMethod({ apiPrefix: '/groups', allowed: Allow.authenticated })
 	static async delete(groupId: string) {
 		const user = remult.user;
 		if (!user) throw Error.AuthRequired;
