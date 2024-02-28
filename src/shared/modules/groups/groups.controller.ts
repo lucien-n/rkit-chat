@@ -54,6 +54,8 @@ export class GroupsController {
 			.relations(group)
 			.users.insert([{ userId: user.id, groupId: group.id }]);
 
+		await UsersController.calculateGroupCount(authUser.id);
+
 		return remult.repo(Group).toJson(group);
 	}
 
@@ -72,6 +74,7 @@ export class GroupsController {
 		if (userInGroup) throw 'Failed to add user to group';
 
 		await remult.repo(Group).relations(group).users.insert([{ userId, groupId }]);
+
 		await GroupsController.calculateUserCount(groupId);
 		await UsersController.calculateGroupCount(userId);
 	}
