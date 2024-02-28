@@ -1,6 +1,5 @@
 import type { FieldRule } from './types';
 import type { StringFieldOptions } from 'remult';
-import type { StringFieldOptions } from 'remult';
 
 export const getStringOptions = (rule: FieldRule): StringFieldOptions => ({
 	minLength: rule.min,
