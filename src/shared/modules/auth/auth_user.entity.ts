@@ -2,7 +2,7 @@ import { Entity, Fields } from 'remult';
 
 @Entity<AuthUser>('auth_users', { allowApiCrud: false })
 export class AuthUser {
-	@Fields.uuid()
+	@Fields.cuid()
 	id!: string;
 
 	@Fields.createdAt()

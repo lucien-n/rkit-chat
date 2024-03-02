@@ -3,7 +3,7 @@ import { Entity, Fields, Relations } from 'remult';
 
 @Entity<AuthSession>('auth_sessions', { allowApiCrud: false })
 export class AuthSession {
-	@Fields.uuid()
+	@Fields.cuid()
 	id!: string;
 
 	@Fields.date()
