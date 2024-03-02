@@ -26,7 +26,7 @@ export class FriendRequestsController {
 		return remult.repo(FriendRequest).toJson(friendRequest);
 	}
 
-	@BackendMethod({ apiPrefix: 'friend-requests', allowed: false })
+	@BackendMethod({ apiPrefix: 'friend-requests', allowed: true })
 	static async acceptFriendRequest(senderId: string) {
 		const authUser = remult.user;
 		if (!authUser) throw Error.AuthRequired;
