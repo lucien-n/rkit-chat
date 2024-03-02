@@ -1,4 +1,5 @@
 import userRules from './user.rules';
+import { Friend } from '../friends/friend.entity';
 import { AuthUser } from '../auth/auth_user.entity';
 import { getStringOptions } from '$shared/helpers/helpers';
 import { Entity, Fields, Relations, remult } from 'remult';
@@ -33,4 +34,7 @@ export class User {
 
 	@Relations.toMany(() => GroupsToUsers, 'userId')
 	groups?: GroupsToUsers[];
+
+	@Relations.toMany(() => Friend, 'userIdA')
+	friends?: Friend[];
 }
