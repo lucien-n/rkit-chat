@@ -1,5 +1,4 @@
 import { Error } from '$shared/helpers/errors';
-import { Friend } from '../friends/friend.entity';
 import { FriendRequest } from './friend-request.entity';
 import { BackendMethod, Controller, remult } from 'remult';
 import { UsersController } from '../users/users.controller';
@@ -18,14 +17,7 @@ export class FriendRequestsController {
 		const fromUserId = authUser.id;
 		const toUserId = receiver.id;
 
-		const existingFriend = await remult.repo(Friend).findOne({
-			where: {
-				$or: [
-					{ userIdA: fromUserId, userIdB: toUserId },
-					{ userIdA: toUserId, userIdB: fromUserId }
-				]
-			}
-		});
+		const existingFriend = await FriendsController.areFriends(fromUserId, toUserId);
 		if (existingFriend) throw 'You are already friends with this user';
 
 		const exists = await remult

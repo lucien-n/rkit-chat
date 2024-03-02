@@ -39,4 +39,17 @@ export class FriendsController {
 		await remult.repo(Friend).delete({ userIdA, userIdB });
 		await remult.repo(Friend).delete({ userIdB, userIdA });
 	}
+
+	@BackendMethod({ apiPrefix: 'friends', allowed: false })
+	static async areFriends(userIdA: string, userIdB: string) {
+		const existingFriend = await remult.repo(Friend).findOne({
+			where: {
+				$or: [
+					{ userIdA, userIdB },
+					{ userIdA: userIdB, userIdB: userIdA	 }
+				]
+			}
+		});
+		return remult.repo(Friend).toJson(existingFriend);
+	}
 }
