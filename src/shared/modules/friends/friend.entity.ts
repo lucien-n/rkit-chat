@@ -1,10 +1,7 @@
 import { Entity, Fields } from 'remult';
 
-@Entity('friends')
+@Entity<Friend>('friends', { id: { userIdA: true, userIdB: true } })
 export class Friend {
-	@Fields.cuid()
-	id = '';
-
 	@Fields.string()
 	userIdA = '';
 
