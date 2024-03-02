@@ -15,7 +15,7 @@ export const POST: RequestHandler = async (event) => {
 	const { handle } = form.data;
 
 	try {
-		await FriendRequestsController.sendFriendRequest(handle);
+		await FriendRequestsController.send(handle);
 	} catch (e) {
 		return actionResult('failure', { message: e ?? Error.InternalError, form }, 400);
 	}

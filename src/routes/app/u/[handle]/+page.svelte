@@ -17,7 +17,7 @@
 	const handleAcceptFriendRequest = async (sender: User) => {
 		contry(
 			async () => {
-				await FriendRequestsController.acceptFriendRequest(sender.id);
+				await FriendRequestsController.accept(sender.id);
 			},
 			() => toast.success(`${sender.handle} is now your friend`),
 			() => toast.error(`Could not accept friend request from ${sender.handle}`)

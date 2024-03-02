@@ -2,6 +2,7 @@ import { Error } from '$shared/helpers/errors';
 import { FriendRequest } from './friend-request.entity';
 import { BackendMethod, Controller, remult } from 'remult';
 import { UsersController } from '../users/users.controller';
+import { FriendsController } from '../friends/friends.controller';
 
 @Controller('FriendRequestsController')
 export class FriendRequestsController {
@@ -36,12 +37,11 @@ export class FriendRequestsController {
 
 		const existingFriendRequest = await remult
 			.repo(FriendRequest)
-			.findOne({ where: { $and: [{ fromUserId }, { toUserId }] } });
+			.findOne({ where: { fromUserId, toUserId } });
 		if (!existingFriendRequest) throw 'Friend request not found';
 
 		await remult.repo(FriendRequest).delete(existingFriendRequest);
 
-		const friendRequest = await remult.repo(FriendRequest).insert({ fromUserId, toUserId });
-		return remult.repo(FriendRequest).toJson(friendRequest);
+		return FriendsController.add(fromUserId, toUserId);
 	}
 }
