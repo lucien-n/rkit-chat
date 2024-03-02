@@ -32,6 +32,15 @@ export class UsersController {
 	}
 
 	@BackendMethod({ apiPrefix: 'users', allowed: false })
+	static async find(
+		where: EntityFilter<User>,
+		include: MembersToInclude<User> = {}
+	): Promise<User[] | undefined> {
+		const user = remult.repo(User).find({ where, include });
+		return remult.repo(User).toJson(user);
+	}
+
+	@BackendMethod({ apiPrefix: 'users', allowed: false })
 	static async create(authUser: AuthUser, username: string) {
 		const existingUser = await remult.repo(User).findOne({ where: { id: authUser.id } });
 		if (existingUser) return existingUser;

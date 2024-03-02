@@ -7,6 +7,7 @@ import { AuthController } from './modules/auth/auth.controller';
 import { AuthSession } from './modules/auth/auth_session.entity';
 import { UsersController } from './modules/users/users.controller';
 import { GroupsController } from './modules/groups/groups.controller';
+import { FriendsController } from './modules/friends/friends.controller';
 import { MessagesController } from './modules/messages/messages.controller';
 import { UserSettings } from './modules/user-settings/user-settings.entity';
 import { FriendRequest } from './modules/friend-requests/friend-request.entity';
@@ -29,5 +30,6 @@ export const controllers = [
 	MessagesController,
 	UsersController,
 	GroupsController,
-	FriendRequestsController
+	FriendRequestsController,
+	FriendsController
 ];

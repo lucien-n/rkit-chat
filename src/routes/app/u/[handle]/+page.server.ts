@@ -6,6 +6,7 @@ import type { User } from '$shared/modules/users/user.entity';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import { UsersController } from '$shared/modules/users/users.controller';
 import { GroupsController } from '$shared/modules/groups/groups.controller';
+import { FriendsController } from '$shared/modules/friends/friends.controller';
 import { createGroupSchema } from '$shared/modules/groups/schemas/create-group.schema';
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -24,9 +25,21 @@ export const load: PageServerLoad = async ({ params }) => {
 			?.map(async ({ fromUserId }) => await UsersController.findById(fromUserId))
 			.filter((user) => user !== undefined) as Promise<User>[]) ?? [];
 
+	const sentFriendRequests =
+		(user.sentFriendRequests
+			?.map(async ({ toUserId }) => await UsersController.findById(toUserId))
+			.filter((user) => user !== undefined) as Promise<User>[]) ?? [];
+
+	const friends =
+		(await FriendsController.findFriends(user.id).then((friendsIds) =>
+			UsersController.find({ id: { $in: friendsIds } })
+		)) ?? [];
+
 	return {
 		user: rejson(user),
-		receivedFriendRequests: await Promise.all(receivedFriendRequests)
+		receivedFriendRequests: await Promise.all(receivedFriendRequests),
+		sentFriendRequests: await Promise.all(sentFriendRequests),
+		friends
 	};
 };
 

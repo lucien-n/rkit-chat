@@ -1,18 +1,18 @@
 <script lang="ts">
-	import { H1, H3, Large } from '$typography';
-	import AddFriendForm from '$ui/friend/add-friend-form.svelte';
-	import { toast } from 'svelte-sonner';
-	import type { PageData } from './$types';
-	import { Button } from '$shadcn/button';
 	import { contry } from '$helpers/contry';
+	import { Button } from '$shadcn/button';
+	import { Card } from '$shadcn/card';
 	import { FriendRequestsController } from '$shared/modules/friend-requests/friend-requests.controller';
 	import type { User } from '$shared/modules/users/user.entity';
-	import { Card } from '$shadcn/card';
-	import { Separator } from '$shadcn/separator';
+	import { H1, H3, Large } from '$typography';
+	import AddFriendForm from '$ui/friend/add-friend-form.svelte';
+	import UserMini from '$ui/user/user-mini.svelte';
+	import { toast } from 'svelte-sonner';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
 
-	$: ({ user, receivedFriendRequests } = data);
+	$: ({ user, friends, receivedFriendRequests, sentFriendRequests } = data);
 
 	const handleAcceptFriendRequest = async (sender: User) => {
 		contry(
@@ -43,17 +43,44 @@
 		/>
 	</div>
 
-	<div class="flex flex-col gap-3">
-		<H3>Friend requests</H3>
-		{#each receivedFriendRequests as user}
-			<Card class="flex w-fit items-center gap-5 px-5 py-3">
-				<div class="flex flex-col">
-					From
+	<div class="grid w-full grid-cols-3 gap-8">
+		<div class="flex flex-col gap-3">
+			<H3>Friends</H3>
+			{#each friends as user}
+				<Card class="flex items-center gap-5 px-5 py-3">
+					<UserMini {user} />
 					<Large>{user.username}</Large>
-				</div>
-				<Separator orientation="vertical" class="h-12" />
-				<Button on:click={() => handleAcceptFriendRequest(user)}>Accept</Button>
-			</Card>
-		{/each}
+				</Card>
+			{/each}
+		</div>
+		<div class="flex flex-col gap-3">
+			<H3>Friend requests</H3>
+			{#each receivedFriendRequests as user}
+				<Card class="flex items-center gap-5 px-5 py-3">
+					<UserMini {user} />
+					<div class="flex flex-col">
+						From
+						<Large>{user.username}</Large>
+					</div>
+					<!-- TODO: Decline received friend request -->
+					<!-- <Button on:click={() => handleDeclineFriendRequest(user)}>Decline</Button> -->
+					<Button class="ml-auto" on:click={() => handleAcceptFriendRequest(user)}>Accept</Button>
+				</Card>
+			{/each}
+		</div>
+		<div class="flex flex-col gap-3">
+			<H3>Sent requests</H3>
+			{#each sentFriendRequests as user}
+				<Card class="flex items-center gap-5 px-5 py-3">
+					<UserMini {user} />
+					<div class="flex flex-col">
+						To
+						<Large>{user.username}</Large>
+					</div>
+					<!-- TODO: Cancel sent friend request -->
+					<!-- <Button on:click={() => handleCancelFriendRequest(user)}>Cancel</Button> -->
+				</Card>
+			{/each}
+		</div>
 	</div>
 </div>

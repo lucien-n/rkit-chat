@@ -4,6 +4,21 @@ import { BackendMethod, Controller, remult } from 'remult';
 @Controller('FriendsController')
 export class FriendsController {
 	@BackendMethod({ apiPrefix: 'friends', allowed: false })
+	static async findFriends(userId: string): Promise<string[] | undefined> {
+		const relations = await remult.repo(Friend).find({
+			where: {
+				$or: [{ userIdA: userId }, { userIdB: userId }]
+			}
+		});
+
+		const friendsIds = relations
+			.flatMap(({ userIdA, userIdB }) => [userIdA, userIdB])
+			.filter((id) => id !== userId);
+
+		return friendsIds;
+	}
+
+	@BackendMethod({ apiPrefix: 'friends', allowed: false })
 	static async add(userIdA: string, userIdB: string) {
 		const friend = remult.repo(Friend).insert({ userIdA, userIdB });
 		return remult.repo(Friend).toJson(friend);
