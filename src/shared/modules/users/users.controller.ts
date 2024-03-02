@@ -1,4 +1,4 @@
-import { toHandle, validateString } from '$shared/helpers/helpers';
+import { toHandle, validateStringLength } from '$shared/helpers/helpers';
 import {
 	remult,
 	Controller,
@@ -37,7 +37,7 @@ export class UsersController {
 		if (existingUser) return existingUser;
 
 		const handle = toHandle(username);
-		if (!validateString(handle, userRules.field.handle)) throw 'Invalid username';
+		if (!validateStringLength(handle, userRules.field.handle)) throw 'Invalid username';
 
 		const user = await remult.repo(User).insert({ id: authUser.id, username, handle });
 
