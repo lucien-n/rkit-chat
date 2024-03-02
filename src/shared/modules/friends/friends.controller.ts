@@ -20,6 +20,16 @@ export class FriendsController {
 
 	@BackendMethod({ apiPrefix: 'friends', allowed: false })
 	static async add(userIdA: string, userIdB: string) {
+		const existingFriend = await remult.repo(Friend).findOne({
+			where: {
+				$or: [
+					{ userIdA, userIdB },
+					{ userIdA: userIdB, userIdB: userIdA }
+				]
+			}
+		});
+		if (existingFriend) throw 'You are already friends with this user';
+
 		const friend = remult.repo(Friend).insert({ userIdA, userIdB });
 		return remult.repo(Friend).toJson(friend);
 	}
