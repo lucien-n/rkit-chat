@@ -54,16 +54,16 @@ export class FriendRequestsController {
 		if (!existingFriendRequest) throw 'Friend request not found';
 
 		// delete invite bothways
-		await remult.repo(FriendRequest).delete(
-			await remult.repo(FriendRequest).findOne({
-				where: {
-					$or: [
-						{ fromUserId, toUserId },
-						{ fromUserId: authUser.id, toUserId: senderId }
-					]
-				}
-			})
-		);
+		for await (const request of remult.repo(FriendRequest).query({
+			where: {
+				$or: [
+					{ fromUserId, toUserId },
+					{ fromUserId: authUser.id, toUserId: senderId }
+				]
+			}
+		})) {
+			remult.repo(FriendRequest).delete(request);
+		}
 
 		return FriendsController.add(fromUserId, toUserId);
 	}
