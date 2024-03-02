@@ -15,7 +15,7 @@ export const urls = {
 };
 
 export const actions = {
-	addFriend: '/api/add-friend'
+	addFriend: '/actions/add-friend'
 };
 
 export const getUserUrl = (user: User | undefined | null) =>
