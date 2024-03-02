@@ -1,16 +1,10 @@
 import { Entity, Fields } from 'remult';
 
-@Entity('friend_requests')
+@Entity<FriendRequest>('friend_requests', { id: { fromUserId: true, toUserId: true } })
 export class FriendRequest {
-	@Fields.cuid()
-	id = '';
-
 	@Fields.string()
 	fromUserId = '';
 
 	@Fields.string()
 	toUserId = '';
-
-	@Fields.boolean()
-	accepted = false;
 }

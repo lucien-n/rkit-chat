@@ -1,5 +1,5 @@
-import type { Group } from '$shared/modules/groups/group.entity';
 import type { User } from '$shared/modules/users/user.entity';
+import type { Group } from '$shared/modules/groups/group.entity';
 
 export const urls = {
 	home: { root: '/' },
@@ -12,6 +12,10 @@ export const urls = {
 		signup: '/auth/signup',
 		signout: '/auth/signout'
 	}
+};
+
+export const actions = {
+	addFriend: '/api/add-friend'
 };
 
 export const getUserUrl = (user: User | undefined | null) =>

@@ -4,6 +4,7 @@ import { AuthUser } from '../auth/auth_user.entity';
 import { getStringOptions } from '$shared/helpers/helpers';
 import { Entity, Fields, Relations, remult } from 'remult';
 import { UserSettings } from '../user-settings/user-settings.entity';
+import { FriendRequest } from '../friend-requests/friend-request.entity';
 import { GroupsToUsers } from '../groups-to-users/groups-to-users.entity';
 
 @Entity<User>('users', { apiPrefilter: () => ({ id: remult.user?.id }), id: { id: true } }) // !temp allowApiCrud
@@ -37,4 +38,10 @@ export class User {
 
 	@Relations.toMany(() => Friend, 'userIdA')
 	friends?: Friend[];
+
+	@Relations.toMany(() => FriendRequest, 'toUserId')
+	receivedFriendRequests?: FriendRequest[];
+
+	@Relations.toMany(() => FriendRequest, 'fromUserId')
+	sentFriendRequests?: FriendRequest[];
 }
