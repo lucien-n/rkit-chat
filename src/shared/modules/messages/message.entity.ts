@@ -15,7 +15,7 @@ import { Entity, Fields, Relations, remult } from 'remult';
 	allowApiInsert: false
 })
 export class Message {
-	@Fields.uuid()
+	@Fields.cuid()
 	id!: string;
 
 	@Fields.createdAt()
