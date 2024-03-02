@@ -6,7 +6,7 @@ import { UsersController } from '../users/users.controller';
 @Controller('FriendRequestsController')
 export class FriendRequestsController {
 	@BackendMethod({ apiPrefix: 'friend-requests', allowed: false })
-	static async sendFriendRequest(handle: string) {
+	static async send(handle: string) {
 		const authUser = remult.user;
 		if (!authUser) throw Error.AuthRequired;
 
@@ -27,20 +27,21 @@ export class FriendRequestsController {
 	}
 
 	@BackendMethod({ apiPrefix: 'friend-requests', allowed: true })
-	static async acceptFriendRequest(senderId: string) {
+	static async accept(senderId: string) {
 		const authUser = remult.user;
 		if (!authUser) throw Error.AuthRequired;
 
 		const fromUserId = senderId;
 		const toUserId = authUser.id;
 
-		const exists = await remult
+		const existingFriendRequest = await remult
 			.repo(FriendRequest)
 			.findOne({ where: { $and: [{ fromUserId }, { toUserId }] } });
-		if (!exists) throw 'Friend request not found';
+		if (!existingFriendRequest) throw 'Friend request not found';
+
+		await remult.repo(FriendRequest).delete(existingFriendRequest);
 
 		const friendRequest = await remult.repo(FriendRequest).insert({ fromUserId, toUserId });
-
 		return remult.repo(FriendRequest).toJson(friendRequest);
 	}
 }
