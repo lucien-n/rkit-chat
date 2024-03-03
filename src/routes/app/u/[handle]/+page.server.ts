@@ -22,7 +22,7 @@ export const load: PageServerLoad = async ({ params }) => {
 
 	const sentFriendRequests =
 		(await UsersController.find({
-			id: { $in: user.receivedFriendRequests?.flatMap(({ toUserId }) => toUserId) ?? [] }
+			id: { $in: user.sentFriendRequests?.flatMap(({ toUserId }) => toUserId) ?? [] }
 		})) ?? [];
 
 	const friends =
