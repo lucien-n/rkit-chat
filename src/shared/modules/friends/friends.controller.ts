@@ -1,5 +1,6 @@
+import { Error } from '$shared/helpers/errors';
 import { Friend } from './friend.entity';
-import { BackendMethod, Controller, remult } from 'remult';
+import { Allow, BackendMethod, Controller, remult } from 'remult';
 
 @Controller('FriendsController')
 export class FriendsController {
@@ -34,10 +35,15 @@ export class FriendsController {
 		return remult.repo(Friend).toJson(friend);
 	}
 
-	@BackendMethod({ apiPrefix: 'friends', allowed: false })
-	static async remove(userIdA: string, userIdB: string) {
-		await remult.repo(Friend).delete({ userIdA, userIdB });
-		await remult.repo(Friend).delete({ userIdB, userIdA });
+	@BackendMethod({ apiPrefix: 'friends', allowed: Allow.authenticated })
+	static async remove(friendId: string) {
+		const authUser = remult.user;
+		if (!authUser) throw Error.AuthRequired;
+
+		const friend = await FriendsController.areFriends(authUser.id, friendId);
+		if (!friend) Error.InternalError;
+
+		await remult.repo(Friend).delete(friend);
 	}
 
 	@BackendMethod({ apiPrefix: 'friends', allowed: false })
@@ -46,7 +52,7 @@ export class FriendsController {
 			where: {
 				$or: [
 					{ userIdA, userIdB },
-					{ userIdA: userIdB, userIdB: userIdA	 }
+					{ userIdA: userIdB, userIdB: userIdA }
 				]
 			}
 		});
