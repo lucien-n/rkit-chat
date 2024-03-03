@@ -50,7 +50,9 @@
 				>
 				<Button on:click={() => handleAcceptFriendRequest(user)}>Accept</Button>
 			{:else}
-				<Button on:click={() => handleCancelFriendRequest(user)}>Accept</Button>
+				<Button variant="destructive" on:click={() => handleCancelFriendRequest(user)}
+					>Cancel</Button
+				>
 			{/if}
 		</div>
 	</Card.Content>
