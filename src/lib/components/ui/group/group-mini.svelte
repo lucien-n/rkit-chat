@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import CustomContextMenu from '$custom/menu/custom-context-menu.svelte';
+	import type { MenuItem } from '$custom/menu/types';
+	import { contry } from '$helpers/contry';
 	import { getGroupUrl } from '$lib/urls';
 	import * as Avatar from '$shadcn/avatar';
 	import { Badge } from '$shadcn/badge';
@@ -13,14 +14,10 @@
 	import Muted from '$typography/muted.svelte';
 	import { Exit, Person, Trash } from 'radix-icons-svelte';
 	import { toast } from 'svelte-sonner';
-	import { scale } from 'svelte/transition';
 	import ConfirmDeleteGroupDialog from './dialogs/confirm-delete-group-dialog.svelte';
-	import type { MenuItem } from '$custom/menu/types';
-	import { contry } from '$helpers/contry';
 
 	export let group: Group;
 
-	$: isCurrent = $page.params.groupId === group.id;
 	const isAdmin = $userStore?.id === group.adminId;
 
 	let openDeleteDialog = false;
@@ -57,12 +54,6 @@
 <CustomContextMenu items={menuItems}>
 	<HoverCard.Root openDelay={50} closeDelay={50}>
 		<HoverCard.Trigger class="relative flex" href={getGroupUrl(group)}>
-			{#if isCurrent}
-				<div
-					class="absolute -left-3 h-5/6 w-[.4rem] self-center rounded-r-md bg-primary"
-					transition:scale
-				/>
-			{/if}
 			<Avatar.Root>
 				<Avatar.Image />
 				<Avatar.Fallback>{group.name?.slice(0, 2)}</Avatar.Fallback>
