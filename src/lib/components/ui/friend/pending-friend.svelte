@@ -22,7 +22,13 @@
 	};
 
 	const handleDeclineFriendRequest = async (sender: User) => {
-		console.log(sender);
+		contry(
+			async () => {
+				await FriendRequestsController.decline(sender.id);
+			},
+			undefined,
+			() => toast.error(`Could not decline friend request from ${sender.handle}`)
+		);
 	};
 
 	const handleCancelFriendRequest = async (receiver: User) => {
