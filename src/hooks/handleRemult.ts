@@ -1,3 +1,4 @@
+import { dev } from '$app/environment';
 import type { Handle } from '@sveltejs/kit';
 import { controllers, entities } from '$shared';
 import { DATABASE_URL } from '$env/static/private';
@@ -10,5 +11,6 @@ export const handleRemult: Handle = remultSveltekit({
 	initApi,
 	getUser,
 	entities,
-	controllers
+	controllers,
+	logApiEndPoints: dev
 });
