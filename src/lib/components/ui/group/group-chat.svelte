@@ -4,7 +4,7 @@
 	import { remultLive } from '$helpers/remultLive';
 	import { Message } from '$shared/modules/messages/message.entity';
 	import type { SendMessageSchema } from '$shared/modules/messages/schemas/send-message.schema';
-	import SendMessageForm from '$ui/message/create-message-form.svelte';
+	import SendMessageForm from '$ui/message/send-message-form.svelte';
 	import MessageCard from '$ui/message/message-card.svelte';
 	import { remult } from 'remult';
 	import { afterUpdate, onMount } from 'svelte';
