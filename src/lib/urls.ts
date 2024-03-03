@@ -22,7 +22,8 @@ export const getGroupUrl = (group: Group | undefined | null) =>
 
 export const actions = {
 	addFriend: '/actions/add-friend',
-	sendMessage: '/actions/send-message/[groupId]'
+	sendMessage: '/actions/send-message/[groupId]',
+	createGroup: '/actions/group-message'
 } as const;
 
 type Actions = typeof actions;

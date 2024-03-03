@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { getAction } from '$lib/urls';
 	import * as Form from '$shadcn/form';
 	import { Input } from '$shadcn/input';
 	import {
@@ -24,7 +25,7 @@
 	const { form: formData, enhance, submitting } = form;
 </script>
 
-<form action="?/createGroup" method="post" class="flex gap-2" use:enhance>
+<form action={getAction('createGroup')} method="post" class="flex gap-2" use:enhance>
 	<Form.Field {form} name="name" class="w-full">
 		<Form.Control let:attrs>
 			<Form.Label>Name</Form.Label>
