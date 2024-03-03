@@ -9,7 +9,7 @@ import { BackendMethod, Controller, remult, type MembersToInclude } from 'remult
 
 @Controller('AuthController')
 export class AuthController {
-	@BackendMethod({ apiPrefix: '/auth', allowed: false })
+	@BackendMethod({ apiPrefix: 'auth', allowed: false })
 	static async findByEmail(email: string) {
 		for await (const user of remult.repo(AuthUser).query()) {
 			if (user.email?.toLowerCase() === email.toLowerCase()) return user;
@@ -18,7 +18,7 @@ export class AuthController {
 		return null;
 	}
 
-	@BackendMethod({ apiPrefix: '/auth', allowed: false })
+	@BackendMethod({ apiPrefix: 'auth', allowed: false })
 	static async findById(
 		id: string,
 		include: MembersToInclude<AuthUser> = {}
@@ -27,7 +27,7 @@ export class AuthController {
 		return remult.repo(AuthUser).toJson(user);
 	}
 
-	@BackendMethod({ apiPrefix: '/auth', allowed: false })
+	@BackendMethod({ apiPrefix: 'auth', allowed: false })
 	static async signup(inputs: SignupInput) {
 		const { username, email, password } = parseZSchema(inputs, signupSchema);
 
@@ -43,7 +43,7 @@ export class AuthController {
 		return authUser;
 	}
 
-	@BackendMethod({ apiPrefix: '/auth', allowed: false })
+	@BackendMethod({ apiPrefix: 'auth', allowed: false })
 	static async signin(inputs: SigninInput) {
 		const { email, password } = parseZSchema(inputs, signinSchema);
 
