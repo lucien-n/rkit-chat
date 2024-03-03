@@ -7,7 +7,7 @@ import { sendMessageSchema, type SendMessageInput } from './schemas/send-message
 
 @Controller('MessagesController')
 export class MessagesController {
-	@BackendMethod({ apiPrefix: '/messages', allowed: false })
+	@BackendMethod({ apiPrefix: 'messages', allowed: false })
 	static async findById(
 		id: string,
 		include: MembersToInclude<Message> = {}
@@ -16,7 +16,7 @@ export class MessagesController {
 		return remult.repo(Message).toJson(user);
 	}
 
-	@BackendMethod({ apiPrefix: '/messages', allowed: Allow.authenticated })
+	@BackendMethod({ apiPrefix: 'messages', allowed: Allow.authenticated })
 	static async send(inputs: SendMessageInput, groupId: string) {
 		const { content } = parseZSchema(inputs, sendMessageSchema);
 
@@ -33,7 +33,7 @@ export class MessagesController {
 		return remult.repo(Message).insert({ content, authorId: authUser.id, groupId });
 	}
 
-	@BackendMethod({ apiPrefix: '/messages', allowed: Allow.authenticated })
+	@BackendMethod({ apiPrefix: 'messages', allowed: Allow.authenticated })
 	static async delete(messageId: string) {
 		const authUser = remult.user;
 		if (!authUser) throw Error.AuthRequired;
@@ -49,7 +49,7 @@ export class MessagesController {
 		await remult.repo(Message).delete(messageId);
 	}
 
-	@BackendMethod({ apiPrefix: '/messages', allowed: Allow.authenticated })
+	@BackendMethod({ apiPrefix: 'messages', allowed: Allow.authenticated })
 	static async update(messageId: string, content: string) {
 		const authUser = remult.user;
 		if (!authUser) throw Error.AuthRequired;
