@@ -21,7 +21,7 @@ export const getGroupUrl = (group: Group | undefined | null) =>
 	group ? `${urls.app.group.root}/${group.id}` : urls.home.root;
 
 export const actions = {
-	addFriend: '/actions/add-friend',
+	sendFriendRequest: '/actions/send-friend-request',
 	sendMessage: '/actions/send-message/[groupId]',
 	createGroup: '/actions/group-message'
 } as const;

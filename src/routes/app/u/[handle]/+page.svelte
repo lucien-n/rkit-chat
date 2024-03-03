@@ -5,7 +5,7 @@
 	import { FriendRequestsController } from '$shared/modules/friend-requests/friend-requests.controller';
 	import type { User } from '$shared/modules/users/user.entity';
 	import { H1, H3, Large } from '$typography';
-	import AddFriendForm from '$ui/friend/add-friend-form.svelte';
+	import SendFriendRequestForm from '$ui/friend/send-friend-request-form.svelte';
 	import UserMini from '$ui/user/user-mini.svelte';
 	import { toast } from 'svelte-sonner';
 	import type { PageData } from './$types';
@@ -28,8 +28,8 @@
 <div class="p-3">
 	<H1>{user?.username}</H1>
 	<div class="w-fit">
-		<AddFriendForm
-			data={data.addFriendForm}
+		<SendFriendRequestForm
+			data={data.sendFriendRequestForm}
 			on:failure={({ detail }) => {
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore

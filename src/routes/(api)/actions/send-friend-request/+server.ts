@@ -1,14 +1,14 @@
 import { Error } from '$shared/helpers/errors';
-import type { RequestHandler } from '@sveltejs/kit';
-import { zod } from 'sveltekit-superforms/adapters';
-import { actionResult, superValidate } from 'sveltekit-superforms';
-import { addFriendSchema } from '$shared/modules/friend-requests/schemas/add-friend.schema';
 import { FriendRequestsController } from '$shared/modules/friend-requests/friend-requests.controller';
+import { sendFriendSchema } from '$shared/modules/friend-requests/schemas/send-friend-request.schema';
+import type { RequestHandler } from '@sveltejs/kit';
+import { actionResult, superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
 
 export const POST: RequestHandler = async (event) => {
 	const { request } = event;
 
-	const form = await superValidate(request, zod(addFriendSchema));
+	const form = await superValidate(request, zod(sendFriendSchema));
 
 	if (!form.valid) return actionResult('failure', { form }, 400);
 
