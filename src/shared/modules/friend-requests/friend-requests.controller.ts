@@ -17,7 +17,7 @@ export class FriendRequestsController {
 				]
 			}
 		})) {
-			remult.repo(FriendRequest).delete(request);
+			await remult.repo(FriendRequest).delete(request);
 		}
 	}
 
