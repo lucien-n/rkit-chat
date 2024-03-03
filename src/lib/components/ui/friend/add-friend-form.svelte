@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { DispatchActionResult } from '$lib/types';
-	import { actions } from '$lib/urls';
+	import { getAction } from '$lib/urls';
 	import * as Form from '$shadcn/form';
 	import { Input } from '$shadcn/input';
 	import {
@@ -26,7 +26,7 @@
 	const { form: formData, enhance } = form;
 </script>
 
-<form action={actions.addFriend} method="post" class="flex gap-1" use:enhance>
+<form action={getAction('addFriend')} method="post" class="flex gap-1" use:enhance>
 	<Form.Field {form} name="handle" class="w-full">
 		<Form.Control let:attrs>
 			<Input {...attrs} bind:value={$formData.handle} placeholder="Handle" />

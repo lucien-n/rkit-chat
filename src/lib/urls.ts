@@ -14,12 +14,29 @@ export const urls = {
 	}
 };
 
-export const actions = {
-	addFriend: '/actions/add-friend'
-};
-
 export const getUserUrl = (user: User | undefined | null) =>
 	user ? `${urls.app.user.root}/${user.handle}` : urls.home.root;
 
 export const getGroupUrl = (group: Group | undefined | null) =>
 	group ? `${urls.app.group.root}/${group.id}` : urls.home.root;
+
+export const actions = {
+	addFriend: '/actions/add-friend',
+	sendMessage: '/actions/send-message/[groupId]'
+} as const;
+
+type Actions = typeof actions;
+
+type ActionParams<T extends keyof Actions> = Actions[T] extends `${string}[${infer Param}]`
+	? Record<Param, string>
+	: undefined;
+
+export const getAction = <T extends keyof Actions>(action: T, params?: ActionParams<T>): string => {
+	let url: Actions[T] = actions[action]; // Declare 'url' with correct type
+	if (params !== undefined) {
+		Object.entries(params).forEach(([key, value]) => {
+			url = url.replace(`[${key}]`, value) as Actions[T]; // Cast 'url' back to its original type after modification
+		});
+	}
+	return url;
+};
