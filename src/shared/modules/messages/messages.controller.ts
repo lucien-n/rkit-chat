@@ -3,7 +3,7 @@ import { Error } from '$shared/helpers/errors';
 import { parseZSchema } from '$shared/helpers/zod';
 import { GroupsController } from '../groups/groups.controller';
 import { BackendMethod, Controller, remult, type MembersToInclude, Allow } from 'remult';
-import { createMessageSchema, type CreateMessageInput } from './schemas/create-message.schema';
+import { sendMessageSchema, type SendMessageInput } from './schemas/send-message.schema';
 
 @Controller('MessagesController')
 export class MessagesController {
@@ -17,8 +17,8 @@ export class MessagesController {
 	}
 
 	@BackendMethod({ apiPrefix: '/messages', allowed: Allow.authenticated })
-	static async create(inputs: CreateMessageInput, groupId: string) {
-		const { content } = parseZSchema(inputs, createMessageSchema);
+	static async send(inputs: SendMessageInput, groupId: string) {
+		const { content } = parseZSchema(inputs, sendMessageSchema);
 
 		const authUser = remult.user;
 		if (!authUser) throw Error.AuthRequired;

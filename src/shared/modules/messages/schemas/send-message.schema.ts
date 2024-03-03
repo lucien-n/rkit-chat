@@ -2,10 +2,10 @@ import { z } from 'zod';
 import messageRules from '../message.rules';
 import { getZString } from '$shared/helpers/zod';
 
-export const createMessageSchema = z.object({
+export const sendMessageSchema = z.object({
 	content: getZString('content', messageRules.field.content)
 });
 
-export type CreateMessageSchema = typeof createMessageSchema;
+export type SendMessageSchema = typeof sendMessageSchema;
 
-export type CreateMessageInput = z.infer<CreateMessageSchema>;
+export type SendMessageInput = z.infer<SendMessageSchema>;

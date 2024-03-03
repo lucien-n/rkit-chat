@@ -1,21 +1,23 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { getPercentage } from '$helpers/helper';
+	import { getAction } from '$lib/urls';
 	import * as Form from '$shadcn/form';
 	import messageRules from '$shared/modules/messages/message.rules';
 	import {
-		createMessageSchema,
-		type CreateMessageSchema
-	} from '$shared/modules/messages/schemas/create-message.schema';
+		sendMessageSchema,
+		type SendMessageSchema
+	} from '$shared/modules/messages/schemas/send-message.schema';
 	import DynamicTextarea from '$ui/chat/dynamic-textarea.svelte';
 	import { PaperPlane } from 'radix-icons-svelte';
 	import { fade } from 'svelte/transition';
 	import { superForm, type Infer, type SuperValidated } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 
-	export let data: SuperValidated<Infer<CreateMessageSchema>>;
+	export let data: SuperValidated<Infer<SendMessageSchema>>;
 
 	const form = superForm(data, {
-		validators: zodClient(createMessageSchema),
+		validators: zodClient(sendMessageSchema),
 		resetForm: true
 	});
 
@@ -29,7 +31,12 @@
 	};
 </script>
 
-<form action="?/createMessage" method="post" class="flex gap-1" use:enhance>
+<form
+	action={getAction('sendMessage', { groupId: $page.params.groupId })}
+	method="post"
+	class="flex gap-1"
+	use:enhance
+>
 	<Form.Field {form} name="content" class="w-full">
 		<Form.Control let:attrs>
 			<div class="relative">
