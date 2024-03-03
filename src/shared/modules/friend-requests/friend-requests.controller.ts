@@ -32,6 +32,8 @@ export class FriendRequestsController {
 		const fromUserId = authUser.id;
 		const toUserId = receiver.id;
 
+		if (fromUserId === toUserId) throw 'You cannot send a friend request to yourself';
+
 		const existingFriend = await FriendsController.areFriends(fromUserId, toUserId);
 		if (existingFriend) throw 'You are already friends with this user';
 
