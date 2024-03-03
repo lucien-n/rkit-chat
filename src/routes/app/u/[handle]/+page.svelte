@@ -5,7 +5,7 @@
 	import { FriendRequestsController } from '$shared/modules/friend-requests/friend-requests.controller';
 	import type { User } from '$shared/modules/users/user.entity';
 	import { H1, H3, Large } from '$typography';
-	import SendFriendRequestForm from '$ui/friend/send-friend-request-form.svelte';
+	import SendFriendRequestForm from '$ui/friend/forms/send-friend-request-form.svelte';
 	import UserMini from '$ui/user/user-mini.svelte';
 	import { toast } from 'svelte-sonner';
 	import type { PageData } from './$types';
