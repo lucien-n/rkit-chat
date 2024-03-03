@@ -15,6 +15,6 @@ export const load: PageServerLoad = async (event) => {
 
 	return {
 		group,
-		messageForm: await superValidate(zod(sendMessageSchema))
+		sendMessageForm: await superValidate(zod(sendMessageSchema))
 	};
 };

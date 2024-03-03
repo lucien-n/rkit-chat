@@ -11,7 +11,7 @@
 	import type { Infer, SuperValidated } from 'sveltekit-superforms';
 	import GroupHeader from './group-chat-header.svelte';
 
-	export let messageForm: SuperValidated<Infer<SendMessageSchema>>;
+	export let sendMessageForm: SuperValidated<Infer<SendMessageSchema>>;
 
 	const messages = remultLive(remult.repo(Message));
 
@@ -49,6 +49,6 @@
 
 {#if group}
 	<div class="p-3">
-		<SendMessageForm data={messageForm} />
+		<SendMessageForm data={sendMessageForm} />
 	</div>
 {/if}
