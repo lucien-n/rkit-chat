@@ -127,13 +127,13 @@ export class GroupsController {
 
 	@BackendMethod({ apiPrefix: 'groups', allowed: Allow.authenticated })
 	static async delete(groupId: string) {
-		const user = remult.user;
-		if (!user) throw Error.AuthRequired;
+		const authUser = remult.user;
+		if (!authUser) throw Error.AuthRequired;
 
 		const group = await GroupsController.findById(groupId);
 		if (!group) throw 'Failed to delete group';
 
-		const isUserAdmin = user.id === group.adminId;
+		const isUserAdmin = authUser.id === group.adminId;
 		if (!isUserAdmin) throw 'Failed to delete group';
 
 		await remult.repo(Group).delete(groupId);
