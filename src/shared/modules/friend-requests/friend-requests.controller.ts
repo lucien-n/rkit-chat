@@ -84,4 +84,22 @@ export class FriendRequestsController {
 
 		await FriendRequestsController.delete(fromUserId, toUserId);
 	}
+
+	@BackendMethod({ apiPrefix: 'friend-requests', allowed: Allow.authenticated })
+	static async cancel(receiverId: string) {
+		if (!receiverId) throw Error.InternalError;
+
+		const authUser = remult.user;
+		if (!authUser) throw Error.AuthRequired;
+
+		const fromUserId = authUser.id;
+		const toUserId = receiverId;
+
+		const existingFriendRequest = await remult
+			.repo(FriendRequest)
+			.findOne({ where: { fromUserId, toUserId } });
+		if (!existingFriendRequest) throw 'Friend request not found';
+
+		await FriendRequestsController.delete(fromUserId, toUserId);
+	}
 }

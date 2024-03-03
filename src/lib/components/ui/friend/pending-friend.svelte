@@ -32,7 +32,13 @@
 	};
 
 	const handleCancelFriendRequest = async (receiver: User) => {
-		console.log(receiver);
+		contry(
+			async () => {
+				await FriendRequestsController.cancel(receiver.id);
+			},
+			undefined,
+			() => toast.error(`Could not cancel friend request from ${receiver.handle}`)
+		);
 	};
 </script>
 
