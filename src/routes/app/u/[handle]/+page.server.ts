@@ -1,6 +1,5 @@
 import { rejson } from '$helpers/rejson';
 import { FriendsController } from '$shared/modules/friends/friends.controller';
-import type { User } from '$shared/modules/users/user.entity';
 import { UsersController } from '$shared/modules/users/users.controller';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
@@ -17,14 +16,14 @@ export const load: PageServerLoad = async ({ params }) => {
 	}
 
 	const receivedFriendRequests =
-		(user.receivedFriendRequests
-			?.map(async ({ fromUserId }) => await UsersController.findById(fromUserId))
-			.filter((user) => user !== undefined) as Promise<User>[]) ?? [];
+		(await UsersController.find({
+			id: { $in: user.receivedFriendRequests?.flatMap(({ fromUserId }) => fromUserId) ?? [] }
+		})) ?? [];
 
 	const sentFriendRequests =
-		(user.sentFriendRequests
-			?.map(async ({ toUserId }) => await UsersController.findById(toUserId))
-			.filter((user) => user !== undefined) as Promise<User>[]) ?? [];
+		(await UsersController.find({
+			id: { $in: user.receivedFriendRequests?.flatMap(({ toUserId }) => toUserId) ?? [] }
+		})) ?? [];
 
 	const friends =
 		(await FriendsController.findFriends(user.id).then((friendsIds) =>
@@ -33,8 +32,8 @@ export const load: PageServerLoad = async ({ params }) => {
 
 	return {
 		user: rejson(user),
-		receivedFriendRequests: await Promise.all(receivedFriendRequests),
-		sentFriendRequests: await Promise.all(sentFriendRequests),
+		receivedFriendRequests: receivedFriendRequests,
+		sentFriendRequests: sentFriendRequests,
 		friends
 	};
 };

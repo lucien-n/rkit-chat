@@ -10,7 +10,7 @@ export const getUser = async (event: RequestEvent): Promise<UserInfo | undefined
 
 	const { id } = event.locals.authUser;
 
-	const user = await UsersController.findById(id, { user: true });
+	const user = await UsersController.findOne({ id }, { user: true });
 	if (!user?.user) return undefined;
 
 	const groups = (await GroupsController.findByUser(user.id)) ?? [];

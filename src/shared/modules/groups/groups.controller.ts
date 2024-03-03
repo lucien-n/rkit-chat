@@ -41,7 +41,7 @@ export class GroupsController {
 		const authUser = remult.user;
 		if (!authUser) throw Error.AuthRequired;
 
-		const user = await UsersController.findById(authUser.id);
+		const user = await UsersController.findOne({ id: authUser.id });
 		if (!user) throw AuthError.UserNotFound;
 
 		if (user.groupCount >= groupRules.maxGroups)
@@ -61,7 +61,7 @@ export class GroupsController {
 
 	@BackendMethod({ apiPrefix: 'groups', allowed: false })
 	static async add(userId: string, groupId: string) {
-		const user = await UsersController.findById(userId);
+		const user = await UsersController.findOne({ id: userId });
 		if (!user) throw 'Failed to add user to group';
 
 		const group = await GroupsController.findById(groupId, { users: true });
@@ -81,7 +81,7 @@ export class GroupsController {
 
 	@BackendMethod({ apiPrefix: 'groups', allowed: false })
 	static async remove(userId: string, groupId: string) {
-		const user = await UsersController.findById(userId);
+		const user = await UsersController.findOne({ id: userId });
 		if (!user) throw 'Failed to remove user from group';
 
 		const group = await GroupsController.findById(groupId, { users: true });
@@ -102,7 +102,7 @@ export class GroupsController {
 		const authUser = remult.user;
 		if (!authUser) throw failMessage;
 
-		const user = await UsersController.findById(authUser.id);
+		const user = await UsersController.findOne({ id: authUser.id });
 		if (!user) throw failMessage;
 
 		const group = await GroupsController.findById(groupId);
