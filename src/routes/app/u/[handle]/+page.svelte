@@ -1,28 +1,14 @@
 <script lang="ts">
-	import { contry } from '$helpers/contry';
-	import { Button } from '$shadcn/button';
-	import { Card } from '$shadcn/card';
-	import { FriendRequestsController } from '$shared/modules/friend-requests/friend-requests.controller';
-	import type { User } from '$shared/modules/users/user.entity';
-	import { H1, H3, Large } from '$typography';
+	import { H1, H3 } from '$typography';
 	import SendFriendRequestForm from '$ui/friend/forms/send-friend-request-form.svelte';
-	import UserMini from '$ui/user/user-mini.svelte';
+	import FriendCard from '$ui/friend/friend-card.svelte';
+	import PendingFriend from '$ui/friend/pending-friend.svelte';
 	import { toast } from 'svelte-sonner';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
 	$: ({ user, friends, receivedFriendRequests, sentFriendRequests } = data);
-
-	const handleAcceptFriendRequest = async (sender: User) => {
-		contry(
-			async () => {
-				await FriendRequestsController.accept(sender.id);
-			},
-			() => toast.success(`${sender.handle} is now your friend`),
-			() => toast.error(`Could not accept friend request from ${sender.handle}`)
-		);
-	};
 </script>
 
 <div class="p-3">
@@ -47,39 +33,19 @@
 		<div class="flex flex-col gap-3">
 			<H3>Friends</H3>
 			{#each friends as user}
-				<Card class="flex items-center gap-5 px-5 py-3">
-					<UserMini {user} />
-					<Large>{user.username}</Large>
-				</Card>
+				<FriendCard {user} />
 			{/each}
 		</div>
 		<div class="flex flex-col gap-3">
 			<H3>Friend requests</H3>
 			{#each receivedFriendRequests as user}
-				<Card class="flex items-center gap-5 px-5 py-3">
-					<UserMini {user} />
-					<div class="flex flex-col">
-						From
-						<Large>{user.username}</Large>
-					</div>
-					<!-- TODO: Decline received friend request -->
-					<!-- <Button on:click={() => handleDeclineFriendRequest(user)}>Decline</Button> -->
-					<Button class="ml-auto" on:click={() => handleAcceptFriendRequest(user)}>Accept</Button>
-				</Card>
+				<PendingFriend {user} status="received" />
 			{/each}
 		</div>
 		<div class="flex flex-col gap-3">
 			<H3>Sent requests</H3>
 			{#each sentFriendRequests as user}
-				<Card class="flex items-center gap-5 px-5 py-3">
-					<UserMini {user} />
-					<div class="flex flex-col">
-						To
-						<Large>{user.username}</Large>
-					</div>
-					<!-- TODO: Cancel sent friend request -->
-					<!-- <Button on:click={() => handleCancelFriendRequest(user)}>Cancel</Button> -->
-				</Card>
+				<PendingFriend {user} status="sent" />
 			{/each}
 		</div>
 	</div>
