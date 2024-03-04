@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { getGroup } from '$contexts/group';
-	import { remultLive } from '$helpers/remultLive';
+	import { remultLive } from '$stores/remultLive';
 	import { Message } from '$shared/modules/messages/message.entity';
 	import type { SendMessageSchema } from '$shared/modules/messages/schemas/send-message.schema';
 	import SendMessageForm from '$ui/message/send-message-form.svelte';
